@@ -1,0 +1,275 @@
+/* Adding font-face for all Playfair Display variants */
+
+@font-face {
+    font-family: 'Playfair Display';
+    src: url('Playfair_Display/static/PlayfairDisplay-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    src: url('Playfair_Display/static/PlayfairDisplay-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    src: url('Playfair_Display/static/PlayfairDisplay-Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    src: url('Playfair_Display/static/PlayfairDisplay-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    src: url('Playfair_Display/static/PlayfairDisplay-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    src: url('Playfair_Display/static/PlayfairDisplay-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    src: url('Playfair_Display/static/PlayfairDisplay-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    src: url('Playfair_Display/static/PlayfairDisplay-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+/* Additional @font-face for Italics */
+@font-face {
+    font-family: 'Playfair Display';
+    src: url('Playfair_Display/static/PlayfairDisplay-BlackItalic.ttf') format('truetype');
+    font-weight: 900;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    src: url('Playfair_Display/static/PlayfairDisplay-ExtraBoldItalic.ttf') format('truetype');
+    font-weight: 800;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    src: url('Playfair_Display/static/PlayfairDisplay-SemiBoldItalic.ttf') format('truetype');
+    font-weight: 600;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    src: url('Playfair_Display/static/PlayfairDisplay-MediumItalic.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+}
+
+
+/* Body */
+body {
+    font-family: 'Playfair Display', serif;
+    line-height: 1.6;
+    background-color: #fff;
+    color: #333;
+    padding: 0 10%;
+    text-align: center;
+}
+
+/* Header */
+header {
+    color: linear-gradient(135deg, #1a1a1a, #333333);
+    text-align: center;
+    padding: 60px 0;
+}
+
+header .header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 60px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+header p {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 500;
+    text-transform: capitalize;
+    letter-spacing: 1.5px;
+    color: linear-gradient(135deg, #1a1a1a, #333333);
+}
+
+/* Content Section */
+.content {
+    padding: 60px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.content h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+}
+
+.content p {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    text-align: center;
+    color: #444;
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+
+/* Footer */
+footer {
+    color: linear-gradient(135deg, #1a1a1a, #333333);
+    padding: 50px 10%;
+    text-align: center;
+}
+
+footer .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+footer p {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin: 0;
+    color: linear-gradient(135deg, #1a1a1a, #333333);
+}
+
+footer .footer-left,
+footer .footer-center,
+footer .footer-right {
+    display: inline-block;
+    vertical-align: top;
+    width: 30%;
+    margin: 0 2%;
+}
+
+footer .footer-left,
+footer .footer-center {
+    text-align: left;
+}
+
+footer .footer-center {
+    text-align: center;
+}
+
+footer .footer-right {
+    text-align: right;
+}
+
+footer .footer-right ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0;
+}
+
+footer .footer-right ul li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+footer .footer-right ul li a {
+    font-family: 'Playfair Display', serif;
+    color: linear-gradient(135deg, #1a1a1a, #333333);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+footer .footer-right ul li a:hover {
+    color: #ff6f61;
+}
+
+body {
+    transition: background-color 0.5s ease, color 0.5s ease;
+  }
+
+  .controls {
+    margin: 30px auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Playfair Display', serif;
+  }
+  
+  .controls label {
+    font-size: 16px;
+    font-weight: 600;
+    margin-right: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: inherit;
+  }
+  
+  .styled-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: transparent;
+    border: 2px solid currentColor;
+    padding: 10px 40px 10px 15px;
+    font-size: 16px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    color: inherit;
+    border-radius: 6px;
+    position: relative;
+    background-image: url("data:image/svg+xml;charset=UTF-8,<svg fill='gray' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 20px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .styled-select:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  
+  body.dark-mode .styled-select {
+    border-color: #aaa;
+    color: #eee;
+    background-color: rgba(255, 255, 255, 0.05);
+    background-image: url("data:image/svg+xml;charset=UTF-8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  }
+  
