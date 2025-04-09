@@ -1,27 +1,9 @@
-// Apply the selected font style on page load
-function changeFont() {
-  const weight = '400'; // Regular weight
-  const style = 'normal'; // Regular style
-
-  document.body.style.fontFamily = "'Playfair Display', serif";
-  document.body.style.fontWeight = weight;
-  document.body.style.fontStyle = style;
-  
-  document.querySelectorAll('h1, h2, p, header, footer, .content').forEach(el => {
-    el.style.fontFamily = "'Playfair Display', serif";
-    el.style.fontWeight = weight;
-    el.style.fontStyle = style;
-  });
-
-  // Save font choice to localStorage
-  localStorage.setItem('selectedFont', JSON.stringify({ weight, style }));
-}
-
 // Apply the selected theme on page load
 function changeTheme() {
   const theme = 'dark'; // Always dark theme
   const body = document.body;
 
+  // Apply dark theme
   if (theme === 'dark') {
     body.classList.add('dark-mode');
     body.style.backgroundColor = '#111';
@@ -48,6 +30,8 @@ window.onload = function() {
   // Apply saved theme (but default to dark)
   if (!savedTheme) {
     changeTheme(); // Apply dark theme by default
+  } else {
+    changeTheme(); // Apply saved theme
   }
 
   // Apply saved font (but default to regular)

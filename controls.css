@@ -54,4 +54,28 @@
   .dark-mode .styled-select:hover {
     background-color: #333;
   }
+  ^
+  body.dark-mode {
+    background-color: #111;
+    color: #eee;
+  }
+  
+  .dark-mode h1, .dark-mode h2, .dark-mode p, .dark-mode header, .dark-mode footer, .dark-mode .content {
+    color: #eee;
+  }
+  
+  .dark-mode .controls {
+    background: rgba(30, 30, 30, 0.8);
+    border-color: #eee;
+  }
+  
+  .dark-mode .styled-select {
+    background-color: #222;
+    color: #eee;
+    border-color: #eee;
+  }
+  
+  .dark-mode .styled-select:hover {
+    background-color: #333;
+  }
   
