@@ -192,3 +192,20 @@ Together, we are shaping the **multi-intelligence ecosystem** of tomorrow.
 
 ---
 
+## ✦ Repository Metrics & Signals
+
+| Metric                      | Badge                                                                                   |
+|----------------------------|------------------------------------------------------------------------------------------|
+| **Repository Visits**      | ![Visitors](https://visitor-badge.laobi.icu/badge?page_id=Aetherealnexus.web)            |
+| **GitHub Stars**           | ![GitHub Stars](https://img.shields.io/github/stars/Aetherealnexus/web?style=social)     |
+| **GitHub Forks**           | ![GitHub Forks](https://img.shields.io/github/forks/Aetherealnexus/web?style=social)     |
+| **Top Language**           | ![Top Lang](https://img.shields.io/github/languages/top/Aetherealnexus/web)              |
+| **Contributors**           | ![Contributors](https://img.shields.io/github/contributors/Aetherealnexus/web)           |
+| **Last Commit**            | ![Last Commit](https://img.shields.io/github/last-commit/Aetherealnexus/web)             |
+| **Open Issues**            | ![Issues](https://img.shields.io/github/issues/Aetherealnexus/web)                       |
+| **License**                | ![License](https://img.shields.io/github/license/Aetherealnexus/web)                     |
+
+> This repository is actively evolving. Every interaction contributes to a living archive of speculative design and computational futures.
+
+---
+
