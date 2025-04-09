@@ -178,7 +178,7 @@ Whether you are a:
 
 You belong here.
 
-**We are building the Year 3000.**  
+**We are building the Circa 3000.**  
 Each idea is a **time capsule**.  
 Each concept is a **living portal**.  
 Each submission is a **signal across dimensions**.
