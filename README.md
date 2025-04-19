@@ -1,4 +1,4 @@
-# FutureArchitect: Holistic Technological Systems for a Post-Limit World
+# Aethereal Nexus: Holistic Technological Systems for a Post-Limit World
 
 **Author:** Bruno Cerqueira  
 **Designed with Purpose and Vision**
@@ -8,7 +8,7 @@
 > **Explore the Future.**  
 > _Where Ideas Converge, Systems Evolve, and Intelligence Expands._
 
-Welcome to **FutureArchitect**, a repository of visionary architectures, theoretical models, and system blueprints for the next evolution of intelligence and reality computation. This is not just a codebase—it is a **living conceptual framework** for post-singularity technology, cognitive design, and conscious integration.
+Welcome to **Aethereal Nexus**, a repository of visionary architectures, theoretical models, and system blueprints for the next evolution of intelligence and reality computation. This is not just a codebase—it is a **living conceptual framework** for post-singularity technology, cognitive design, and conscious integration.
 
 ---
 
