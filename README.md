@@ -29,9 +29,9 @@ This repository captures a portfolio of advanced constructs, ready for experimen
 Each of these constructs is both **architecture and philosophy**, **system and signal**, designed to be built, modified, remixed, or evolved by forward-thinkers.
 
 ### Intelligence & Decision Systems
-- Self-Sustaining Information Ecosystems  
-- Knowledge-Infused Processing Units  
-- Automated Heuristic Refinement  
+- Self-Sustaining Information Ecosystems : verdara.aethereal.nexus
+- Knowledge-Infused Processing Units : kipumind.aethereal.nexus
+- Automated Heuristic Refinement : nuralith.aethereal.nexus
 - Strategic Computational Frameworks  
 - High-Fidelity Decision Architectures  
 - Real-Time Operational Intelligence  
