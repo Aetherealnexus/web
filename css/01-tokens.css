@@ -1,0 +1,31 @@
+:root {
+  --bg-0: #02050d;
+  --bg-1: #08101e;
+  --panel: rgba(8, 15, 30, 0.62);
+  --panel-strong: rgba(11, 21, 42, 0.82);
+
+  --line: rgba(171, 197, 255, 0.18);
+  --line-strong: rgba(189, 212, 255, 0.42);
+
+  --text-0: #f4f7ff;
+  --text-1: #d3dcf6;
+  --text-2: #93a4cd;
+
+  --accent: #9ebcff;
+  --accent-2: #a9fff0;
+
+  --shell-pad: clamp(10px, 2vw, 24px);
+  --stage-size: min(96vw, calc(100svh - (2 * var(--shell-pad))), 980px);
+  --orbit-radius: clamp(140px, calc(var(--stage-size) * 0.42), 390px);
+  --core-size: clamp(140px, calc(var(--stage-size) * 0.34), 310px);
+  --node-size: clamp(70px, calc(var(--stage-size) * 0.17), 138px);
+
+  --tilt-x: 0;
+  --tilt-y: 0;
+  --glow-x: 50%;
+  --glow-y: 50%;
+  --discipline-hue: 220;
+  --orbit-multiplier: 1;
+
+  --font-ui: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}

@@ -1,0 +1,14 @@
+@media (prefers-reduced-motion: reduce) {
+  .page-fx__aurora,
+  .page-fx__grid,
+  .orbit-viewport,
+  .orbit-node,
+  .orbit-node__inner,
+  .orbit-node__sigil,
+  .orbit-rings,
+  .reading-layer,
+  .reading-panel {
+    animation: none !important;
+    transition: none !important;
+  }
+}

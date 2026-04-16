@@ -1,0 +1,97 @@
+1. ONTHEIA
+
+Pronounced: ON / THEI / A
+Discipline: Ontophysics
+Intersection: Fundamental Physics + Mathematics + Analytic Metaphysics
+Conclusion: Reality is not raw chaos; it possesses structure, order, and intelligibility.
+
+2. COSMION
+
+Pronounced: COS / MI / ON
+Discipline: Informational Cosmodynamics
+Intersection: Cosmology + Thermodynamics + Information Theory
+Conclusion: The universe unfolds as a dynamic process of energy, entropy, and information organization.
+
+3. CAUSALON
+
+Pronounced: CAU / SA / LON
+Discipline: Structural Causality
+Intersection: Philosophy of Science + Causal Statistics + Dynamical Systems
+Conclusion: To understand reality, we must identify real mechanisms, not merely visible correlations.
+
+4. EMERGIA
+
+Pronounced: E / MER / GI / A
+Discipline: Science of Emergence
+Intersection: Complexity Science + Network Theory + Cybernetics
+Conclusion: Many properties of the real arise from interaction, not from isolated parts.
+
+5. BIOSIGNIA
+
+Pronounced: BIO / SIG / NI / A
+Discipline: Evolutionary Biosemiotics
+Intersection: Evolutionary Biology + Ecology + Semiotics
+Conclusion: Life does not merely survive; it interprets signals, adapts, and creates meaning through interaction.
+
+6. NOEMARA
+
+Pronounced: NO / E / MA / RA
+Discipline: Neurophenomenology
+Intersection: Neuroscience + Phenomenology + Cognitive Science
+Conclusion: Consciousness can only be approached properly when objective measurement and subjective experience are studied together.
+
+7. PREDION
+
+Pronounced: PRE / DI / ON
+Discipline: Predictive Psychodynamics
+Intersection: Cognitive Psychology + Bayesian Inference + Computational Neuroscience
+Conclusion: The mind functions largely as a prediction engine, constantly modeling the world and correcting itself through error.
+
+8. LOGORA
+
+Pronounced: LO / GO / RA
+Discipline: Language, Logic, and Reality
+Intersection: Linguistics + Logic + Philosophy of Language
+Conclusion: Human access to reality is profoundly shaped by symbolic structure, naming, and representational limits.
+
+9. ANTHORA
+
+Pronounced: AN / THO / RA
+Discipline: Anthropology of Shared Reality
+Intersection: Anthropology + History + Sociology
+Conclusion: Human beings live simultaneously in physical reality and in collectively constructed symbolic worlds.
+
+10. TECHNEON
+
+Pronounced: TECH / NE / ON
+Discipline: Cybernetic Technoagency
+Intersection: Engineering + Artificial Intelligence + Robotics + Human–Machine Interaction
+Conclusion: Intelligence is no longer purely biological; it is becoming distributed across humans, machines, and systems.
+
+11. ETHARA
+
+Pronounced: E / THA / RA
+Discipline: Evolutionary Ethics of Civilization
+Intersection: Ethics + Evolutionary Biology + Game Theory + Political Philosophy
+Conclusion: Any durable civilization must align power, cooperation, and the reduction of suffering.
+
+12. LIMENOS
+
+Pronounced: LI / ME / NOS
+Discipline: Frontier Epistemology
+Intersection: Scientific Method + Logic + Measurement Theory + History of Science
+Conclusion: The strongest knowledge does not come from pretending certainty, but from disciplined contact with uncertainty and limits.
+
+
+----
+
+Como colocar o teu conteúdo real depois
+
+Para cada disciplina, no disciplines-data.js, podes acrescentar um novo campo opcional:
+
+readingHtml: `
+  <section class="reading-block">
+    <h2 class="reading-block__title">My Research</h2>
+    <p class="reading-block__text">...</p>
+  </section>
+`

@@ -1,0 +1,135 @@
+@media (max-width: 920px) {
+  .reading-panel {
+    width: min(100%, calc(100vw - 20px));
+    max-height: min(86svh, 900px);
+    min-height: auto;
+  }
+
+  .reading-head {
+    grid-template-columns: 88px minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .reading-head__sigil {
+    width: 88px;
+    border-radius: 22px;
+  }
+
+  .reading-summary {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --stage-size: min(98vw, calc(100svh - (2 * var(--shell-pad))), 620px);
+    --orbit-radius: clamp(128px, calc(var(--stage-size) * 0.43), 290px);
+    --core-size: clamp(124px, calc(var(--stage-size) * 0.34), 220px);
+    --node-size: clamp(60px, calc(var(--stage-size) * 0.15), 94px);
+  }
+
+  .orbit-node__title {
+    font-size: clamp(7px, 2vw, 10px);
+    letter-spacing: 0.12em;
+  }
+
+  .orbit-system.is-hovering .orbit-node:not(.is-active) .orbit-node__inner {
+    transform: scale(0.80);
+    opacity: 0.50;
+  }
+
+  .orbit-node.is-active .orbit-node__inner {
+    transform: scale(1.16);
+  }
+
+  .reading-layer {
+    padding:
+      max(42px, env(safe-area-inset-top))
+      max(8px, env(safe-area-inset-right))
+      max(42px, env(safe-area-inset-bottom))
+      max(8px, env(safe-area-inset-left));
+  }
+
+  .reading-panel__header {
+    padding: 14px 14px 12px;
+  }
+
+  .reading-panel__scroll {
+    padding: 0 14px 16px;
+  }
+
+  .reading-head {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    margin-top: 14px;
+  }
+
+  .reading-head__text {
+    width: 100%;
+  }
+
+  .reading-head__title {
+    font-size: clamp(24px, 8vw, 34px);
+  }
+
+  .reading-head__pronounced {
+    font-size: 11px;
+  }
+
+  .reading-back-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .site-top-signature {
+    font-size: 9px;
+    letter-spacing: 0.22em;
+  }
+
+  .site-bottom-signature {
+    font-size: 8px;
+    letter-spacing: 0.10em;
+    max-width: 92vw;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 560px) {
+  :root {
+    --shell-pad: 8px;
+    --stage-size: min(96vw, calc(100svh - 16px), 760px);
+    --orbit-radius: clamp(118px, calc(var(--stage-size) * 0.42), 275px);
+    --core-size: clamp(110px, calc(var(--stage-size) * 0.32), 190px);
+    --node-size: clamp(56px, calc(var(--stage-size) * 0.14), 84px);
+  }
+
+  .orbit-node__title {
+    font-size: 7px;
+    letter-spacing: 0.10em;
+  }
+
+  .orbit-node__index {
+    font-size: 7px;
+  }
+
+  .reading-panel {
+    max-height: min(88svh, 900px);
+  }
+
+  .reading-head {
+    grid-template-columns: 82px minmax(0, 1fr);
+  }
+
+  .reading-head__sigil {
+    width: 82px;
+  }
+
+  .reading-head__title {
+    font-size: clamp(20px, 2.6vw, 32px);
+  }
+
+  .reading-block__text {
+    font-size: 13px;
+    line-height: 1.58;
+  }
+}

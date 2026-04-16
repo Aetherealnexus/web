@@ -1,0 +1,42 @@
+.orbit-screen.is-reading {
+  --orbit-multiplier: 1.12;
+}
+
+.orbit-screen.is-reading .orbit-aura {
+  opacity: 0.35;
+  transform: scale(1.08);
+}
+
+.orbit-screen.is-reading .orbit-rings {
+  opacity: 0.22;
+  transform: scale(1.06);
+  filter: blur(1px);
+}
+
+.orbit-screen.is-reading .orbit-node {
+  pointer-events: none;
+}
+
+.orbit-screen.is-reading .orbit-system.is-hovering .orbit-node:not(.is-active) .orbit-node__inner,
+.orbit-screen.is-reading .orbit-node:not(.is-selected) .orbit-node__inner {
+  transform: scale(1.72);
+  opacity: 0;
+  filter: blur(10px);
+}
+
+.orbit-screen.is-reading .orbit-node.is-selected .orbit-node__inner {
+  transform: scale(2.22);
+  opacity: 0;
+  filter: blur(8px);
+}
+
+.orbit-screen.is-reading .reading-layer {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.orbit-screen.is-reading .reading-panel {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  transition-delay: 120ms;
+}

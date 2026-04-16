@@ -1,0 +1,33 @@
+.site-top-signature,
+.site-bottom-signature {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  pointer-events: none;
+  user-select: none;
+  font-family: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  text-align: center;
+  color: rgba(244, 247, 255, 0.56);
+  text-shadow: 0 1px 18px rgba(0, 0, 0, 0.35);
+  mix-blend-mode: screen;
+}
+
+.site-top-signature {
+  top: max(14px, env(safe-area-inset-top));
+  font-size: clamp(10px, 0.78vw, 12px);
+  white-space: nowrap;
+}
+
+.site-bottom-signature {
+  bottom: max(14px, env(safe-area-inset-bottom));
+  font-size: clamp(9px, 0.72vw, 11px);
+  color: rgba(244, 247, 255, 0.46);
+  letter-spacing: 0.18em;
+  max-width: min(92vw, 900px);
+  white-space: normal;
+  line-height: 1.35;
+}

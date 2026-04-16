@@ -1,0 +1,203 @@
+.page-bg {
+  position: fixed;
+  inset: -2.5vmax;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #02050d;
+  background-image: url("../images/background/1%20(1).png");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transform: scale(1.04);
+  filter: saturate(1.05) contrast(1.04) brightness(0.94);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 320ms ease, visibility 320ms ease;
+  will-change: transform, opacity, filter, background-image;
+}
+
+.page-bg-fx {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(110, 150, 255, 0.10), transparent 16%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03), transparent 34%),
+    linear-gradient(180deg, #020610 0%, #050c18 38%, #03060f 100%);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 320ms ease, visibility 320ms ease;
+}
+
+.page-fx__aurora {
+  position: absolute;
+  inset: auto;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.52;
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+}
+
+.page-fx__aurora--a {
+  width: 46vw;
+  height: 46vw;
+  min-width: 420px;
+  min-height: 420px;
+  left: -8vw;
+  top: 8vh;
+  background:
+    radial-gradient(circle at 50% 50%,
+      rgba(92, 130, 255, 0.30) 0%,
+      rgba(116, 82, 255, 0.20) 36%,
+      rgba(0, 0, 0, 0) 72%);
+  animation: aenAuroraFloatA 24s ease-in-out infinite alternate;
+}
+
+.page-fx__aurora--b {
+  width: 52vw;
+  height: 52vw;
+  min-width: 500px;
+  min-height: 500px;
+  right: -10vw;
+  top: -6vh;
+  background:
+    radial-gradient(circle at 50% 50%,
+      rgba(83, 255, 216, 0.18) 0%,
+      rgba(66, 158, 255, 0.18) 40%,
+      rgba(0, 0, 0, 0) 74%);
+  animation: aenAuroraFloatB 28s ease-in-out infinite alternate;
+}
+
+.page-fx__aurora--c {
+  width: 60vw;
+  height: 60vw;
+  min-width: 560px;
+  min-height: 560px;
+  left: 50%;
+  bottom: -30vh;
+  transform: translateX(-50%);
+  background:
+    radial-gradient(circle at 50% 50%,
+      rgba(161, 118, 255, 0.16) 0%,
+      rgba(80, 124, 255, 0.12) 38%,
+      rgba(0, 0, 0, 0) 74%);
+  animation: aenAuroraFloatC 30s ease-in-out infinite alternate;
+}
+
+.page-fx__halo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(58vw, 820px);
+  height: min(58vw, 820px);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at center,
+      rgba(210, 226, 255, 0.08) 0%,
+      rgba(128, 164, 255, 0.06) 18%,
+      rgba(86, 124, 255, 0.04) 34%,
+      rgba(0, 0, 0, 0) 70%);
+  filter: blur(24px);
+  opacity: 0.9;
+}
+
+.page-fx__grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(circle at center, black 34%, rgba(0,0,0,0.78) 56%, transparent 100%);
+  opacity: 0.20;
+  animation: aenGridDrift 24s linear infinite;
+}
+
+.page-fx__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  opacity: 0.78;
+  mix-blend-mode: screen;
+}
+
+.page-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at center, rgba(176, 206, 255, 0.05), transparent 22%),
+    radial-gradient(circle at var(--glow-x) var(--glow-y), rgba(160, 189, 255, 0.08), transparent 34%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 0.20) 100%);
+}
+
+body[data-bg-mode="fx"] .page-bg {
+  opacity: 0;
+  visibility: hidden;
+}
+
+body[data-bg-mode="fx"] .page-bg-fx {
+  opacity: 1;
+  visibility: visible;
+}
+
+body[data-bg-mode="image"] .page-bg {
+  opacity: 1;
+  visibility: visible;
+}
+
+body[data-bg-mode="image"] .page-bg-fx {
+  opacity: 0;
+  visibility: hidden;
+}
+
+@keyframes aenAuroraFloatA {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    opacity: 0.42;
+  }
+  100% {
+    transform: translate3d(8vw, -4vh, 0) scale(1.14) rotate(18deg);
+    opacity: 0.62;
+  }
+}
+
+@keyframes aenAuroraFloatB {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1.02) rotate(0deg);
+    opacity: 0.34;
+  }
+  100% {
+    transform: translate3d(-7vw, 5vh, 0) scale(1.16) rotate(-16deg);
+    opacity: 0.56;
+  }
+}
+
+@keyframes aenAuroraFloatC {
+  0% {
+    transform: translateX(-50%) translateY(0) scale(1) rotate(0deg);
+    opacity: 0.24;
+  }
+  100% {
+    transform: translateX(-50%) translateY(-4vh) scale(1.12) rotate(12deg);
+    opacity: 0.44;
+  }
+}
+
+@keyframes aenGridDrift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(22px, 12px, 0);
+  }
+}
