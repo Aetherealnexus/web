@@ -5037,258 +5037,806 @@
     </section>
   `
 },
-    {
-    key: "logora",
-    title: "LOGORA",
-    pronounced: "LO / GO / RA",
-    discipline: "Language, Logic, and Reality",
-    intersection: "Linguistics + Logic + Philosophy of Language",
-    conclusion: "Human access to reality is profoundly shaped by symbolic structure, naming, and representational limits.",
-    svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" fill="none"><g stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"><circle cx="128" cy="128" r="92"/><circle cx="128" cy="128" r="58"/><path d="M128 84L156 128L128 172L100 128L128 84Z"/><circle cx="128" cy="128" r="10"/><path d="M128 58V198"/><path d="M70 128H186"/><path d="M92 92L76 128L92 164"/><path d="M164 92L180 128L164 164"/><path d="M108 96H148"/><path d="M108 160H148"/><circle cx="128" cy="76" r="6"/><circle cx="128" cy="180" r="6"/><circle cx="76" cy="128" r="6"/><circle cx="180" cy="128" r="6"/><path d="M104 76C112 70 120 66 128 66C136 66 144 70 152 76"/><path d="M104 180C112 186 120 190 128 190C136 190 144 186 152 180"/></g></svg>`,
-    readingHtml: `
+{
+  key: "logora",
+  title: "LOGORA",
+  pronounced: "LO / GO / RA",
+  discipline: "Language, Logic, and Reality",
+  intersection: "Linguistics + Logic + Philosophy of Language",
+  conclusion: "Human access to reality is profoundly shaped by symbolic structure, naming, and representational limits.",
+  translations: {
+    pt: {
+      title: "LOGORA",
+      pronounced: "LO / GO / RA",
+      discipline: "Linguagem, Lógica e Realidade",
+      intersection: "Linguística + Lógica + Filosofia da Linguagem",
+      conclusion: "O acesso humano à realidade é profundamente moldado pela estrutura simbólica, pela nomeação e pelos limites da representação.",
+      readingHtml: `
         <section class="reading-block">
-        <p class="reading-block__eyebrow">Language, Logic, and Reality</p>
-        <h2 class="reading-block__title">LOGORA</h2>
-        <p class="reading-block__subtitle">The grammar of the real and the responsibility of speaking truly.</p>
+          <p class="reading-block__eyebrow">Linguagem, Lógica e Realidade</p>
+          <h2 class="reading-block__title">LOGORA</h2>
+          <p class="reading-block__subtitle">A gramática do real e a responsabilidade de falar com verdade.</p>
         </section>
 
         <section class="reading-block">
-        <h3 class="reading-block__section-title">Opening</h3>
-        <p class="reading-block__text">
-            Human beings do not merely live in a world; they live in a world that has been named, sorted,
-            inferred, narrated, measured, negotiated, and institutionally declared. A promise, a marriage,
-            a border, a unit of money, or even a biological species is not simply encountered as a bare
-            datum in the way a rock or a pulse of light is encountered. Each becomes intelligible,
-            actionable, and socially consequential through symbolic forms, classificatory practices, and
-            rules of use. Where language is crude, institutions become brittle; where inference is
-            undisciplined, description detaches from reality; where categories harden into idols, societies
-            begin to obey their own abstractions rather than the world they were meant to understand.
-        </p>
-        <p class="reading-block__text">
-            This is why LOGORA matters. It begins from the severe fact that human access to reality is
-            never unmediated. We do not face the world as pure spectators receiving a finished truth. We
-            face it as symbol-using creatures whose contact with what is depends on signs, concepts,
-            criteria, inferential norms, and shared forms of life. The question is not whether this
-            mediation exists. The question is whether we can understand it well enough to become less
-            confused by our own language, less captive to our own categories, and less reckless with the
-            powers that representation gives us.
-        </p>
+          <h3 class="reading-block__section-title">Abertura</h3>
+          <p class="reading-block__text">
+            Os seres humanos não vivem apenas num mundo; vivem num mundo que foi nomeado, ordenado,
+            inferido, narrado, medido, negociado e institucionalmente declarado. Uma promessa, um
+            casamento, uma fronteira, uma unidade monetária, ou até mesmo uma espécie biológica, não é
+            simplesmente encontrada como um dado nu da mesma forma que uma rocha ou um pulso de luz é
+            encontrado. Cada uma destas coisas se torna inteligível, acionável e socialmente consequente
+            através de formas simbólicas, práticas classificatórias e regras de uso. Onde a linguagem é
+            grosseira, as instituições tornam-se frágeis; onde a inferência é indisciplinada, a
+            descrição desprende-se da realidade; onde as categorias endurecem em ídolos, as sociedades
+            começam a obedecer às suas próprias abstrações em vez do mundo que pretendiam compreender.
+          </p>
+          <p class="reading-block__text">
+            É por isso que LOGORA importa. Parte do facto severo de que o acesso humano à realidade nunca
+            é não mediado. Não enfrentamos o mundo como espectadores puros a receber uma verdade acabada.
+            Enfrentamo-lo como criaturas que usam símbolos, cujo contacto com o que existe depende de
+            signos, conceitos, critérios, normas inferenciais e formas de vida partilhadas. A questão
+            não é saber se esta mediação existe. A questão é saber se conseguimos compreendê-la
+            suficientemente bem para nos tornarmos menos confusos pela nossa própria linguagem, menos
+            cativos das nossas próprias categorias e menos imprudentes com os poderes que a representação
+            nos dá.
+          </p>
         </section>
 
         <section class="reading-block">
-        <h3 class="reading-block__section-title">What This Discipline Is</h3>
-        <p class="reading-block__text">
-            LOGORA is the discipline that studies the relation among language, logic, and reality as a
-            single field of pressure rather than three neighboring topics. It takes from linguistics the
-            empirical study of how natural languages are structured; from logic the discipline of
-            consequence, validity, and formal representation; and from philosophy of language the questions
-            of meaning, reference, truth, use, and context. This combination is not decorative. The
-            philosophy of linguistics is explicitly distinct from philosophy of language, and model theory
-            already treats interpretation as a relation between language and structure, while natural
-            language ontology investigates the ontology implicit in ordinary speech. LOGORA makes these
-            strands answer one another. Its central question is simple to state and difficult to exhaust:
-            how do finite symbolic systems enable contact with a reality that is not itself made of
-            symbols?
-        </p>
-        <p class="reading-block__text">
-            What makes this an intellectual domain in its own right is the pressure point at which these
-            inquiries meet. Linguistics can tell us how languages actually carve distinctions, but not by
-            itself what makes those distinctions true, adequate, or misleading. Logic can tell us what
-            follows from what, but not by itself how symbols acquire worldly bearing. Philosophy of
-            language can ask how words refer, how truth is possible, and how context matters, but without
-            linguistics it risks treating language too abstractly, and without logic it risks losing grip
-            on form. LOGORA exists because none of these fields alone can explain how symbols become
-            instruments of world-disclosure, coordination, and error at once.
-        </p>
+          <h3 class="reading-block__section-title">O Que É Esta Disciplina</h3>
+          <p class="reading-block__text">
+            LOGORA é a disciplina que estuda a relação entre linguagem, lógica e realidade como um único
+            campo de tensão, e não como três tópicos vizinhos. Retira da linguística o estudo empírico
+            de como as línguas naturais são estruturadas; da lógica, a disciplina da consequência, da
+            validade e da representação formal; e da filosofia da linguagem, as questões de significado,
+            referência, verdade, uso e contexto. Esta combinação não é decorativa. A filosofia da
+            linguística é explicitamente distinta da filosofia da linguagem, e a teoria dos modelos já
+            trata a interpretação como uma relação entre linguagem e estrutura, enquanto a ontologia da
+            linguagem natural investiga a ontologia implícita na fala comum. LOGORA faz com que estes
+            fios respondam uns aos outros. A sua questão central é simples de enunciar e difícil de
+            esgotar: como é que sistemas simbólicos finitos permitem contacto com uma realidade que não
+            é ela própria feita de símbolos?
+          </p>
+          <p class="reading-block__text">
+            O que faz disto um domínio intelectual autónomo é o ponto de pressão onde estas investigações
+            se encontram. A linguística pode dizer-nos como as línguas realmente recortam distinções,
+            mas não pode por si só dizer o que torna essas distinções verdadeiras, adequadas ou
+            enganadoras. A lógica pode dizer-nos o que decorre de quê, mas não pode por si só explicar
+            como os símbolos adquirem alcance sobre o mundo. A filosofia da linguagem pode perguntar como
+            as palavras referem, como a verdade é possível e como o contexto importa, mas sem a
+            linguística arrisca tratar a linguagem de forma demasiado abstrata, e sem a lógica arrisca
+            perder a aderência à forma. LOGORA existe porque nenhum destes campos, isoladamente, consegue
+            explicar como os símbolos se tornam, ao mesmo tempo, instrumentos de revelação do mundo, de
+            coordenação e de erro.
+          </p>
         </section>
 
         <section class="reading-block">
-        <h3 class="reading-block__section-title">The Living Intersection</h3>
-        <p class="reading-block__text">
-            At one side of the intersection stands linguistics and semiotics. From Ferdinand de Saussure
-            comes the insight that language is a structured sign-system in which the relation between
-            signifier and signified is not a natural fusion but a socially stabilized distinction; from
-            Charles Sanders Peirce comes the richer account of sign, object, and interpretant, and the
-            distinction among icons, indices, and symbols. Once these perspectives are joined, language
-            stops looking like a transparent label pasted onto prepackaged reality. It appears instead as
-            an active medium in which conventions, relations, and interpretive habits make a world
-            available to thought.
-        </p>
-        <p class="reading-block__text">
-            At another side stands logic. Gottlob Frege showed that denotation alone cannot explain
-            meaning, because the logical behavior and cognitive significance of sentences outrun bare
-            reference. Model theory then generalized the point by treating interpretation as a relation
-            between formal language and structures, while the model-theoretic account of logical
-            consequence defines validity as preservation of truth across models. In this framework, logic
-            is not merely a set of mental habits; it is a discipline of form that tests whether our
-            symbolic moves remain stable when the nonlogical content is varied. Yet that very discipline
-            exposes limits: Alfred Tarski’s work on truth and later truth theory show that sufficiently
-            rich languages cannot, under natural assumptions, fully define their own truth predicate
-            without ascending to a more powerful metalanguage.
-        </p>
-        <p class="reading-block__text">
-            The third side is philosophy of language in its full breadth, where meaning is no longer
-            treated as a static bond between word and object. Ludwig Wittgenstein insisted that meaning
-            lives in use and in language-games rather than in some hidden essence carried by words across
-            every context. John Langshaw Austin showed that utterances do not only describe reality; they
-            can warn, promise, apologize, invite, and bring about institutional changes. Pragmatics adds
-            that intentions, beliefs, context, and social institutions affect what is accomplished in
-            saying something, while dynamic semantics recasts meaning itself as a capacity to update
-            context rather than only to satisfy truth conditions. The result is a picture in which language
-            is at once representational, inferential, practical, and worldmaking.
-        </p>
+          <h3 class="reading-block__section-title">A Interseção Viva</h3>
+          <p class="reading-block__text">
+            Num dos lados da interseção está a linguística e a semiótica. De Ferdinand de Saussure vem a
+            perceção de que a linguagem é um sistema estruturado de signos no qual a relação entre
+            significante e significado não é uma fusão natural, mas uma distinção socialmente
+            estabilizada; de Charles Sanders Peirce vem a descrição mais rica de signo, objeto e
+            interpretante, bem como a distinção entre ícones, índices e símbolos. Quando estas
+            perspetivas se juntam, a linguagem deixa de parecer uma etiqueta transparente colada sobre
+            uma realidade pré-embalada. Passa antes a aparecer como um meio ativo no qual convenções,
+            relações e hábitos interpretativos tornam um mundo disponível ao pensamento.
+          </p>
+          <p class="reading-block__text">
+            Noutro lado está a lógica. Gottlob Frege mostrou que a denotação, por si só, não consegue
+            explicar o significado, porque o comportamento lógico e a significação cognitiva das frases
+            ultrapassam a mera referência. A teoria dos modelos generalizou depois este ponto ao tratar a
+            interpretação como uma relação entre linguagem formal e estruturas, enquanto a descrição
+            modeloteórica da consequência lógica define validade como preservação da verdade através de
+            modelos. Neste quadro, a lógica não é apenas um conjunto de hábitos mentais; é uma disciplina
+            da forma que testa se os nossos movimentos simbólicos permanecem estáveis quando o conteúdo
+            não lógico varia. Contudo, essa mesma disciplina expõe limites: o trabalho de Alfred Tarski
+            sobre a verdade e a teoria posterior da verdade mostram que linguagens suficientemente ricas
+            não conseguem, sob pressupostos naturais, definir completamente o seu próprio predicado de
+            verdade sem ascender a uma metalinguagem mais poderosa.
+          </p>
+          <p class="reading-block__text">
+            O terceiro lado é a filosofia da linguagem na sua amplitude plena, onde o significado já não
+            é tratado como um vínculo estático entre palavra e objeto. Ludwig Wittgenstein insistiu que o
+            significado vive no uso e nos jogos de linguagem, e não numa essência oculta carregada pelas
+            palavras através de todos os contextos. John Langshaw Austin mostrou que os enunciados não
+            apenas descrevem a realidade; podem advertir, prometer, pedir desculpa, convidar e produzir
+            mudanças institucionais. A pragmática acrescenta que intenções, crenças, contexto e
+            instituições sociais afetam aquilo que é realizado ao dizer alguma coisa, enquanto a semântica
+            dinâmica reconstrói o próprio significado como a capacidade de atualizar contexto e não apenas
+            de satisfazer condições de verdade. O resultado é uma imagem em que a linguagem é
+            simultaneamente representacional, inferencial, prática e construtora de mundo.
+          </p>
         </section>
 
         <section class="reading-block">
-        <h3 class="reading-block__section-title">The Core Truth It Reveals</h3>
-        <p class="reading-block__text">
-            The core truth of LOGORA is that human access to reality is profoundly shaped by symbolic
-            structure, naming, and representational limits. Naming is not a decorative afterthought to
-            perception. It stabilizes distinctions, compresses variation into kinds, and furnishes
-            cognition with handles. Experimental work shows that even redundant verbal labels can
-            facilitate category learning, that feature dimensions which are easier to name are easier to
-            learn as categories, and that hearing a word can modulate subsequent visual processing by
-            activating shape-related representations very early in the perceptual stream. Symbolic form
-            does not merely report what the mind has already done; it helps the mind finish the work of
-            carving the world into usable units.
-        </p>
-        <p class="reading-block__text">
-            But LOGORA also rejects the fantasy that language wholly imprisons thought. The strongest
-            versions of linguistic relativity have not survived careful scrutiny, and the most serious
-            formulations insist that one must specify exactly which feature of language influences which
-            feature of cognition, and how strongly. The evidence points to a subtler picture. Some lexical
-            distinctions affect particular memory or perceptual tasks; richer color vocabulary, for
-            example, is associated more robustly with better color memory than with basic color perception.
-            At the same time, large cross-linguistic work on demonstratives shows that despite variation
-            among languages, spatial systems are strongly constrained by common facts of embodiment and
-            action, such as whether an object is within reach. Language shapes access to reality, then,
-            but under constraints imposed by body, world, and shared cognitive architecture.
-        </p>
-        <p class="reading-block__text">
-            The deepest part of the thesis concerns limits. Every representation selects; every model
-            idealizes; every vocabulary foregrounds some distinctions while suppressing others. Philosophy
-            of science now treats scientific representations and models as heterogeneous tools that enable
-            surrogative reasoning about target systems, precisely because they represent in some respects
-            and can misrepresent in others. Formal logic, for all its extraordinary precision, meets
-            boundaries from within: Gödel’s incompleteness theorems mark limits of provability in
-            sufficiently rich formal systems, and Tarskian truth theory shows that truth for a language
-            generally requires semantic resources beyond that language itself. Even natural language can
-            smuggle in ontological assumptions that diverge from cognition or from the underlying structure
-            of things, as the mass-count distinction illustrates. The human condition is therefore not one
-            of possessing reality directly, but of approaching it through representational systems that
-            illuminate only by omission.
-        </p>
+          <h3 class="reading-block__section-title">A Verdade Nuclear que Ela Revela</h3>
+          <p class="reading-block__text">
+            A verdade nuclear de LOGORA é que o acesso humano à realidade é profundamente moldado pela
+            estrutura simbólica, pela nomeação e pelos limites da representação. Nomear não é um
+            acrescento decorativo à perceção. Estabiliza distinções, comprime variação em tipos, e
+            fornece à cognição pontos de agarrar. O trabalho experimental mostra que até etiquetas
+            verbais redundantes podem facilitar a aprendizagem de categorias, que dimensões de traço mais
+            fáceis de nomear são mais fáceis de aprender como categorias, e que ouvir uma palavra pode
+            modular o processamento visual subsequente ao ativar representações relacionadas com a forma
+            muito cedo na corrente percetiva. A forma simbólica não se limita a relatar aquilo que a
+            mente já fez; ajuda a mente a concluir o trabalho de recortar o mundo em unidades utilizáveis.
+          </p>
+          <p class="reading-block__text">
+            Mas LOGORA também rejeita a fantasia de que a linguagem aprisiona completamente o pensamento.
+            As versões mais fortes da relatividade linguística não sobreviveram a escrutínio cuidadoso, e
+            as formulações mais sérias insistem que é preciso especificar exatamente que característica da
+            linguagem influencia que característica da cognição, e com que força. A evidência aponta para
+            uma imagem mais subtil. Algumas distinções lexicais afetam certas tarefas específicas de
+            memória ou perceção; um vocabulário cromático mais rico, por exemplo, está associado de forma
+            mais robusta a melhor memória de cores do que à perceção básica da cor. Ao mesmo tempo,
+            trabalho comparativo em grande escala sobre demonstrativos mostra que, apesar da variação entre
+            línguas, os sistemas espaciais são fortemente constrangidos por factos comuns da
+            corporificação e da ação, como o facto de um objeto estar ou não ao alcance da mão. A
+            linguagem molda, portanto, o acesso à realidade, mas sob constrangimentos impostos pelo
+            corpo, pelo mundo e por uma arquitetura cognitiva partilhada.
+          </p>
+          <p class="reading-block__text">
+            A parte mais profunda da tese diz respeito aos limites. Toda a representação seleciona; todo
+            o modelo idealiza; todo o vocabulário destaca certas distinções enquanto suprime outras.
+            A filosofia da ciência trata hoje representações e modelos científicos como ferramentas
+            heterogéneas que permitem raciocínio substitutivo sobre sistemas-alvo, precisamente porque
+            representam em certos aspetos e podem deturpar noutros. A lógica formal, apesar da sua
+            precisão extraordinária, encontra fronteiras vindas de dentro: os teoremas da incompletude de
+            Gödel marcam limites de demonstrabilidade em sistemas formais suficientemente ricos, e a
+            teoria tarskiana da verdade mostra que a verdade para uma linguagem requer geralmente
+            recursos semânticos para além dessa linguagem. Mesmo a linguagem natural pode introduzir
+            pressupostos ontológicos que divergem da cognição ou da estrutura subjacente das coisas, como
+            ilustra a distinção entre nomes massivos e contáveis. A condição humana não é, por isso, a
+            de possuir a realidade diretamente, mas a de aproximar-se dela através de sistemas
+            representacionais que iluminam apenas por omissão.
+          </p>
         </section>
 
         <section class="reading-block">
-        <h3 class="reading-block__section-title">Why This Matters for Human Life</h3>
-        <p class="reading-block__text">
-            For individual life, LOGORA changes perception first. It encourages a person to ask whether
-            what appears obvious is actually a property of the thing, or a result of the categories through
-            which the thing has been apprehended. It changes judgment by teaching that reference is not the
-            same as description, that a name is not exhausted by the beliefs commonly attached to it, and
-            that classification is often more contestable than ordinary speech suggests. Saul Kripke’s
-            challenge to descriptivism shows why stable reference can survive mistaken descriptions, while
-            debates over species show that even central scientific categories may admit plural, rival
-            definitions with practical consequences in law and in our image of human nature. Logic adds the
-            discipline of counterexample and consequence, forcing us to distinguish association from
-            implication and rhetoric from entailment.
-        </p>
-        <p class="reading-block__text">
-            It also changes how we relate. A large share of human conflict does not arise because the world
-            is silent, but because speech acts are misunderstood, implications are treated as literal
-            content, or institutional settings are ignored. A promise is not merely a sentence with future
-            tense. An insult is not reducible to dictionary meaning. A legal utterance does not operate
-            like casual conversation. Classical speech-act theory and pragmatics make plain that what one
-            does in speaking depends on intentions, shared beliefs, context, and social institutions. This
-            matters ethically because responsibility in language begins not only with saying what is true,
-            but with understanding what act one is performing and what commitments one is placing into the
-            social world.
-        </p>
-        <p class="reading-block__text">
-            At the civilizational scale, LOGORA becomes a theory of institutional and epistemic design.
-            Social ontology argues that many institutional facts are sustained by collective recognition,
-            constitutive rules, and declarations; scientific representation argues that models mediate
-            between theory and world and remain useful even when idealized or partially inaccurate. A
-            serious civilization therefore cannot treat language as a cosmetic layer over “real”
-            operations. Its definitions, ontologies, metadata, legal categories, standards, and model
-            assumptions are part of its operative infrastructure. A polity that cannot distinguish between
-            a target and its proxy, a definition and a discovery, or a declaration and a description will
-            eventually hand power to whatever vocabulary happens to dominate rather than to whatever
-            representation best tracks reality.
-        </p>
-        <p class="reading-block__text">
-            There is also a practical wisdom here about suffering. A person can be tyrannized by inherited
-            names, by self-descriptions treated as essences, by sentences whose grammar gives accident the
-            appearance of necessity. LOGORA does not offer therapy by slogan. It offers something sterner
-            and more useful: the habit of asking what exactly a word commits one to, what follows from a
-            claim, what merely accompanies it, what background assumptions are hidden in the phrase, and
-            whether a given representation is fit for the reality it aims to govern. That habit does not
-            eliminate pain, but it can reduce the specifically human misery of being misled by one’s own
-            language.
-        </p>
+          <h3 class="reading-block__section-title">Porque Isto Importa para a Vida Humana</h3>
+          <p class="reading-block__text">
+            Para a vida individual, LOGORA altera primeiro a perceção. Incentiva a pessoa a perguntar se
+            aquilo que parece óbvio é realmente uma propriedade da coisa, ou um resultado das categorias
+            através das quais a coisa foi apreendida. Muda o julgamento ao ensinar que referência não é o
+            mesmo que descrição, que um nome não se esgota nas crenças habitualmente associadas a ele, e
+            que a classificação é frequentemente mais contestável do que a fala comum sugere. O desafio
+            de Saul Kripke ao descritivismo mostra por que razão a referência estável pode sobreviver a
+            descrições erradas, enquanto debates sobre espécies mostram que até categorias científicas
+            centrais podem admitir definições plurais e rivais com consequências práticas no direito e na
+            nossa imagem da natureza humana. A lógica acrescenta a disciplina do contraexemplo e da
+            consequência, obrigando-nos a distinguir associação de implicação e retórica de acarretamento.
+          </p>
+          <p class="reading-block__text">
+            Isto muda também a forma como nos relacionamos. Uma grande parte do conflito humano não surge
+            porque o mundo é silencioso, mas porque atos de fala são mal compreendidos, implicações são
+            tratadas como conteúdo literal ou enquadramentos institucionais são ignorados. Uma promessa
+            não é apenas uma frase no futuro. Um insulto não se reduz ao significado de dicionário. Um
+            enunciado jurídico não funciona como uma conversa casual. A teoria clássica dos atos de fala
+            e a pragmática tornam claro que aquilo que alguém faz ao falar depende de intenções, crenças
+            partilhadas, contexto e instituições sociais. Isto importa eticamente porque a responsabilidade
+            na linguagem começa não apenas em dizer o que é verdadeiro, mas em compreender que ato se está
+            a realizar e que compromissos se estão a colocar no mundo social.
+          </p>
+          <p class="reading-block__text">
+            À escala civilizacional, LOGORA torna-se uma teoria de desenho institucional e epistémico.
+            A ontologia social argumenta que muitos factos institucionais são sustentados por
+            reconhecimento coletivo, regras constitutivas e declarações; a teoria da representação
+            científica argumenta que os modelos mediam entre teoria e mundo e permanecem úteis mesmo
+            quando idealizados ou parcialmente inexatos. Uma civilização séria não pode, portanto, tratar
+            a linguagem como uma camada cosmética sobre operações “reais”. As suas definições, ontologias,
+            metadados, categorias jurídicas, standards e pressupostos de modelo são parte da sua
+            infraestrutura operativa. Uma polity incapaz de distinguir entre um alvo e o seu proxy,
+            uma definição e uma descoberta, ou uma declaração e uma descrição acabará por entregar poder
+            ao vocabulário que por acaso domina, em vez da representação que melhor acompanha a realidade.
+          </p>
+          <p class="reading-block__text">
+            Há também aqui uma sabedoria prática sobre o sofrimento. Uma pessoa pode ser tiranizada por
+            nomes herdados, por autodescrições tratadas como essências, por frases cuja gramática dá ao
+            acidente a aparência de necessidade. LOGORA não oferece terapia por slogan. Oferece algo mais
+            severo e mais útil: o hábito de perguntar exatamente a que compromete uma palavra, o que se
+            segue de uma afirmação, o que apenas a acompanha, que pressupostos de fundo estão escondidos
+            na expressão, e se uma determinada representação é adequada à realidade que pretende governar.
+            Esse hábito não elimina a dor, mas pode reduzir a miséria especificamente humana de ser
+            enganado pela própria linguagem.
+          </p>
         </section>
 
         <section class="reading-block">
-        <h3 class="reading-block__section-title">Tensions, Limits, and Open Questions</h3>
-        <p class="reading-block__text">
-            The most important open question is how deep the relation between language and thought actually
-            runs. Developmental research suggests that links between language and cognition emerge very
-            early in infancy, yet contemporary neuroscience has also assembled a serious case that language
-            in modern humans is primarily a tool for communication rather than a prerequisite for complex
-            thought. The same literature emphasizes a double dissociation: thought can survive severe
-            language impairment, and intact language does not guarantee intact reasoning. Meanwhile, the
-            best work on linguistic relativity continues to insist that any influence of language on
-            cognition must be stated in specific, testable, domain-sensitive terms. The result is neither
-            triumph for linguistic determinism nor easy vindication of thought without words, but an
-            unresolved picture of mutual scaffolding, partial dissociation, and layered dependence.
-        </p>
-        <p class="reading-block__text">
-            A second unresolved question concerns ontological authority. Does natural language reveal the
-            joints of reality, or only the commitments speakers tacitly incur when they use it? Natural
-            language ontology itself deliberately separates the ontology implicit in language from the
-            question of what ultimately exists. Formal logic gains precision by abstraction, but
-            abstraction can make it insensitive to the grain of context, embodiment, and ordinary practice.
-            Ordinary language, by contrast, carries use, nuance, and institution within it, but precisely
-            for that reason it also carries ambiguity, vagueness, and the risk of philosophical
-            overreading. LOGORA must therefore resist two symmetrical errors: reducing reality to grammar,
-            and treating grammar as a disposable veil over reality. The task is to move among levels of
-            representation without granting final sovereignty to any single one.
-        </p>
-        <p class="reading-block__text">
-            A third question is civilizational and increasingly urgent. As formal ontologies, computational
-            models, and machine-mediated language systems become integral to governance, science, and
-            everyday cognition, who decides which categories count, which distinctions are made legible,
-            and which inferences become automated? The older philosophical problems of reference, truth,
-            and representation are no longer confined to seminar rooms. They now appear in data schemas,
-            legal taxonomies, risk models, and interface language. LOGORA does not yet supply a complete
-            politics for this condition, but it makes the problem unmistakable: symbolic design is never
-            neutral, because every schema distributes visibility, salience, and power.
-        </p>
+          <h3 class="reading-block__section-title">Tensões, Limites e Questões em Aberto</h3>
+          <p class="reading-block__text">
+            A questão em aberto mais importante é quão profunda é realmente a relação entre linguagem e
+            pensamento. A investigação do desenvolvimento sugere que ligações entre linguagem e cognição
+            emergem muito cedo na infância, mas a neurociência contemporânea também reuniu um argumento
+            sério de que a linguagem, nos humanos modernos, é primariamente uma ferramenta de comunicação
+            e não um pré-requisito para pensamento complexo. A mesma literatura enfatiza uma dupla
+            dissociação: o pensamento pode sobreviver a défices graves de linguagem, e linguagem intacta
+            não garante raciocínio intacto. Ao mesmo tempo, o melhor trabalho sobre relatividade
+            linguística continua a insistir que qualquer influência da linguagem sobre a cognição deve ser
+            formulada em termos específicos, testáveis e sensíveis ao domínio. O resultado não é nem
+            triunfo do determinismo linguístico nem fácil vindicação do pensamento sem palavras, mas uma
+            imagem por resolver de escoramento mútuo, dissociação parcial e dependência em camadas.
+          </p>
+          <p class="reading-block__text">
+            Uma segunda questão não resolvida diz respeito à autoridade ontológica. Revela a linguagem
+            natural as juntas da realidade, ou apenas os compromissos que os falantes tacitamente assumem
+            ao usá-la? A própria ontologia da linguagem natural separa deliberadamente a ontologia
+            implícita na linguagem da questão do que existe em última instância. A lógica formal ganha
+            precisão através da abstração, mas a abstração pode torná-la insensível ao grão do contexto,
+            da corporificação e da prática comum. A linguagem comum, por contraste, transporta uso,
+            nuance e instituição dentro de si, mas precisamente por isso transporta também ambiguidade,
+            vagueza e o risco de leitura filosófica excessiva. LOGORA tem, por isso, de resistir a dois
+            erros simétricos: reduzir a realidade à gramática, e tratar a gramática como um véu
+            descartável sobre a realidade. A tarefa é mover-se entre níveis de representação sem conceder
+            soberania final a qualquer um deles.
+          </p>
+          <p class="reading-block__text">
+            Uma terceira questão é civilizacional e cada vez mais urgente. À medida que ontologias
+            formais, modelos computacionais e sistemas linguísticos mediados por máquina se tornam
+            integrais à governação, à ciência e à cognição quotidiana, quem decide quais categorias
+            contam, que distinções se tornam legíveis e que inferências passam a ser automatizadas?
+            Os velhos problemas filosóficos de referência, verdade e representação já não estão confinados
+            a seminários. Aparecem agora em esquemas de dados, taxonomias legais, modelos de risco e
+            linguagem de interface. LOGORA ainda não oferece uma política completa para esta condição,
+            mas torna o problema inconfundível: o desenho simbólico nunca é neutro, porque todo o
+            esquema distribui visibilidade, saliência e poder.
+          </p>
         </section>
 
         <section class="reading-block">
-        <h3 class="reading-block__section-title">Closing</h3>
-        <p class="reading-block__text">
-            LOGORA teaches neither the cynic’s lesson that language merely traps us in appearances, nor
-            the formalist’s temptation to believe that perfect symbolization would dissolve the world into
-            clarity. Its harder lesson is that symbols are the disciplined means by which finite beings
-            gain partial access to what exceeds them. They disclose by structuring, they coordinate by
-            simplifying, they enable knowledge by allowing inference, and they mislead whenever their
-            convenience is mistaken for completeness. To live well under this condition is to name
-            carefully, reason honestly, interrogate categories, and keep every representation answerable to
-            the reality it seeks to grasp.
-        </p>
-        <p class="reading-block__text">
-            That is why this discipline is not merely theoretical. It is an ethic of intellectual conduct.
-            It asks for exactness without rigidity, interpretive sensitivity without relativistic drift,
-            and humility without surrender. The reward is not final certainty. It is something rarer and
-            more durable: a mind less enchanted by its own words, a society less governed by unexamined
-            abstractions, and a more lucid freedom in the interval between what can be said and what is.
-        </p>
+          <h3 class="reading-block__section-title">Fecho</h3>
+          <p class="reading-block__text">
+            LOGORA não ensina nem a lição cínica de que a linguagem apenas nos aprisiona em aparências,
+            nem a tentação formalista de acreditar que a simbolização perfeita dissolveria o mundo em
+            clareza. A sua lição mais difícil é que os símbolos são os meios disciplinados pelos quais
+            seres finitos obtêm acesso parcial ao que os excede. Revelam ao estruturar, coordenam ao
+            simplificar, tornam possível o conhecimento ao permitirem inferência, e enganam sempre que a
+            sua conveniência é confundida com completude. Viver bem sob esta condição é nomear com cuidado,
+            raciocinar com honestidade, interrogar categorias e manter toda a representação responsável
+            perante a realidade que procura apreender.
+          </p>
+          <p class="reading-block__text">
+            É por isso que esta disciplina não é apenas teórica. É uma ética da conduta intelectual.
+            Pede exatidão sem rigidez, sensibilidade interpretativa sem deriva relativista, e humildade
+            sem rendição. A recompensa não é certeza final. É algo mais raro e mais durável: uma mente
+            menos enfeitiçada pelas suas próprias palavras, uma sociedade menos governada por abstrações
+            não examinadas, e uma liberdade mais lúcida no intervalo entre aquilo que pode ser dito e
+            aquilo que é.
+          </p>
         </section>
-    `
+      `
     },
+    fr: {
+      title: "LOGORA",
+      pronounced: "LO / GO / RA",
+      discipline: "Langage, Logique et Réalité",
+      intersection: "Linguistique + Logique + Philosophie du Langage",
+      conclusion: "L’accès humain à la réalité est profondément façonné par la structure symbolique, la nomination et les limites de la représentation.",
+      readingHtml: `
+        <section class="reading-block">
+          <p class="reading-block__eyebrow">Langage, Logique et Réalité</p>
+          <h2 class="reading-block__title">LOGORA</h2>
+          <p class="reading-block__subtitle">La grammaire du réel et la responsabilité de parler avec vérité.</p>
+        </section>
+
+        <section class="reading-block">
+          <h3 class="reading-block__section-title">Ouverture</h3>
+          <p class="reading-block__text">
+            Les êtres humains ne vivent pas seulement dans un monde ; ils vivent dans un monde qui a été
+            nommé, trié, inféré, raconté, mesuré, négocié et institutionnellement déclaré. Une promesse,
+            un mariage, une frontière, une unité monétaire, ou même une espèce biologique, ne sont pas
+            simplement rencontrés comme des données nues de la même manière qu’un rocher ou une impulsion
+            lumineuse sont rencontrés. Chacun devient intelligible, actionnable et socialement
+            conséquent à travers des formes symboliques, des pratiques classificatoires et des règles
+            d’usage. Là où le langage est grossier, les institutions deviennent fragiles ; là où
+            l’inférence est indisciplinée, la description se détache du réel ; là où les catégories se
+            durcissent en idoles, les sociétés commencent à obéir à leurs propres abstractions plutôt
+            qu’au monde qu’elles étaient censées comprendre.
+          </p>
+          <p class="reading-block__text">
+            C’est pourquoi LOGORA importe. Il commence par le fait sévère que l’accès humain à la réalité
+            n’est jamais immédiat. Nous ne faisons pas face au monde comme de purs spectateurs recevant
+            une vérité achevée. Nous lui faisons face comme des créatures utilisant des symboles, dont le
+            contact avec ce qui est dépend de signes, de concepts, de critères, de normes inférentielles
+            et de formes de vie partagées. La question n’est pas de savoir si cette médiation existe.
+            La question est de savoir si nous pouvons la comprendre assez bien pour devenir moins confus
+            par notre propre langage, moins captifs de nos propres catégories, et moins imprudents avec
+            les pouvoirs que nous donne la représentation.
+          </p>
+        </section>
+
+        <section class="reading-block">
+          <h3 class="reading-block__section-title">Ce Qu’Est Cette Discipline</h3>
+          <p class="reading-block__text">
+            LOGORA est la discipline qui étudie la relation entre langage, logique et réalité comme un
+            seul champ de tension plutôt que comme trois sujets voisins. Elle prend à la linguistique
+            l’étude empirique de la manière dont les langues naturelles sont structurées ; à la logique,
+            la discipline de la conséquence, de la validité et de la représentation formelle ; et à la
+            philosophie du langage, les questions de signification, de référence, de vérité, d’usage et
+            de contexte. Cette combinaison n’est pas décorative. La philosophie de la linguistique est
+            explicitement distincte de la philosophie du langage, et la théorie des modèles traite déjà
+            l’interprétation comme une relation entre langage et structure, tandis que l’ontologie du
+            langage naturel étudie l’ontologie implicite dans la parole ordinaire. LOGORA fait répondre
+            ces fils les uns aux autres. Sa question centrale est simple à énoncer et difficile à
+            épuiser : comment des systèmes symboliques finis rendent-ils possible un contact avec une
+            réalité qui n’est pas elle-même faite de symboles ?
+          </p>
+          <p class="reading-block__text">
+            Ce qui fait de cela un domaine intellectuel à part entière est le point de pression où ces
+            enquêtes se rencontrent. La linguistique peut nous dire comment les langues découpent
+            effectivement des distinctions, mais elle ne peut pas, à elle seule, nous dire ce qui rend
+            ces distinctions vraies, adéquates ou trompeuses. La logique peut nous dire ce qui découle
+            de quoi, mais elle ne peut pas, à elle seule, expliquer comment les symboles acquièrent une
+            portée sur le monde. La philosophie du langage peut demander comment les mots réfèrent,
+            comment la vérité est possible et comment le contexte compte, mais sans la linguistique elle
+            risque de traiter le langage trop abstraitement, et sans la logique elle risque de perdre
+            prise sur la forme. LOGORA existe parce qu’aucun de ces champs, à lui seul, ne peut expliquer
+            comment les symboles deviennent à la fois des instruments de dévoilement du monde, de
+            coordination et d’erreur.
+          </p>
+        </section>
+
+        <section class="reading-block">
+          <h3 class="reading-block__section-title">L’Intersection Vivante</h3>
+          <p class="reading-block__text">
+            D’un côté de l’intersection se trouvent la linguistique et la sémiotique. De Ferdinand de
+            Saussure vient l’intuition selon laquelle le langage est un système structuré de signes dans
+            lequel la relation entre signifiant et signifié n’est pas une fusion naturelle, mais une
+            distinction stabilisée socialement ; de Charles Sanders Peirce vient le compte rendu plus
+            riche du signe, de l’objet et de l’interprétant, ainsi que la distinction entre icônes,
+            indices et symboles. Une fois ces perspectives réunies, le langage cesse d’apparaître comme
+            une étiquette transparente collée sur une réalité déjà emballée. Il apparaît plutôt comme un
+            médium actif dans lequel conventions, relations et habitudes interprétatives rendent un monde
+            disponible à la pensée.
+          </p>
+          <p class="reading-block__text">
+            D’un autre côté se trouve la logique. Gottlob Frege a montré que la dénotation seule ne peut
+            pas expliquer la signification, parce que le comportement logique et la portée cognitive des
+            phrases débordent la simple référence. La théorie des modèles a ensuite généralisé ce point
+            en traitant l’interprétation comme une relation entre langage formel et structures, tandis que
+            le compte rendu modélothéorique de la conséquence logique définit la validité comme
+            préservation de la vérité à travers les modèles. Dans ce cadre, la logique n’est pas seulement
+            un ensemble d’habitudes mentales ; c’est une discipline de la forme qui teste si nos mouvements
+            symboliques demeurent stables lorsque le contenu non logique varie. Pourtant, cette même
+            discipline expose des limites : les travaux d’Alfred Tarski sur la vérité et la théorie
+            ultérieure de la vérité montrent que des langages suffisamment riches ne peuvent pas, sous
+            des hypothèses naturelles, définir entièrement leur propre prédicat de vérité sans monter à
+            un métalangage plus puissant.
+          </p>
+          <p class="reading-block__text">
+            Le troisième côté est la philosophie du langage dans toute son ampleur, où la signification
+            n’est plus traitée comme un lien statique entre mot et objet. Ludwig Wittgenstein insistait
+            sur le fait que la signification vit dans l’usage et dans les jeux de langage plutôt que dans
+            une essence cachée portée par les mots à travers tous les contextes. John Langshaw Austin a
+            montré que les énoncés ne se contentent pas de décrire la réalité ; ils peuvent avertir,
+            promettre, s’excuser, inviter et produire des changements institutionnels. La pragmatique
+            ajoute que les intentions, les croyances, le contexte et les institutions sociales affectent
+            ce qui est accompli en disant quelque chose, tandis que la sémantique dynamique reconstruit
+            la signification elle-même comme une capacité à mettre à jour le contexte plutôt qu’à
+            simplement satisfaire des conditions de vérité. Il en résulte une image où le langage est à
+            la fois représentationnel, inférentiel, pratique et constructeur de monde.
+          </p>
+        </section>
+
+        <section class="reading-block">
+          <h3 class="reading-block__section-title">La Vérité Centrale Qu’Elle Révèle</h3>
+          <p class="reading-block__text">
+            La vérité centrale de LOGORA est que l’accès humain à la réalité est profondément façonné par
+            la structure symbolique, la nomination et les limites de la représentation. Nommer n’est pas
+            un simple après-coup décoratif de la perception. Cela stabilise des distinctions, comprime la
+            variation en types, et donne à la cognition des prises. Les travaux expérimentaux montrent
+            que même des étiquettes verbales redondantes peuvent faciliter l’apprentissage des catégories,
+            que des dimensions de traits plus faciles à nommer sont plus faciles à apprendre comme
+            catégories, et qu’entendre un mot peut moduler le traitement visuel ultérieur en activant
+            très tôt dans le flux perceptif des représentations liées à la forme. La forme symbolique
+            ne se contente pas de rapporter ce que l’esprit a déjà fait ; elle aide l’esprit à achever
+            le travail de découper le monde en unités utilisables.
+          </p>
+          <p class="reading-block__text">
+            Mais LOGORA rejette aussi le fantasme selon lequel le langage emprisonnerait totalement la
+            pensée. Les versions les plus fortes de la relativité linguistique n’ont pas résisté à un
+            examen attentif, et les formulations les plus sérieuses insistent sur le fait qu’il faut
+            spécifier exactement quelle caractéristique du langage influence quelle caractéristique de la
+            cognition, et avec quelle force. Les preuves pointent vers une image plus subtile. Certaines
+            distinctions lexicales affectent certaines tâches particulières de mémoire ou de perception ;
+            un vocabulaire chromatique plus riche, par exemple, est plus robustement associé à une
+            meilleure mémoire des couleurs qu’à la perception élémentaire des couleurs. En même temps,
+            des travaux comparatifs à grande échelle sur les démonstratifs montrent que, malgré la
+            variation entre langues, les systèmes spatiaux sont fortement contraints par des faits
+            communs d’incarnation et d’action, comme le fait qu’un objet soit ou non à portée de main.
+            Le langage façonne donc l’accès au réel, mais sous des contraintes imposées par le corps,
+            par le monde et par une architecture cognitive partagée.
+          </p>
+          <p class="reading-block__text">
+            La partie la plus profonde de la thèse concerne les limites. Toute représentation sélectionne ;
+            tout modèle idéalise ; tout vocabulaire met au premier plan certaines distinctions tout en en
+            supprimant d’autres. La philosophie des sciences traite aujourd’hui les représentations et les
+            modèles scientifiques comme des outils hétérogènes qui permettent un raisonnement substitutif
+            sur des systèmes cibles, précisément parce qu’ils représentent à certains égards et peuvent
+            mésreprésenter à d’autres. La logique formelle, malgré son extraordinaire précision, rencontre
+            des frontières venues de l’intérieur : les théorèmes d’incomplétude de Gödel marquent les
+            limites de la démontrabilité dans des systèmes formels suffisamment riches, et la théorie
+            tarskienne de la vérité montre que la vérité pour un langage exige généralement des ressources
+            sémantiques allant au-delà de ce langage lui-même. Même le langage naturel peut véhiculer des
+            présupposés ontologiques qui divergent de la cognition ou de la structure sous-jacente des
+            choses, comme l’illustre la distinction entre noms massifs et noms comptables. La condition
+            humaine n’est donc pas celle de posséder le réel directement, mais celle de s’en approcher à
+            travers des systèmes de représentation qui n’éclairent qu’en omettant.
+          </p>
+        </section>
+
+        <section class="reading-block">
+          <h3 class="reading-block__section-title">Pourquoi Cela Compte pour la Vie Humaine</h3>
+          <p class="reading-block__text">
+            Pour la vie individuelle, LOGORA transforme d’abord la perception. Il encourage une personne
+            à se demander si ce qui paraît évident est réellement une propriété de la chose, ou le
+            résultat des catégories à travers lesquelles la chose a été appréhendée. Il transforme le
+            jugement en enseignant que la référence n’est pas la même chose que la description, qu’un nom
+            n’est pas épuisé par les croyances qui lui sont communément attachées, et que la classification
+            est souvent plus contestable que ne le suggère le langage ordinaire. Le défi de Saul Kripke
+            au descriptivisme montre pourquoi une référence stable peut survivre à des descriptions
+            erronées, tandis que les débats sur les espèces montrent que même des catégories scientifiques
+            centrales peuvent admettre des définitions plurielles et rivales avec des conséquences
+            pratiques en droit et dans notre image de la nature humaine. La logique ajoute la discipline
+            du contre-exemple et de la conséquence, nous forçant à distinguer association et implication,
+            rhétorique et conséquence logique.
+          </p>
+          <p class="reading-block__text">
+            Cela change aussi notre manière de nous rapporter aux autres. Une grande part du conflit humain
+            ne naît pas parce que le monde est silencieux, mais parce que des actes de parole sont mal
+            compris, que des implications sont traitées comme un contenu littéral, ou que des cadres
+            institutionnels sont ignorés. Une promesse n’est pas seulement une phrase au futur. Une
+            insulte n’est pas réductible au sens du dictionnaire. Un énoncé juridique n’opère pas comme
+            une conversation ordinaire. La théorie classique des actes de langage et la pragmatique
+            rendent clair que ce que l’on fait en parlant dépend d’intentions, de croyances partagées,
+            du contexte et des institutions sociales. Cela importe éthiquement parce que la responsabilité
+            dans le langage commence non seulement par le fait de dire ce qui est vrai, mais par la
+            compréhension de l’acte que l’on accomplit et des engagements que l’on dépose dans le monde
+            social.
+          </p>
+          <p class="reading-block__text">
+            À l’échelle civilisationnelle, LOGORA devient une théorie du design institutionnel et
+            épistémique. L’ontologie sociale soutient que de nombreux faits institutionnels sont soutenus
+            par la reconnaissance collective, des règles constitutives et des déclarations ; la théorie
+            de la représentation scientifique soutient que les modèles médiatisent entre théorie et monde
+            et demeurent utiles même lorsqu’ils sont idéalisés ou partiellement inexacts. Une civilisation
+            sérieuse ne peut donc pas traiter le langage comme une couche cosmétique au-dessus d’opérations
+            “réelles”. Ses définitions, ontologies, métadonnées, catégories juridiques, standards et
+            hypothèses de modèle font partie de son infrastructure opératoire. Une polity incapable de
+            distinguer une cible de son proxy, une définition d’une découverte, ou une déclaration d’une
+            description, finira par remettre le pouvoir au vocabulaire qui domine par hasard plutôt qu’à
+            la représentation qui suit le mieux le réel.
+          </p>
+          <p class="reading-block__text">
+            Il y a aussi ici une sagesse pratique concernant la souffrance. Une personne peut être
+            tyrannisée par des noms hérités, par des auto-descriptions traitées comme des essences, par
+            des phrases dont la grammaire donne à l’accident l’apparence de la nécessité. LOGORA n’offre
+            pas une thérapie par slogan. Il offre quelque chose de plus sévère et de plus utile :
+            l’habitude de demander exactement à quoi un mot engage, ce qui découle d’une affirmation, ce
+            qui l’accompagne simplement, quels présupposés de fond sont cachés dans une formule, et si une
+            représentation donnée est adéquate à la réalité qu’elle vise à gouverner. Cette habitude
+            n’élimine pas la douleur, mais elle peut réduire la misère spécifiquement humaine d’être
+            trompé par son propre langage.
+          </p>
+        </section>
+
+        <section class="reading-block">
+          <h3 class="reading-block__section-title">Tensions, Limites et Questions Ouvertes</h3>
+          <p class="reading-block__text">
+            La question ouverte la plus importante est de savoir jusqu’où va réellement la relation entre
+            langage et pensée. Les recherches développementales suggèrent que les liens entre langage et
+            cognition émergent très tôt dans la petite enfance, mais les neurosciences contemporaines ont
+            également élaboré un argument sérieux selon lequel le langage chez les humains modernes est
+            principalement un outil de communication plutôt qu’une condition préalable à la pensée
+            complexe. La même littérature insiste sur une double dissociation : la pensée peut survivre à
+            de graves atteintes du langage, et un langage intact ne garantit pas un raisonnement intact.
+            Parallèlement, les meilleurs travaux sur la relativité linguistique continuent d’insister sur
+            le fait que toute influence du langage sur la cognition doit être formulée en termes
+            spécifiques, testables et sensibles au domaine. Le résultat n’est ni le triomphe du
+            déterminisme linguistique ni une facile revendication d’une pensée sans mots, mais une image
+            non résolue d’étayage mutuel, de dissociation partielle et de dépendance en couches.
+          </p>
+          <p class="reading-block__text">
+            Une deuxième question non résolue concerne l’autorité ontologique. Le langage naturel révèle-t-il
+            les articulations du réel, ou seulement les engagements que les locuteurs contractent
+            tacitement lorsqu’ils l’emploient ? L’ontologie du langage naturel elle-même sépare
+            délibérément l’ontologie implicite du langage de la question de ce qui existe ultimement.
+            La logique formelle gagne en précision par l’abstraction, mais l’abstraction peut la rendre
+            insensible au grain du contexte, de l’incarnation et de la pratique ordinaire. Le langage
+            ordinaire, en revanche, porte en lui l’usage, la nuance et l’institution, mais précisément
+            pour cette raison il porte aussi ambiguïté, vague et risque de surinterprétation
+            philosophique. LOGORA doit donc résister à deux erreurs symétriques : réduire la réalité à la
+            grammaire, et traiter la grammaire comme un voile jetable sur le réel. La tâche consiste à
+            circuler entre les niveaux de représentation sans accorder de souveraineté finale à aucun
+            d’entre eux.
+          </p>
+          <p class="reading-block__text">
+            Une troisième question est civilisationnelle et de plus en plus urgente. À mesure que les
+            ontologies formelles, les modèles computationnels et les systèmes de langage médiés par des
+            machines deviennent intégrés à la gouvernance, à la science et à la cognition quotidienne,
+            qui décide quelles catégories comptent, quelles distinctions deviennent lisibles, et quelles
+            inférences deviennent automatisées ? Les anciens problèmes philosophiques de référence, de
+            vérité et de représentation ne sont plus confinés aux salles de séminaire. Ils apparaissent
+            désormais dans les schémas de données, les taxonomies juridiques, les modèles de risque et le
+            langage des interfaces. LOGORA ne fournit pas encore une politique complète pour cette
+            condition, mais il rend le problème incontestable : le design symbolique n’est jamais neutre,
+            parce que tout schéma distribue visibilité, saillance et pouvoir.
+          </p>
+        </section>
+
+        <section class="reading-block">
+          <h3 class="reading-block__section-title">Clôture</h3>
+          <p class="reading-block__text">
+            LOGORA n’enseigne ni la leçon cynique selon laquelle le langage ne ferait que nous enfermer
+            dans les apparences, ni la tentation formaliste de croire qu’une symbolisation parfaite
+            dissoudrait le monde dans la clarté. Sa leçon plus difficile est que les symboles sont les
+            moyens disciplinés par lesquels des êtres finis gagnent un accès partiel à ce qui les
+            dépasse. Ils dévoilent en structurant, ils coordonnent en simplifiant, ils rendent possible
+            la connaissance en permettant l’inférence, et ils trompent chaque fois que leur commodité
+            est confondue avec la complétude. Bien vivre sous cette condition, c’est nommer avec soin,
+            raisonner honnêtement, interroger les catégories, et maintenir toute représentation
+            responsable devant la réalité qu’elle cherche à saisir.
+          </p>
+          <p class="reading-block__text">
+            C’est pourquoi cette discipline n’est pas seulement théorique. C’est une éthique de la
+            conduite intellectuelle. Elle demande de l’exactitude sans rigidité, de la sensibilité
+            interprétative sans dérive relativiste, et de l’humilité sans reddition. La récompense
+            n’est pas une certitude finale. C’est quelque chose de plus rare et de plus durable :
+            un esprit moins enchanté par ses propres mots, une société moins gouvernée par des
+            abstractions non examinées, et une liberté plus lucide dans l’intervalle entre ce qui peut
+            être dit et ce qui est.
+          </p>
+        </section>
+      `
+    }
+  },
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" fill="none"><g stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"><circle cx="128" cy="128" r="92"/><circle cx="128" cy="128" r="58"/><path d="M128 84L156 128L128 172L100 128L128 84Z"/><circle cx="128" cy="128" r="10"/><path d="M128 58V198"/><path d="M70 128H186"/><path d="M92 92L76 128L92 164"/><path d="M164 92L180 128L164 164"/><path d="M108 96H148"/><path d="M108 160H148"/><circle cx="128" cy="76" r="6"/><circle cx="128" cy="180" r="6"/><circle cx="76" cy="128" r="6"/><circle cx="180" cy="128" r="6"/><path d="M104 76C112 70 120 66 128 66C136 66 144 70 152 76"/><path d="M104 180C112 186 120 190 128 190C136 190 144 186 152 180"/></g></svg>`,
+  readingHtml: `
+    <section class="reading-block">
+      <p class="reading-block__eyebrow">Language, Logic, and Reality</p>
+      <h2 class="reading-block__title">LOGORA</h2>
+      <p class="reading-block__subtitle">The grammar of the real and the responsibility of speaking truly.</p>
+    </section>
+
+    <section class="reading-block">
+      <h3 class="reading-block__section-title">Opening</h3>
+      <p class="reading-block__text">
+        Human beings do not merely live in a world; they live in a world that has been named, sorted,
+        inferred, narrated, measured, negotiated, and institutionally declared. A promise, a marriage,
+        a border, a unit of money, or even a biological species is not simply encountered as a bare
+        datum in the way a rock or a pulse of light is encountered. Each becomes intelligible,
+        actionable, and socially consequential through symbolic forms, classificatory practices, and
+        rules of use. Where language is crude, institutions become brittle; where inference is
+        undisciplined, description detaches from reality; where categories harden into idols, societies
+        begin to obey their own abstractions rather than the world they were meant to understand.
+      </p>
+      <p class="reading-block__text">
+        This is why LOGORA matters. It begins from the severe fact that human access to reality is
+        never unmediated. We do not face the world as pure spectators receiving a finished truth. We
+        face it as symbol-using creatures whose contact with what is depends on signs, concepts,
+        criteria, inferential norms, and shared forms of life. The question is not whether this
+        mediation exists. The question is whether we can understand it well enough to become less
+        confused by our own language, less captive to our own categories, and less reckless with the
+        powers that representation gives us.
+      </p>
+    </section>
+
+    <section class="reading-block">
+      <h3 class="reading-block__section-title">What This Discipline Is</h3>
+      <p class="reading-block__text">
+        LOGORA is the discipline that studies the relation among language, logic, and reality as a
+        single field of pressure rather than three neighboring topics. It takes from linguistics the
+        empirical study of how natural languages are structured; from logic the discipline of
+        consequence, validity, and formal representation; and from philosophy of language the questions
+        of meaning, reference, truth, use, and context. This combination is not decorative. The
+        philosophy of linguistics is explicitly distinct from philosophy of language, and model theory
+        already treats interpretation as a relation between language and structure, while natural
+        language ontology investigates the ontology implicit in ordinary speech. LOGORA makes these
+        strands answer one another. Its central question is simple to state and difficult to exhaust:
+        how do finite symbolic systems enable contact with a reality that is not itself made of
+        symbols?
+      </p>
+      <p class="reading-block__text">
+        What makes this an intellectual domain in its own right is the pressure point at which these
+        inquiries meet. Linguistics can tell us how languages actually carve distinctions, but not by
+        itself what makes those distinctions true, adequate, or misleading. Logic can tell us what
+        follows from what, but not by itself how symbols acquire worldly bearing. Philosophy of
+        language can ask how words refer, how truth is possible, and how context matters, but without
+        linguistics it risks treating language too abstractly, and without logic it risks losing grip
+        on form. LOGORA exists because none of these fields alone can explain how symbols become
+        instruments of world-disclosure, coordination, and error at once.
+      </p>
+    </section>
+
+    <section class="reading-block">
+      <h3 class="reading-block__section-title">The Living Intersection</h3>
+      <p class="reading-block__text">
+        At one side of the intersection stands linguistics and semiotics. From Ferdinand de Saussure
+        comes the insight that language is a structured sign-system in which the relation between
+        signifier and signified is not a natural fusion but a socially stabilized distinction; from
+        Charles Sanders Peirce comes the richer account of sign, object, and interpretant, and the
+        distinction among icons, indices, and symbols. Once these perspectives are joined, language
+        stops looking like a transparent label pasted onto prepackaged reality. It appears instead as
+        an active medium in which conventions, relations, and interpretive habits make a world
+        available to thought.
+      </p>
+      <p class="reading-block__text">
+        At another side stands logic. Gottlob Frege showed that denotation alone cannot explain
+        meaning, because the logical behavior and cognitive significance of sentences outrun bare
+        reference. Model theory then generalized the point by treating interpretation as a relation
+        between formal language and structures, while the model-theoretic account of logical
+        consequence defines validity as preservation of truth across models. In this framework, logic
+        is not merely a set of mental habits; it is a discipline of form that tests whether our
+        symbolic moves remain stable when the nonlogical content is varied. Yet that very discipline
+        exposes limits: Alfred Tarski’s work on truth and later truth theory show that sufficiently
+        rich languages cannot, under natural assumptions, fully define their own truth predicate
+        without ascending to a more powerful metalanguage.
+      </p>
+      <p class="reading-block__text">
+        The third side is philosophy of language in its full breadth, where meaning is no longer
+        treated as a static bond between word and object. Ludwig Wittgenstein insisted that meaning
+        lives in use and in language-games rather than in some hidden essence carried by words across
+        every context. John Langshaw Austin showed that utterances do not only describe reality; they
+        can warn, promise, apologize, invite, and bring about institutional changes. Pragmatics adds
+        that intentions, beliefs, context, and social institutions affect what is accomplished in
+        saying something, while dynamic semantics recasts meaning itself as a capacity to update
+        context rather than only to satisfy truth conditions. The result is a picture in which language
+        is at once representational, inferential, practical, and worldmaking.
+      </p>
+    </section>
+
+    <section class="reading-block">
+      <h3 class="reading-block__section-title">The Core Truth It Reveals</h3>
+      <p class="reading-block__text">
+        The core truth of LOGORA is that human access to reality is profoundly shaped by symbolic
+        structure, naming, and representational limits. Naming is not a decorative afterthought to
+        perception. It stabilizes distinctions, compresses variation into kinds, and furnishes
+        cognition with handles. Experimental work shows that even redundant verbal labels can
+        facilitate category learning, that feature dimensions which are easier to name are easier to
+        learn as categories, and that hearing a word can modulate subsequent visual processing by
+        activating shape-related representations very early in the perceptual stream. Symbolic form
+        does not merely report what the mind has already done; it helps the mind finish the work of
+        carving the world into usable units.
+      </p>
+      <p class="reading-block__text">
+        But LOGORA also rejects the fantasy that language wholly imprisons thought. The strongest
+        versions of linguistic relativity have not survived careful scrutiny, and the most serious
+        formulations insist that one must specify exactly which feature of language influences which
+        feature of cognition, and how strongly. The evidence points to a subtler picture. Some lexical
+        distinctions affect particular memory or perceptual tasks; richer color vocabulary, for
+        example, is associated more robustly with better color memory than with basic color perception.
+        At the same time, large cross-linguistic work on demonstratives shows that despite variation
+        among languages, spatial systems are strongly constrained by common facts of embodiment and
+        action, such as whether an object is within reach. Language shapes access to reality, then,
+        but under constraints imposed by body, world, and shared cognitive architecture.
+      </p>
+      <p class="reading-block__text">
+        The deepest part of the thesis concerns limits. Every representation selects; every model
+        idealizes; every vocabulary foregrounds some distinctions while suppressing others. Philosophy
+        of science now treats scientific representations and models as heterogeneous tools that enable
+        surrogative reasoning about target systems, precisely because they represent in some respects
+        and can misrepresent in others. Formal logic, for all its extraordinary precision, meets
+        boundaries from within: Gödel’s incompleteness theorems mark limits of provability in
+        sufficiently rich formal systems, and Tarskian truth theory shows that truth for a language
+        generally requires semantic resources beyond that language itself. Even natural language can
+        smuggle in ontological assumptions that diverge from cognition or from the underlying structure
+        of things, as the mass-count distinction illustrates. The human condition is therefore not one
+        of possessing reality directly, but of approaching it through representational systems that
+        illuminate only by omission.
+      </p>
+    </section>
+
+    <section class="reading-block">
+      <h3 class="reading-block__section-title">Why This Matters for Human Life</h3>
+      <p class="reading-block__text">
+        For individual life, LOGORA changes perception first. It encourages a person to ask whether
+        what appears obvious is actually a property of the thing, or a result of the categories through
+        which the thing has been apprehended. It changes judgment by teaching that reference is not the
+        same as description, that a name is not exhausted by the beliefs commonly attached to it, and
+        that classification is often more contestable than ordinary speech suggests. Saul Kripke’s
+        challenge to descriptivism shows why stable reference can survive mistaken descriptions, while
+        debates over species show that even central scientific categories may admit plural, rival
+        definitions with practical consequences in law and in our image of human nature. Logic adds the
+        discipline of counterexample and consequence, forcing us to distinguish association from
+        implication and rhetoric from entailment.
+      </p>
+      <p class="reading-block__text">
+        It also changes how we relate. A large share of human conflict does not arise because the world
+        is silent, but because speech acts are misunderstood, implications are treated as literal
+        content, or institutional settings are ignored. A promise is not merely a sentence with future
+        tense. An insult is not reducible to dictionary meaning. A legal utterance does not operate
+        like casual conversation. Classical speech-act theory and pragmatics make plain that what one
+        does in speaking depends on intentions, shared beliefs, context, and social institutions. This
+        matters ethically because responsibility in language begins not only with saying what is true,
+        but with understanding what act one is performing and what commitments one is placing into the
+        social world.
+      </p>
+      <p class="reading-block__text">
+        At the civilizational scale, LOGORA becomes a theory of institutional and epistemic design.
+        Social ontology argues that many institutional facts are sustained by collective recognition,
+        constitutive rules, and declarations; scientific representation argues that models mediate
+        between theory and world and remain useful even when idealized or partially inaccurate. A
+        serious civilization therefore cannot treat language as a cosmetic layer over “real”
+        operations. Its definitions, ontologies, metadata, legal categories, standards, and model
+        assumptions are part of its operative infrastructure. A polity that cannot distinguish between
+        a target and its proxy, a definition and a discovery, or a declaration and a description will
+        eventually hand power to whatever vocabulary happens to dominate rather than to whatever
+        representation best tracks reality.
+      </p>
+      <p class="reading-block__text">
+        There is also a practical wisdom here about suffering. A person can be tyrannized by inherited
+        names, by self-descriptions treated as essences, by sentences whose grammar gives accident the
+        appearance of necessity. LOGORA does not offer therapy by slogan. It offers something sterner
+        and more useful: the habit of asking what exactly a word commits one to, what follows from a
+        claim, what merely accompanies it, what background assumptions are hidden in the phrase, and
+        whether a given representation is fit for the reality it aims to govern. That habit does not
+        eliminate pain, but it can reduce the specifically human misery of being misled by one’s own
+        language.
+      </p>
+    </section>
+
+    <section class="reading-block">
+      <h3 class="reading-block__section-title">Tensions, Limits, and Open Questions</h3>
+      <p class="reading-block__text">
+        The most important open question is how deep the relation between language and thought actually
+        runs. Developmental research suggests that links between language and cognition emerge very
+        early in infancy, yet contemporary neuroscience has also assembled a serious case that language
+        in modern humans is primarily a tool for communication rather than a prerequisite for complex
+        thought. The same literature emphasizes a double dissociation: thought can survive severe
+        language impairment, and intact language does not guarantee intact reasoning. Meanwhile, the
+        best work on linguistic relativity continues to insist that any influence of language on
+        cognition must be stated in specific, testable, domain-sensitive terms. The result is neither
+        triumph for linguistic determinism nor easy vindication of thought without words, but an
+        unresolved picture of mutual scaffolding, partial dissociation, and layered dependence.
+      </p>
+      <p class="reading-block__text">
+        A second unresolved question concerns ontological authority. Does natural language reveal the
+        joints of reality, or only the commitments speakers tacitly incur when they use it? Natural
+        language ontology itself deliberately separates the ontology implicit in language from the
+        question of what ultimately exists. Formal logic gains precision by abstraction, but
+        abstraction can make it insensitive to the grain of context, embodiment, and ordinary practice.
+        Ordinary language, by contrast, carries use, nuance, and institution within it, but precisely
+        for that reason it also carries ambiguity, vagueness, and the risk of philosophical
+        overreading. LOGORA must therefore resist two symmetrical errors: reducing reality to grammar,
+        and treating grammar as a disposable veil over reality. The task is to move among levels of
+        representation without granting final sovereignty to any single one.
+      </p>
+      <p class="reading-block__text">
+        A third question is civilizational and increasingly urgent. As formal ontologies, computational
+        models, and machine-mediated language systems become integral to governance, science, and
+        everyday cognition, who decides which categories count, which distinctions are made legible,
+        and which inferences become automated? The older philosophical problems of reference, truth,
+        and representation are no longer confined to seminar rooms. They now appear in data schemas,
+        legal taxonomies, risk models, and interface language. LOGORA does not yet supply a complete
+        politics for this condition, but it makes the problem unmistakable: symbolic design is never
+        neutral, because every schema distributes visibility, salience, and power.
+      </p>
+    </section>
+
+    <section class="reading-block">
+      <h3 class="reading-block__section-title">Closing</h3>
+      <p class="reading-block__text">
+        LOGORA teaches neither the cynic’s lesson that language merely traps us in appearances, nor
+        the formalist’s temptation to believe that perfect symbolization would dissolve the world into
+        clarity. Its harder lesson is that symbols are the disciplined means by which finite beings
+        gain partial access to what exceeds them. They disclose by structuring, they coordinate by
+        simplifying, they enable knowledge by allowing inference, and they mislead whenever their
+        convenience is mistaken for completeness. To live well under this condition is to name
+        carefully, reason honestly, interrogate categories, and keep every representation answerable to
+        the reality it seeks to grasp.
+      </p>
+      <p class="reading-block__text">
+        That is why this discipline is not merely theoretical. It is an ethic of intellectual conduct.
+        It asks for exactness without rigidity, interpretive sensitivity without relativistic drift,
+        and humility without surrender. The reward is not final certainty. It is something rarer and
+        more durable: a mind less enchanted by its own words, a society less governed by unexamined
+        abstractions, and a more lucid freedom in the interval between what can be said and what is.
+      </p>
+    </section>
+  `
+},
 
 
 
