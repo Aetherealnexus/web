@@ -308,46 +308,65 @@
     orbit.classList.remove("is-hovering");
   }
 
-  function getReadingMarkup(item) {
+    function getReadingMarkup(item) {
+    if (item.status === "research_in_progress") {
+        const word = escapeHtml(item.placeholderWord || "UNFOLDING");
+        const label = escapeHtml(item.placeholderLabel || "Research in progress");
+        const text = escapeHtml(
+        item.placeholderText ||
+        "This discipline is currently under active development. The investigation is ongoing, but this section is not yet publicly available."
+        );
+
+        return `
+        <section class="reading-placeholder">
+            <div class="reading-placeholder__core">
+            <p class="reading-placeholder__label">${label}</p>
+            <div class="reading-placeholder__word">${word}</div>
+            <p class="reading-placeholder__text">${text}</p>
+            </div>
+        </section>
+        `;
+    }
+
     if (typeof item.readingHtml === "string" && item.readingHtml.trim()) {
-      return item.readingHtml;
+        return item.readingHtml;
     }
 
     return `
-      <section class="reading-block">
+        <section class="reading-block">
         <h2 class="reading-block__title">Orientation</h2>
         <p class="reading-block__text">
-          <strong>${escapeHtml(item.title)}</strong> is the active gateway. This reading chamber is now ready to receive your own investigations, notes, frameworks, citations, hypotheses, and long-form reflections.
+            <strong>${escapeHtml(item.title)}</strong> is the active gateway. This reading chamber is now ready to receive your own investigations, notes, frameworks, citations, hypotheses, and long-form reflections.
         </p>
         <p class="reading-block__text">
-          The visual system remains the same as the entrance state so the discipline feels born from the same symbolic world rather than disconnected from it.
+            The visual system remains the same as the entrance state so the discipline feels born from the same symbolic world rather than disconnected from it.
         </p>
-      </section>
+        </section>
 
-      <section class="reading-block">
+        <section class="reading-block">
         <h2 class="reading-block__title">Current Definition</h2>
         <p class="reading-block__text">
-          <strong>Discipline:</strong> ${escapeHtml(item.discipline)}
+            <strong>Discipline:</strong> ${escapeHtml(item.discipline)}
         </p>
         <p class="reading-block__text">
-          <strong>Intersection:</strong> ${escapeHtml(item.intersection)}
+            <strong>Intersection:</strong> ${escapeHtml(item.intersection)}
         </p>
         <p class="reading-block__text">
-          <strong>Conclusion:</strong> ${escapeHtml(item.conclusion)}
+            <strong>Conclusion:</strong> ${escapeHtml(item.conclusion)}
         </p>
-      </section>
+        </section>
 
-      <section class="reading-block">
+        <section class="reading-block">
         <h2 class="reading-block__title">Reading Zone</h2>
         <p class="reading-block__text">
-          This is the scrollable area intended for your real research corpus. You can later replace this default text by adding a new field such as <strong>readingHtml</strong> inside the corresponding object in <strong>disciplines-data.js</strong>.
+            This is the scrollable area intended for your real research corpus. You can later replace this default text by adding a new field such as <strong>readingHtml</strong> inside the corresponding object in <strong>disciplines-data.js</strong>.
         </p>
         <p class="reading-block__text">
-          You can place essays, nested sections, source notes, structured arguments, ontological maps, historical context, equations, symbolic interpretations, or any other long-form material here.
+            You can place essays, nested sections, source notes, structured arguments, ontological maps, historical context, equations, symbolic interpretations, or any other long-form material here.
         </p>
-      </section>
+        </section>
     `;
-  }
+    }
 
   function applyReadingContent(item) {
     const index = disciplines.findIndex((entry) => entry.key === item.key) + 1;
