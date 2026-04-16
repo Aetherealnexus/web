@@ -7,6 +7,127 @@
   const pageBg = document.getElementById("pageBg");
   const pageBgCanvas = document.getElementById("pageBgCanvas");
 
+  const disciplines = Array.isArray(window.NEXUS_DISCIPLINES) ? window.NEXUS_DISCIPLINES : [];
+  const orbit = document.getElementById("discipline-orbit");
+  const screen = document.querySelector(".orbit-screen");
+  const pointerMode = window.matchMedia("(hover: none), (pointer: coarse)");
+
+  const readingLayer = document.getElementById("readingLayer");
+  const readingPanel = document.getElementById("readingPanel");
+  const readingBackBtn = document.getElementById("readingBackBtn");
+  const readingBackBtnText = document.getElementById("readingBackBtnText");
+
+  const readingSigil = document.getElementById("readingSigil");
+  const readingEyebrow = document.getElementById("readingEyebrow");
+  const readingTitle = document.querySelector(".reading-head__title");
+  const readingPronounced = document.getElementById("readingPronounced");
+
+  const readingDiscipline = document.getElementById("readingDiscipline");
+  const readingIntersection = document.getElementById("readingIntersection");
+  const readingConclusion = document.getElementById("readingConclusion");
+
+  const readingArticle = document.getElementById("readingArticle");
+  const readingScroll = document.getElementById("readingScroll");
+  const metaDescription = document.querySelector('meta[name="description"]');
+
+  const langSwitcher = document.getElementById("langSwitcher");
+  const langButtons = Array.from(document.querySelectorAll(".lang-flag"));
+
+  const SUPPORTED_LANGS = ["en", "pt", "fr"];
+  const DEFAULT_LANG = "en";
+
+  const UI_TRANSLATIONS = {
+    en: {
+      back: "Go Back",
+      eyebrow: "DISCIPLINE",
+      disciplineLabel: "Discipline",
+      intersectionLabel: "Intersection",
+      conclusionLabel: "Conclusion",
+      orientationTitle: "Orientation",
+      currentDefinitionTitle: "Current Definition",
+      readingZoneTitle: "Reading Zone",
+      orientationTextA:
+        "<strong>{title}</strong> is the active gateway. This reading chamber is now ready to receive your own investigations, notes, frameworks, citations, hypotheses, and long-form reflections.",
+      orientationTextB:
+        "The visual system remains the same as the entrance state so the discipline feels born from the same symbolic world rather than disconnected from it.",
+      readingZoneTextA:
+        "This is the scrollable area intended for your real research corpus. You can later replace this default text by adding a new field such as <strong>readingHtml</strong> inside the corresponding object in <strong>disciplines-data.js</strong>.",
+      readingZoneTextB:
+        "You can place essays, nested sections, source notes, structured arguments, ontological maps, historical context, equations, symbolic interpretations, or any other long-form material here.",
+      researchInProgress: "Research in progress",
+      unfolding: "UNFOLDING",
+      researchPlaceholderText:
+        "This discipline is currently under active development. The investigation is ongoing, but this section of the Aethereal Nexus is not yet publicly available."
+    },
+    pt: {
+      back: "Voltar",
+      eyebrow: "DISCIPLINA",
+      disciplineLabel: "Disciplina",
+      intersectionLabel: "Interseção",
+      conclusionLabel: "Conclusão",
+      orientationTitle: "Orientação",
+      currentDefinitionTitle: "Definição Atual",
+      readingZoneTitle: "Zona de Leitura",
+      orientationTextA:
+        "<strong>{title}</strong> é a gateway ativa. Esta câmara de leitura está agora pronta para receber as tuas investigações, notas, frameworks, citações, hipóteses e reflexões de longo formato.",
+      orientationTextB:
+        "O sistema visual mantém-se igual ao estado de entrada para que a disciplina pareça nascer do mesmo mundo simbólico e não como algo desligado dele.",
+      readingZoneTextA:
+        "Esta é a área com scroll destinada ao teu corpus real de investigação. Mais tarde, podes substituir este texto por defeito adicionando um novo campo como <strong>readingHtml</strong> dentro do objeto correspondente em <strong>disciplines-data.js</strong>.",
+      readingZoneTextB:
+        "Podes colocar aqui ensaios, secções aninhadas, notas de fontes, argumentos estruturados, mapas ontológicos, contexto histórico, equações, interpretações simbólicas ou qualquer outro material de longo formato.",
+      researchInProgress: "Investigação em curso",
+      unfolding: "EM DESENVOLVIMENTO",
+      researchPlaceholderText:
+        "Esta disciplina encontra-se atualmente em desenvolvimento ativo. A investigação está a decorrer, mas esta secção do Aethereal Nexus ainda não está publicamente disponível."
+    },
+    fr: {
+      back: "Retour",
+      eyebrow: "DISCIPLINE",
+      disciplineLabel: "Discipline",
+      intersectionLabel: "Intersection",
+      conclusionLabel: "Conclusion",
+      orientationTitle: "Orientation",
+      currentDefinitionTitle: "Définition Actuelle",
+      readingZoneTitle: "Zone de Lecture",
+      orientationTextA:
+        "<strong>{title}</strong> est la passerelle active. Cette chambre de lecture est maintenant prête à recevoir vos recherches, notes, cadres, citations, hypothèses et réflexions longues.",
+      orientationTextB:
+        "Le système visuel reste identique à l’état d’entrée afin que la discipline semble née du même monde symbolique plutôt que détachée de celui-ci.",
+      readingZoneTextA:
+        "Il s’agit de la zone défilante destinée à votre véritable corpus de recherche. Vous pourrez plus tard remplacer ce texte par défaut en ajoutant un nouveau champ comme <strong>readingHtml</strong> dans l’objet correspondant de <strong>disciplines-data.js</strong>.",
+      readingZoneTextB:
+        "Vous pouvez y placer des essais, des sections imbriquées, des notes de sources, des arguments structurés, des cartes ontologiques, du contexte historique, des équations, des interprétations symboliques ou tout autre matériau long format.",
+      researchInProgress: "Recherche en cours",
+      unfolding: "EN DÉPLOIEMENT",
+      researchPlaceholderText:
+        "Cette discipline est actuellement en développement actif. La recherche est en cours, mais cette section de l’Aethereal Nexus n’est pas encore publiquement disponible."
+    }
+  };
+
+  const fallbackSvg = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none" aria-hidden="true">
+      <g stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="128" cy="128" r="84"/>
+        <path d="M128 52V204"/>
+        <path d="M52 128H204"/>
+        <circle cx="128" cy="128" r="18"/>
+      </g>
+    </svg>
+  `;
+
+  const baseTitle = document.title;
+  const baseDescription = metaDescription ? metaDescription.getAttribute("content") || "" : "";
+  const total = disciplines.length;
+
+  let currentLang = (() => {
+    const saved = localStorage.getItem("aen_lang");
+    return SUPPORTED_LANGS.includes(saved) ? saved : DEFAULT_LANG;
+  })();
+
+  let currentOpenDisciplineKey = null;
+  let clearStateTimer = null;
+
   function initImageBackgroundMode() {
     if (!pageBg || backgrounds.length === 0) return;
 
@@ -36,8 +157,7 @@
       height: 0,
       dpr: 1,
       particles: [],
-      rafId: 0,
-      lastTime: 0
+      rafId: 0
     };
 
     function createParticle(index, width, height, count) {
@@ -195,10 +315,9 @@
 
     window.addEventListener("resize", start, { passive: true });
     prefersReducedMotion.addEventListener?.("change", start);
+    window.addEventListener("beforeunload", stop, { passive: true });
 
     start();
-
-    window.addEventListener("beforeunload", stop, { passive: true });
   }
 
   if (bgMode === "image") {
@@ -207,76 +326,7 @@
     initFxBackgroundMode();
   }
 
-  const disciplines = Array.isArray(window.NEXUS_DISCIPLINES) ? window.NEXUS_DISCIPLINES : [];
-  const orbit = document.getElementById("discipline-orbit");
-  const screen = document.querySelector(".orbit-screen");
-  const pointerMode = window.matchMedia("(hover: none), (pointer: coarse)");
-
-  const readingLayer = document.getElementById("readingLayer");
-  const readingPanel = document.getElementById("readingPanel");
-  const readingBackBtn = document.getElementById("readingBackBtn");
-  const readingSigil = document.getElementById("readingSigil");
-  const readingEyebrow = document.getElementById("readingEyebrow");
-  const readingTitle = document.querySelector(".reading-head__title");
-  const readingPronounced = document.getElementById("readingPronounced");
-  const readingDiscipline = document.getElementById("readingDiscipline");
-  const readingIntersection = document.getElementById("readingIntersection");
-  const readingConclusion = document.getElementById("readingConclusion");
-  const readingArticle = document.getElementById("readingArticle");
-  const readingScroll = document.getElementById("readingScroll");
-  const metaDescription = document.querySelector('meta[name="description"]');
-
-  if (!orbit || !screen || disciplines.length === 0) return;
-
-  const total = disciplines.length;
-  const baseTitle = document.title;
-  const baseDescription = metaDescription ? metaDescription.getAttribute("content") || "" : "";
-  const fallbackSvg = `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none" aria-hidden="true">
-      <g stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="128" cy="128" r="84"/>
-        <path d="M128 52V204"/>
-        <path d="M52 128H204"/>
-        <circle cx="128" cy="128" r="18"/>
-      </g>
-    </svg>
-  `;
-
-  let clearStateTimer = null;
-
-  orbit.innerHTML = disciplines
-    .map((item, index) => {
-      const order = String(index + 1).padStart(2, "0");
-      const hue = Math.round((360 / total) * index);
-      const svgMarkup = typeof item.svg === "string" && item.svg.trim() ? item.svg : fallbackSvg;
-
-      return `
-        <a
-          class="orbit-node"
-          href="#${encodeURIComponent(item.key)}"
-          style="--i:${index}; --total:${total}; --node-hue:${hue};"
-          data-key="${item.key}"
-          aria-label="Open ${item.title}"
-        >
-          <span class="orbit-node__inner">
-            <span class="orbit-node__index">${order}</span>
-
-            <span class="orbit-node__sigil" aria-hidden="true">
-              ${svgMarkup}
-            </span>
-
-            <span class="orbit-node__title">${item.title}</span>
-
-            <span class="sr-only">
-              ${item.title}. ${item.discipline}. ${item.conclusion}
-            </span>
-          </span>
-        </a>
-      `;
-    })
-    .join("");
-
-  const nodes = [...orbit.querySelectorAll(".orbit-node")];
+  if (!orbit || !screen || total === 0) return;
 
   function escapeHtml(value) {
     return String(value ?? "")
@@ -287,8 +337,56 @@
       .replace(/'/g, "&#39;");
   }
 
+  function getUi(lang = currentLang) {
+    return UI_TRANSLATIONS[lang] || UI_TRANSLATIONS[DEFAULT_LANG];
+  }
+
+  function setDocumentLang(lang) {
+    const htmlLang = lang === "pt" ? "pt-PT" : lang === "fr" ? "fr" : "en";
+    document.documentElement.lang = htmlLang;
+  }
+
   function getDisciplineByKey(key) {
     return disciplines.find((item) => item.key === key) || null;
+  }
+
+  function getLocalizedDiscipline(item, lang = currentLang) {
+    const localized = item?.translations?.[lang] || {};
+    const ui = getUi(lang);
+
+    return {
+      title: localized.title || item.title,
+      pronounced: localized.pronounced || item.pronounced,
+      discipline: localized.discipline || item.discipline,
+      intersection: localized.intersection || item.intersection,
+      conclusion: localized.conclusion || item.conclusion,
+      readingHtml: localized.readingHtml || item.readingHtml || "",
+      placeholderWord: localized.placeholderWord || item.placeholderWord || ui.unfolding,
+      placeholderLabel: localized.placeholderLabel || item.placeholderLabel || ui.researchInProgress,
+      placeholderText: localized.placeholderText || item.placeholderText || ui.researchPlaceholderText
+    };
+  }
+
+  function updateLanguageButtons() {
+    langButtons.forEach((button) => {
+      button.classList.toggle("is-active", button.dataset.lang === currentLang);
+    });
+  }
+
+  function updateStaticUiLanguage() {
+    const ui = getUi(currentLang);
+
+    setDocumentLang(currentLang);
+    updateLanguageButtons();
+
+    if (readingBackBtnText) {
+      readingBackBtnText.textContent = ui.back;
+    }
+
+    const summaryLabels = document.querySelectorAll(".reading-summary__label");
+    if (summaryLabels[0]) summaryLabels[0].textContent = ui.disciplineLabel;
+    if (summaryLabels[1]) summaryLabels[1].textContent = ui.intersectionLabel;
+    if (summaryLabels[2]) summaryLabels[2].textContent = ui.conclusionLabel;
   }
 
   function setHoverActive(targetNode) {
@@ -308,67 +406,65 @@
     orbit.classList.remove("is-hovering");
   }
 
-    function getReadingMarkup(item) {
-    if (item.status === "research_in_progress") {
-        const word = escapeHtml(item.placeholderWord || "UNFOLDING");
-        const label = escapeHtml(item.placeholderLabel || "Research in progress");
-        const text = escapeHtml(
-        item.placeholderText ||
-        "This discipline is currently under active development. The investigation is ongoing, but this section is not yet publicly available."
-        );
+  function buildDefaultReadingMarkup(item, localized) {
+    const ui = getUi(currentLang);
 
-        return `
-        <section class="reading-placeholder">
-            <div class="reading-placeholder__core">
-            <p class="reading-placeholder__label">${label}</p>
-            <div class="reading-placeholder__word">${word}</div>
-            <p class="reading-placeholder__text">${text}</p>
-            </div>
-        </section>
-        `;
-    }
-
-    if (typeof item.readingHtml === "string" && item.readingHtml.trim()) {
-        return item.readingHtml;
-    }
+    const orientationTextA = ui.orientationTextA.replace("{title}", escapeHtml(localized.title));
 
     return `
-        <section class="reading-block">
-        <h2 class="reading-block__title">Orientation</h2>
-        <p class="reading-block__text">
-            <strong>${escapeHtml(item.title)}</strong> is the active gateway. This reading chamber is now ready to receive your own investigations, notes, frameworks, citations, hypotheses, and long-form reflections.
-        </p>
-        <p class="reading-block__text">
-            The visual system remains the same as the entrance state so the discipline feels born from the same symbolic world rather than disconnected from it.
-        </p>
-        </section>
+      <section class="reading-block">
+        <h2 class="reading-block__title">${escapeHtml(ui.orientationTitle)}</h2>
+        <p class="reading-block__text">${orientationTextA}</p>
+        <p class="reading-block__text">${ui.orientationTextB}</p>
+      </section>
 
-        <section class="reading-block">
-        <h2 class="reading-block__title">Current Definition</h2>
+      <section class="reading-block">
+        <h2 class="reading-block__title">${escapeHtml(ui.currentDefinitionTitle)}</h2>
         <p class="reading-block__text">
-            <strong>Discipline:</strong> ${escapeHtml(item.discipline)}
+          <strong>${escapeHtml(ui.disciplineLabel)}:</strong> ${escapeHtml(localized.discipline)}
         </p>
         <p class="reading-block__text">
-            <strong>Intersection:</strong> ${escapeHtml(item.intersection)}
+          <strong>${escapeHtml(ui.intersectionLabel)}:</strong> ${escapeHtml(localized.intersection)}
         </p>
         <p class="reading-block__text">
-            <strong>Conclusion:</strong> ${escapeHtml(item.conclusion)}
+          <strong>${escapeHtml(ui.conclusionLabel)}:</strong> ${escapeHtml(localized.conclusion)}
         </p>
-        </section>
+      </section>
 
-        <section class="reading-block">
-        <h2 class="reading-block__title">Reading Zone</h2>
-        <p class="reading-block__text">
-            This is the scrollable area intended for your real research corpus. You can later replace this default text by adding a new field such as <strong>readingHtml</strong> inside the corresponding object in <strong>disciplines-data.js</strong>.
-        </p>
-        <p class="reading-block__text">
-            You can place essays, nested sections, source notes, structured arguments, ontological maps, historical context, equations, symbolic interpretations, or any other long-form material here.
-        </p>
-        </section>
+      <section class="reading-block">
+        <h2 class="reading-block__title">${escapeHtml(ui.readingZoneTitle)}</h2>
+        <p class="reading-block__text">${ui.readingZoneTextA}</p>
+        <p class="reading-block__text">${ui.readingZoneTextB}</p>
+      </section>
     `;
+  }
+
+  function getReadingMarkup(item) {
+    const localized = getLocalizedDiscipline(item, currentLang);
+
+    if (item.status === "research_in_progress") {
+      return `
+        <section class="reading-placeholder">
+          <div class="reading-placeholder__core">
+            <p class="reading-placeholder__label">${escapeHtml(localized.placeholderLabel)}</p>
+            <div class="reading-placeholder__word">${escapeHtml(localized.placeholderWord)}</div>
+            <p class="reading-placeholder__text">${escapeHtml(localized.placeholderText)}</p>
+          </div>
+        </section>
+      `;
     }
 
+    if (typeof localized.readingHtml === "string" && localized.readingHtml.trim()) {
+      return localized.readingHtml;
+    }
+
+    return buildDefaultReadingMarkup(item, localized);
+  }
+
   function applyReadingContent(item) {
+    const localized = getLocalizedDiscipline(item, currentLang);
+    const ui = getUi(currentLang);
+
     const index = disciplines.findIndex((entry) => entry.key === item.key) + 1;
     const hue = Math.round((360 / total) * (index - 1));
     const svgMarkup = typeof item.svg === "string" && item.svg.trim() ? item.svg : fallbackSvg;
@@ -377,22 +473,24 @@
 
     if (readingLayer) readingLayer.setAttribute("aria-hidden", "false");
     if (readingSigil) readingSigil.innerHTML = svgMarkup;
-    if (readingEyebrow) readingEyebrow.textContent = `DISCIPLINE ${String(index).padStart(2, "0")}`;
-    if (readingTitle) readingTitle.textContent = item.title;
-    if (readingPronounced) readingPronounced.textContent = item.pronounced;
-    if (readingDiscipline) readingDiscipline.textContent = item.discipline;
-    if (readingIntersection) readingIntersection.textContent = item.intersection;
-    if (readingConclusion) readingConclusion.textContent = item.conclusion;
+    if (readingEyebrow) readingEyebrow.textContent = `${ui.eyebrow} ${String(index).padStart(2, "0")}`;
+    if (readingTitle) readingTitle.textContent = localized.title;
+    if (readingPronounced) readingPronounced.textContent = localized.pronounced;
+    if (readingDiscipline) readingDiscipline.textContent = localized.discipline;
+    if (readingIntersection) readingIntersection.textContent = localized.intersection;
+    if (readingConclusion) readingConclusion.textContent = localized.conclusion;
     if (readingArticle) readingArticle.innerHTML = getReadingMarkup(item);
     if (readingScroll) readingScroll.scrollTop = 0;
 
-    document.title = `${item.title} – Aethereal Nexus`;
+    document.title = `${localized.title} – Aethereal Nexus`;
     if (metaDescription) {
       metaDescription.setAttribute(
         "content",
-        `${item.title}. ${item.discipline}. ${item.conclusion}`
+        `${localized.title}. ${localized.discipline}. ${localized.conclusion}`
       );
     }
+
+    updateStaticUiLanguage();
   }
 
   function restoreBaseMeta() {
@@ -406,6 +504,7 @@
     const item = getDisciplineByKey(key);
     if (!item) return;
 
+    currentOpenDisciplineKey = key;
     clearTimeout(clearStateTimer);
 
     const selectedNode = nodes.find((node) => node.dataset.key === key);
@@ -425,6 +524,7 @@
   }
 
   function closeDiscipline() {
+    currentOpenDisciplineKey = null;
     screen.classList.remove("is-reading");
 
     if (readingLayer) {
@@ -432,6 +532,7 @@
     }
 
     restoreBaseMeta();
+    updateStaticUiLanguage();
 
     clearTimeout(clearStateTimer);
     clearStateTimer = window.setTimeout(() => {
@@ -442,6 +543,55 @@
       orbit.classList.remove("is-hovering");
     }, 520);
   }
+
+  function setLanguage(lang) {
+    if (!SUPPORTED_LANGS.includes(lang)) return;
+
+    currentLang = lang;
+    localStorage.setItem("aen_lang", lang);
+    updateStaticUiLanguage();
+
+    if (currentOpenDisciplineKey) {
+      const item = getDisciplineByKey(currentOpenDisciplineKey);
+      if (item) {
+        applyReadingContent(item);
+      }
+    }
+  }
+
+  orbit.innerHTML = disciplines
+    .map((item, index) => {
+      const order = String(index + 1).padStart(2, "0");
+      const hue = Math.round((360 / total) * index);
+      const svgMarkup = typeof item.svg === "string" && item.svg.trim() ? item.svg : fallbackSvg;
+
+      return `
+        <a
+          class="orbit-node"
+          href="#${encodeURIComponent(item.key)}"
+          style="--i:${index}; --total:${total}; --node-hue:${hue};"
+          data-key="${item.key}"
+          aria-label="Open ${escapeHtml(item.title)}"
+        >
+          <span class="orbit-node__inner">
+            <span class="orbit-node__index">${order}</span>
+
+            <span class="orbit-node__sigil" aria-hidden="true">
+              ${svgMarkup}
+            </span>
+
+            <span class="orbit-node__title">${escapeHtml(item.title)}</span>
+
+            <span class="sr-only">
+              ${escapeHtml(item.title)}. ${escapeHtml(item.discipline)}. ${escapeHtml(item.conclusion)}
+            </span>
+          </span>
+        </a>
+      `;
+    })
+    .join("");
+
+  const nodes = Array.from(orbit.querySelectorAll(".orbit-node"));
 
   nodes.forEach((node) => {
     node.addEventListener("pointerenter", () => {
@@ -475,6 +625,14 @@
   if (readingBackBtn) {
     readingBackBtn.addEventListener("click", () => {
       closeDiscipline();
+    });
+  }
+
+  if (langSwitcher) {
+    langSwitcher.addEventListener("click", (event) => {
+      const button = event.target.closest(".lang-flag");
+      if (!button) return;
+      setLanguage(button.dataset.lang);
     });
   }
 
@@ -515,4 +673,7 @@
       event.stopPropagation();
     });
   }
+
+  updateStaticUiLanguage();
+  setLanguage(currentLang);
 })();

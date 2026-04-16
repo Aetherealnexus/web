@@ -6,7 +6,7 @@
     name="viewport"
     content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
   />
-  <title>Aethereal Nexus – The Twelve Disciplines</title>
+  <title>Aethereal Nexus</title>
   <meta
     name="description"
     content="Aethereal Nexus presents twelve symbolic disciplines of reality in an immersive orbital interface."
@@ -16,7 +16,7 @@
   <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="style.css" />
 
-  <meta property="og:title" content="Aethereal Nexus – The Twelve Disciplines" />
+  <meta property="og:title" content="Aethereal Nexus" />
   <meta
     property="og:description"
     content="An immersive orbital interface of twelve disciplines that illuminate the structure of reality."
@@ -26,10 +26,10 @@
   <meta property="og:type" content="website" />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Aethereal Nexus – The Twelve Disciplines" />
+  <meta name="twitter:title" content="Aethereal Nexus" />
   <meta
     name="twitter:description"
-    content="Enter the orbital architecture of the twelve disciplines of reality."
+    content="Enter the orbital architecture of reality."
   />
   <meta name="twitter:image" content="https://www.aethereal.nexus/images/aethereal_nexus.png" />
 
@@ -92,10 +92,29 @@ Para voltar às imagens random no futuro:
     >
       <article class="reading-panel" id="readingPanel">
         <header class="reading-panel__header">
-          <button type="button" class="reading-back-btn" id="readingBackBtn">
-            <span aria-hidden="true">←</span>
-            <span>Go Back</span>
-          </button>
+          <div class="reading-toolbar">
+            <button type="button" class="reading-back-btn" id="readingBackBtn">
+              <span aria-hidden="true">←</span>
+              <span id="readingBackBtnText">Go Back</span>
+            </button>
+
+            <div class="lang-switcher" id="langSwitcher" aria-label="Language selector">
+              <button type="button" class="lang-flag is-active" data-lang="en" aria-label="English">
+                <span class="lang-flag__emoji">🇬🇧</span>
+                <span class="lang-flag__label">EN</span>
+              </button>
+
+              <button type="button" class="lang-flag" data-lang="pt" aria-label="Português">
+                <span class="lang-flag__emoji">🇵🇹</span>
+                <span class="lang-flag__label">PT</span>
+              </button>
+
+              <button type="button" class="lang-flag" data-lang="fr" aria-label="Français">
+                <span class="lang-flag__emoji">🇫🇷</span>
+                <span class="lang-flag__label">FR</span>
+              </button>
+            </div>
+          </div>
 
           <div class="reading-head">
             <div class="reading-head__sigil" id="readingSigil" aria-hidden="true"></div>
