@@ -1,10 +1,10 @@
 (() => {
-  function sendDisciplineAnalytics(discipline, language = "en") {
+  function sendDisciplineAnalytics(discipline, language = "en", options = {}) {
+    const { includePageView = true } = options;
     if (!discipline || !discipline.key) return;
 
     const localized = getLocalizedDiscipline(discipline, language);
     const safeLanguage = language || document.documentElement.lang || "en";
-    const virtualHash = `#${discipline.key}`;
 
     if (typeof window.trackDisciplineOpen === "function") {
       window.trackDisciplineOpen(
@@ -14,11 +14,21 @@
       );
     }
 
-    if (typeof window.gtag === "function") {
+    if (includePageView && typeof window.gtag === "function") {
+      const absoluteUrl = buildAbsoluteStateUrl({
+        disciplineKey: discipline.key,
+        language: safeLanguage
+      });
+
+      const relativeUrl = buildStateUrl({
+        disciplineKey: discipline.key,
+        language: safeLanguage
+      });
+
       window.gtag("event", "page_view", {
         page_title: `${localized.title || discipline.title || discipline.key} – Aethereal Nexus`,
-        page_location: `${window.location.origin}${window.location.pathname}${virtualHash}${safeLanguage !== DEFAULT_LANG ? `?lang=${safeLanguage}` : ""}`,
-        page_path: `/${virtualHash}${safeLanguage !== DEFAULT_LANG ? `?lang=${safeLanguage}` : ""}`,
+        page_location: absoluteUrl,
+        page_path: relativeUrl,
         language: safeLanguage
       });
     }
@@ -33,12 +43,20 @@
 
     if (discipline && typeof window.gtag === "function") {
       const localized = getLocalizedDiscipline(discipline, safeLanguage);
-      const virtualHash = `#${discipline.key || "discipline"}`;
+      const absoluteUrl = buildAbsoluteStateUrl({
+        disciplineKey: discipline.key,
+        language: safeLanguage
+      });
+
+      const relativeUrl = buildStateUrl({
+        disciplineKey: discipline.key,
+        language: safeLanguage
+      });
 
       window.gtag("event", "page_view", {
         page_title: `${localized.title || discipline.title || "Discipline"} – Aethereal Nexus (${safeLanguage.toUpperCase()})`,
-        page_location: `${window.location.origin}${window.location.pathname}${safeLanguage !== DEFAULT_LANG ? `?lang=${safeLanguage}` : ""}${virtualHash}`,
-        page_path: `/${safeLanguage !== DEFAULT_LANG ? `?lang=${safeLanguage}` : ""}${virtualHash}`,
+        page_location: absoluteUrl,
+        page_path: relativeUrl,
         language: safeLanguage
       });
     }
@@ -46,16 +64,37 @@
 
   function sendHomeAnalytics(language = "en") {
     const safeLanguage = language || document.documentElement.lang || "en";
-    const search = safeLanguage !== DEFAULT_LANG ? `?lang=${safeLanguage}` : "";
+    const absoluteUrl = buildAbsoluteStateUrl({
+      disciplineKey: null,
+      language: safeLanguage
+    });
+
+    const relativeUrl = buildStateUrl({
+      disciplineKey: null,
+      language: safeLanguage
+    });
 
     if (typeof window.gtag === "function") {
       window.gtag("event", "page_view", {
         page_title: baseTitle,
-        page_location: `${window.location.origin}${window.location.pathname}${search}`,
-        page_path: `${window.location.pathname}${search}`,
+        page_location: absoluteUrl,
+        page_path: relativeUrl,
         language: safeLanguage
       });
     }
+  }
+
+  function sendShareAnalytics(method, discipline, language = "en") {
+    if (!discipline || typeof window.gtag !== "function") return;
+
+    const localized = getLocalizedDiscipline(discipline, language);
+
+    window.gtag("event", "discipline_share", {
+      share_method: method || "copy_link",
+      discipline_key: discipline.key || "",
+      discipline_title: localized.title || discipline.title || "",
+      language_selected: language || document.documentElement.lang || "en"
+    });
   }
 
   const body = document.body;
@@ -75,6 +114,8 @@
   const readingPanel = document.getElementById("readingPanel");
   const readingBackBtn = document.getElementById("readingBackBtn");
   const readingBackBtnText = document.getElementById("readingBackBtnText");
+  const readingShareBtn = document.getElementById("readingShareBtn");
+  const readingShareBtnText = document.getElementById("readingShareBtnText");
 
   const readingSigil = document.getElementById("readingSigil");
   const readingEyebrow = document.getElementById("readingEyebrow");
@@ -87,7 +128,14 @@
 
   const readingArticle = document.getElementById("readingArticle");
   const readingScroll = document.getElementById("readingScroll");
-  const metaDescription = document.querySelector('meta[name="description"]');
+  const metaDescription = document.getElementById("metaDescription");
+
+  const canonicalUrl = document.getElementById("canonicalUrl");
+  const metaOgTitle = document.getElementById("metaOgTitle");
+  const metaOgDescription = document.getElementById("metaOgDescription");
+  const metaOgUrl = document.getElementById("metaOgUrl");
+  const metaTwitterTitle = document.getElementById("metaTwitterTitle");
+  const metaTwitterDescription = document.getElementById("metaTwitterDescription");
 
   const langSwitcher = document.getElementById("langSwitcher");
   const langButtons = Array.from(document.querySelectorAll(".lang-flag"));
@@ -98,6 +146,10 @@
   const UI_TRANSLATIONS = {
     en: {
       back: "Go Back",
+      shareLink: "Share Link",
+      linkCopied: "Link Copied",
+      linkShared: "Shared",
+      linkCopyFailed: "Copy Failed",
       eyebrow: "DISCIPLINE",
       disciplineLabel: "Discipline",
       intersectionLabel: "Intersection",
@@ -120,6 +172,10 @@
     },
     pt: {
       back: "Voltar",
+      shareLink: "Partilhar Link",
+      linkCopied: "Link Copiado",
+      linkShared: "Partilhado",
+      linkCopyFailed: "Falha ao Copiar",
       eyebrow: "DISCIPLINA",
       disciplineLabel: "Disciplina",
       intersectionLabel: "Interseção",
@@ -142,6 +198,10 @@
     },
     fr: {
       back: "Retour",
+      shareLink: "Partager le Lien",
+      linkCopied: "Lien Copié",
+      linkShared: "Partagé",
+      linkCopyFailed: "Échec de Copie",
       eyebrow: "DISCIPLINE",
       disciplineLabel: "Discipline",
       intersectionLabel: "Intersection",
@@ -177,6 +237,12 @@
 
   const baseTitle = document.title;
   const baseDescription = metaDescription ? metaDescription.getAttribute("content") || "" : "";
+  const baseCanonical = canonicalUrl ? canonicalUrl.getAttribute("href") || "" : "";
+  const baseOgTitle = metaOgTitle ? metaOgTitle.getAttribute("content") || "" : "";
+  const baseOgDescription = metaOgDescription ? metaOgDescription.getAttribute("content") || "" : "";
+  const baseOgUrl = metaOgUrl ? metaOgUrl.getAttribute("content") || "" : "";
+  const baseTwitterTitle = metaTwitterTitle ? metaTwitterTitle.getAttribute("content") || "" : "";
+  const baseTwitterDescription = metaTwitterDescription ? metaTwitterDescription.getAttribute("content") || "" : "";
   const total = disciplines.length;
 
   let currentLang = (() => {
@@ -190,6 +256,9 @@
 
   let currentOpenDisciplineKey = null;
   let clearStateTimer = null;
+  let shareFeedbackTimer = null;
+  let shareFeedbackState = "default";
+  let stateApplyFrame = 0;
 
   function initImageBackgroundMode() {
     if (!pageBg || backgrounds.length === 0) return;
@@ -461,6 +530,13 @@
     return `${url.pathname}${url.search}${url.hash}`;
   }
 
+  function buildAbsoluteStateUrl({
+    disciplineKey = currentOpenDisciplineKey,
+    language = currentLang
+  } = {}) {
+    return `${window.location.origin}${buildStateUrl({ disciplineKey, language })}`;
+  }
+
   function syncUrlState({
     disciplineKey = currentOpenDisciplineKey,
     language = currentLang,
@@ -482,10 +558,84 @@
     );
   }
 
+  function setMetaContent(metaEl, value) {
+    if (!metaEl) return;
+    metaEl.setAttribute("content", value || "");
+  }
+
+  function setCanonicalValue(value) {
+    if (!canonicalUrl) return;
+    canonicalUrl.setAttribute("href", value || "");
+  }
+
+  function applyDisciplineMeta(item) {
+    const localized = getLocalizedDiscipline(item, currentLang);
+    const disciplineUrl = buildAbsoluteStateUrl({
+      disciplineKey: item.key,
+      language: currentLang
+    });
+
+    const title = `${localized.title} – Aethereal Nexus`;
+    const description = `${localized.title}. ${localized.discipline}. ${localized.conclusion}`;
+
+    document.title = title;
+
+    if (metaDescription) {
+      metaDescription.setAttribute("content", description);
+    }
+
+    setCanonicalValue(disciplineUrl);
+    setMetaContent(metaOgTitle, title);
+    setMetaContent(metaOgDescription, description);
+    setMetaContent(metaOgUrl, disciplineUrl);
+    setMetaContent(metaTwitterTitle, title);
+    setMetaContent(metaTwitterDescription, description);
+  }
+
+  function restoreBaseMeta() {
+    document.title = baseTitle;
+
+    if (metaDescription) {
+      metaDescription.setAttribute("content", baseDescription);
+    }
+
+    setCanonicalValue(baseCanonical);
+    setMetaContent(metaOgTitle, baseOgTitle);
+    setMetaContent(metaOgDescription, baseOgDescription);
+    setMetaContent(metaOgUrl, baseOgUrl);
+    setMetaContent(metaTwitterTitle, baseTwitterTitle);
+    setMetaContent(metaTwitterDescription, baseTwitterDescription);
+  }
+
   function updateLanguageButtons() {
     langButtons.forEach((button) => {
       button.classList.toggle("is-active", button.dataset.lang === currentLang);
     });
+  }
+
+  function setShareButtonState(state = "default", options = {}) {
+    const { autoReset = true } = options;
+    const ui = getUi(currentLang);
+    shareFeedbackState = state;
+
+    if (!readingShareBtn || !readingShareBtnText) return;
+
+    clearTimeout(shareFeedbackTimer);
+
+    let label = ui.shareLink;
+    if (state === "copied") label = ui.linkCopied;
+    if (state === "shared") label = ui.linkShared;
+    if (state === "error") label = ui.linkCopyFailed;
+
+    readingShareBtnText.textContent = label;
+    readingShareBtn.classList.toggle("is-success", state === "copied" || state === "shared");
+    readingShareBtn.classList.toggle("is-error", state === "error");
+
+    if (autoReset && state !== "default") {
+      shareFeedbackTimer = window.setTimeout(() => {
+        setShareButtonState("default", { autoReset: false });
+      }, 1800);
+    }
   }
 
   function updateStaticUiLanguage() {
@@ -496,6 +646,16 @@
 
     if (readingBackBtnText) {
       readingBackBtnText.textContent = ui.back;
+    }
+
+    if (readingShareBtn) {
+      readingShareBtn.disabled = !currentOpenDisciplineKey;
+    }
+
+    if (shareFeedbackState === "default") {
+      setShareButtonState("default", { autoReset: false });
+    } else {
+      setShareButtonState(shareFeedbackState, { autoReset: false });
     }
 
     const summaryLabels = document.querySelectorAll(".reading-summary__label");
@@ -523,7 +683,6 @@
 
   function buildDefaultReadingMarkup(item, localized) {
     const ui = getUi(currentLang);
-
     const orientationTextA = ui.orientationTextA.replace("{title}", escapeHtml(localized.title));
 
     return `
@@ -597,28 +756,90 @@
     if (readingArticle) readingArticle.innerHTML = getReadingMarkup(item);
     if (readingScroll) readingScroll.scrollTop = 0;
 
-    document.title = `${localized.title} – Aethereal Nexus`;
-    if (metaDescription) {
-      metaDescription.setAttribute(
-        "content",
-        `${localized.title}. ${localized.discipline}. ${localized.conclusion}`
-      );
-    }
-
+    applyDisciplineMeta(item);
     updateStaticUiLanguage();
   }
 
-  function restoreBaseMeta() {
-    document.title = baseTitle;
-    if (metaDescription) {
-      metaDescription.setAttribute("content", baseDescription);
+  function fallbackCopyText(text) {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+    textarea.style.pointerEvents = "none";
+    textarea.style.left = "-9999px";
+
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+
+    const successful = document.execCommand("copy");
+    document.body.removeChild(textarea);
+
+    if (!successful) {
+      throw new Error("Copy command failed");
+    }
+  }
+
+  async function handleShareAction() {
+    if (!currentOpenDisciplineKey) return;
+
+    const item = getDisciplineByKey(currentOpenDisciplineKey);
+    if (!item) return;
+
+    const localized = getLocalizedDiscipline(item, currentLang);
+    const shareUrl = buildAbsoluteStateUrl({
+      disciplineKey: item.key,
+      language: currentLang
+    });
+
+    try {
+      if (navigator.share && pointerMode.matches) {
+        await navigator.share({
+          title: `${localized.title} – Aethereal Nexus`,
+          text: localized.conclusion || localized.discipline || "",
+          url: shareUrl
+        });
+
+        setShareButtonState("shared");
+        sendShareAnalytics("native_share", item, currentLang);
+        return;
+      }
+
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(shareUrl);
+      } else {
+        fallbackCopyText(shareUrl);
+      }
+
+      setShareButtonState("copied");
+      sendShareAnalytics("copy_link", item, currentLang);
+    } catch (error) {
+      if (navigator.clipboard && window.isSecureContext) {
+        try {
+          await navigator.clipboard.writeText(shareUrl);
+          setShareButtonState("copied");
+          sendShareAnalytics("copy_link", item, currentLang);
+          return;
+        } catch (_) {
+          // continue to fallback below
+        }
+      }
+
+      try {
+        fallbackCopyText(shareUrl);
+        setShareButtonState("copied");
+        sendShareAnalytics("copy_link", item, currentLang);
+      } catch (_) {
+        setShareButtonState("error");
+      }
     }
   }
 
   function openDiscipline(key, options = {}) {
     const {
       syncUrl = true,
-      emitAnalytics = true,
+      analyticsMode = "full",
       replaceHistory = false
     } = options;
 
@@ -651,15 +872,17 @@
       });
     }
 
-    if (emitAnalytics) {
-      sendDisciplineAnalytics(item, currentLang);
+    if (analyticsMode === "full") {
+      sendDisciplineAnalytics(item, currentLang, { includePageView: true });
+    } else if (analyticsMode === "event-only") {
+      sendDisciplineAnalytics(item, currentLang, { includePageView: false });
     }
   }
 
   function closeDiscipline(options = {}) {
     const {
       syncUrl = true,
-      emitAnalytics = true,
+      analyticsMode = "full",
       replaceHistory = false
     } = options;
 
@@ -683,7 +906,7 @@
       });
     }
 
-    if (emitAnalytics && hadOpenDiscipline) {
+    if (analyticsMode === "full" && hadOpenDiscipline) {
       sendHomeAnalytics(currentLang);
     }
 
@@ -738,29 +961,42 @@
   }
 
   function applyUrlState(options = {}) {
-    const { emitAnalytics = true } = options;
+    const { analyticsMode = "full" } = options;
 
-    const urlLang = getLanguageFromUrl();
-    const targetLang = urlLang || currentLang || DEFAULT_LANG;
+    const targetLang = getLanguageFromUrl() || currentLang || DEFAULT_LANG;
     const targetDisciplineKey = getDisciplineKeyFromUrl();
 
-    setLanguage(targetLang, {
-      emitAnalytics: false,
-      syncUrl: false
-    });
+    const langChanged = targetLang !== currentLang;
+    const disciplineChanged = targetDisciplineKey !== currentOpenDisciplineKey;
+
+    if (!langChanged && !disciplineChanged) return;
+
+    if (langChanged) {
+      setLanguage(targetLang, {
+        emitAnalytics: false,
+        syncUrl: false
+      });
+    }
 
     if (targetDisciplineKey) {
-      openDiscipline(targetDisciplineKey, {
-        syncUrl: false,
-        emitAnalytics
-      });
+      if (disciplineChanged) {
+        openDiscipline(targetDisciplineKey, {
+          syncUrl: false,
+          analyticsMode
+        });
+      } else if (langChanged && analyticsMode === "full") {
+        const item = getDisciplineByKey(targetDisciplineKey);
+        if (item) {
+          sendLanguageAnalytics(targetLang, item);
+        }
+      }
       return;
     }
 
-    if (currentOpenDisciplineKey) {
+    if (disciplineChanged && currentOpenDisciplineKey) {
       closeDiscipline({
         syncUrl: false,
-        emitAnalytics
+        analyticsMode
       });
       return;
     }
@@ -768,9 +1004,16 @@
     restoreBaseMeta();
     updateStaticUiLanguage();
 
-    if (emitAnalytics) {
+    if (langChanged && analyticsMode === "full") {
       sendHomeAnalytics(currentLang);
     }
+  }
+
+  function scheduleUrlStateApply(analyticsMode = "full") {
+    cancelAnimationFrame(stateApplyFrame);
+    stateApplyFrame = window.requestAnimationFrame(() => {
+      applyUrlState({ analyticsMode });
+    });
   }
 
   orbit.innerHTML = disciplines
@@ -824,7 +1067,7 @@
       event.preventDefault();
       openDiscipline(node.dataset.key, {
         syncUrl: true,
-        emitAnalytics: true
+        analyticsMode: "full"
       });
     });
   });
@@ -843,8 +1086,14 @@
     readingBackBtn.addEventListener("click", () => {
       closeDiscipline({
         syncUrl: true,
-        emitAnalytics: true
+        analyticsMode: "full"
       });
+    });
+  }
+
+  if (readingShareBtn) {
+    readingShareBtn.addEventListener("click", () => {
+      handleShareAction();
     });
   }
 
@@ -861,14 +1110,18 @@
   }
 
   window.addEventListener("popstate", () => {
-    applyUrlState({ emitAnalytics: true });
+    scheduleUrlStateApply("full");
+  });
+
+  window.addEventListener("hashchange", () => {
+    scheduleUrlStateApply("full");
   });
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && screen.classList.contains("is-reading")) {
       closeDiscipline({
         syncUrl: true,
-        emitAnalytics: true
+        analyticsMode: "full"
       });
     }
   });
@@ -911,7 +1164,12 @@
     syncUrl: false
   });
 
+  if (readingShareBtn) {
+    readingShareBtn.disabled = true;
+    setShareButtonState("default", { autoReset: false });
+  }
+
   applyUrlState({
-    emitAnalytics: Boolean(getDisciplineKeyFromUrl())
+    analyticsMode: getDisciplineKeyFromUrl() ? "event-only" : "none"
   });
 })();

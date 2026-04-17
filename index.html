@@ -10,6 +10,7 @@
   <title>Aethereal Nexus | Consciousness, Reality and Symbolic Disciplines</title>
 
   <meta
+    id="metaDescription"
     name="description"
     content="Aethereal Nexus is a knowledge hub exploring twelve original disciplines across consciousness, reality, philosophy, symbolism, science and meaning through an immersive orbital interface."
   />
@@ -29,7 +30,7 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="format-detection" content="telephone=no" />
 
-  <link rel="canonical" href="https://www.aethereal.nexus/" />
+  <link id="canonicalUrl" rel="canonical" href="https://www.aethereal.nexus/" />
   <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="style.css" />
 
@@ -73,12 +74,21 @@
   <meta property="og:locale" content="en_US" />
   <meta property="og:locale:alternate" content="pt_PT" />
   <meta property="og:locale:alternate" content="fr_FR" />
-  <meta property="og:title" content="Aethereal Nexus | Consciousness, Reality and Symbolic Disciplines" />
   <meta
+    id="metaOgTitle"
+    property="og:title"
+    content="Aethereal Nexus | Consciousness, Reality and Symbolic Disciplines"
+  />
+  <meta
+    id="metaOgDescription"
     property="og:description"
     content="A knowledge hub of twelve original disciplines exploring consciousness, reality, philosophy, symbolism, science and meaning."
   />
-  <meta property="og:url" content="https://www.aethereal.nexus/" />
+  <meta
+    id="metaOgUrl"
+    property="og:url"
+    content="https://www.aethereal.nexus/"
+  />
   <meta property="og:image" content="https://www.aethereal.nexus/images/aethereal_nexus.png" />
   <meta property="og:image:type" content="image/png" />
   <meta
@@ -87,8 +97,13 @@
   />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Aethereal Nexus | Consciousness, Reality and Symbolic Disciplines" />
   <meta
+    id="metaTwitterTitle"
+    name="twitter:title"
+    content="Aethereal Nexus | Consciousness, Reality and Symbolic Disciplines"
+  />
+  <meta
+    id="metaTwitterDescription"
     name="twitter:description"
     content="Enter an immersive knowledge hub of twelve original disciplines on consciousness, reality, symbolism, philosophy and meaning."
   />
@@ -236,10 +251,22 @@ Para voltar às imagens random no futuro:
       <article class="reading-panel" id="readingPanel">
         <header class="reading-panel__header">
           <div class="reading-toolbar">
-            <button type="button" class="reading-back-btn" id="readingBackBtn">
-              <span aria-hidden="true">←</span>
-              <span id="readingBackBtnText">Go Back</span>
-            </button>
+            <div class="reading-toolbar__actions">
+              <button type="button" class="reading-back-btn" id="readingBackBtn">
+                <span aria-hidden="true">←</span>
+                <span id="readingBackBtnText">Go Back</span>
+              </button>
+
+              <button
+                type="button"
+                class="reading-share-btn"
+                id="readingShareBtn"
+                aria-label="Share direct link"
+              >
+                <span aria-hidden="true">↗</span>
+                <span id="readingShareBtnText">Share Link</span>
+              </button>
+            </div>
 
             <div class="lang-switcher" id="langSwitcher" aria-label="Language selector">
               <button type="button" class="lang-flag is-active" data-lang="en" aria-label="English">

@@ -62,7 +62,22 @@
     background 260ms ease;
 }
 
-.reading-back-btn {
+.reading-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.reading-toolbar__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.reading-back-btn,
+.reading-share-btn {
   appearance: none;
   border: 1px solid rgba(255,255,255,0.10);
   background: rgba(8, 14, 27, 0.74);
@@ -82,16 +97,44 @@
     transform 180ms ease,
     border-color 180ms ease,
     background 180ms ease,
-    box-shadow 180ms ease;
+    box-shadow 180ms ease,
+    opacity 180ms ease;
 }
 
 .reading-back-btn:hover,
-.reading-back-btn:focus-visible {
+.reading-back-btn:focus-visible,
+.reading-share-btn:hover,
+.reading-share-btn:focus-visible {
   transform: translateY(-1px);
   border-color: hsla(var(--discipline-hue), 100%, 84%, 0.34);
   background: rgba(12, 20, 38, 0.92);
   box-shadow: 0 0 0 1px hsla(var(--discipline-hue), 100%, 80%, 0.10);
   outline: none;
+}
+
+.reading-share-btn.is-success {
+  border-color: hsla(var(--discipline-hue), 100%, 88%, 0.44);
+  background:
+    linear-gradient(180deg, rgba(20, 35, 70, 0.92), rgba(11, 20, 39, 0.98));
+  box-shadow:
+    0 0 0 1px hsla(var(--discipline-hue), 100%, 80%, 0.14),
+    0 0 22px hsla(var(--discipline-hue), 100%, 76%, 0.08);
+}
+
+.reading-share-btn.is-error {
+  border-color: rgba(255, 120, 120, 0.42);
+  background: rgba(46, 12, 18, 0.92);
+  box-shadow:
+    0 0 0 1px rgba(255, 120, 120, 0.10),
+    0 0 22px rgba(255, 80, 80, 0.08);
+}
+
+.reading-share-btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+  pointer-events: none;
+  transform: none;
+  box-shadow: none;
 }
 
 .reading-head {
@@ -332,13 +375,6 @@
   color: rgba(244, 247, 255, 0.82);
 }
 
-.reading-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-}
-
 .lang-switcher {
   display: inline-flex;
   align-items: center;
@@ -500,6 +536,15 @@
   .reading-toolbar {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .reading-toolbar__actions {
+    justify-content: center;
+  }
+
+  .reading-back-btn,
+  .reading-share-btn {
+    justify-content: center;
   }
 
   .lang-switcher {
