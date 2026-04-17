@@ -114,8 +114,10 @@
   const readingPanel = document.getElementById("readingPanel");
   const readingBackBtn = document.getElementById("readingBackBtn");
   const readingBackBtnText = document.getElementById("readingBackBtnText");
-  const readingShareBtn = document.getElementById("readingShareBtn");
-  const readingShareBtnText = document.getElementById("readingShareBtnText");
+  const readingCopyBtn = document.getElementById("readingCopyBtn");
+  const readingCopyBtnText = document.getElementById("readingCopyBtnText");
+  const readingNativeShareBtn = document.getElementById("readingNativeShareBtn");
+  const readingNativeShareBtnText = document.getElementById("readingNativeShareBtnText");
 
   const readingSigil = document.getElementById("readingSigil");
   const readingEyebrow = document.getElementById("readingEyebrow");
@@ -142,14 +144,17 @@
 
   const SUPPORTED_LANGS = ["en", "pt", "fr"];
   const DEFAULT_LANG = "en";
+  const supportsNativeShare = typeof navigator.share === "function";
 
   const UI_TRANSLATIONS = {
     en: {
       back: "Go Back",
-      shareLink: "Share Link",
+      copyLink: "Copy Link",
+      shareNative: "Share",
       linkCopied: "Link Copied",
-      linkShared: "Shared",
       linkCopyFailed: "Copy Failed",
+      linkShared: "Shared",
+      shareFailed: "Share Failed",
       eyebrow: "DISCIPLINE",
       disciplineLabel: "Discipline",
       intersectionLabel: "Intersection",
@@ -172,10 +177,12 @@
     },
     pt: {
       back: "Voltar",
-      shareLink: "Partilhar Link",
+      copyLink: "Copiar Link",
+      shareNative: "Partilhar",
       linkCopied: "Link Copiado",
-      linkShared: "Partilhado",
       linkCopyFailed: "Falha ao Copiar",
+      linkShared: "Partilhado",
+      shareFailed: "Falha ao Partilhar",
       eyebrow: "DISCIPLINA",
       disciplineLabel: "Disciplina",
       intersectionLabel: "Interseção",
@@ -198,10 +205,12 @@
     },
     fr: {
       back: "Retour",
-      shareLink: "Partager le Lien",
+      copyLink: "Copier le Lien",
+      shareNative: "Partager",
       linkCopied: "Lien Copié",
-      linkShared: "Partagé",
       linkCopyFailed: "Échec de Copie",
+      linkShared: "Partagé",
+      shareFailed: "Échec du Partage",
       eyebrow: "DISCIPLINE",
       disciplineLabel: "Discipline",
       intersectionLabel: "Intersection",
@@ -256,8 +265,10 @@
 
   let currentOpenDisciplineKey = null;
   let clearStateTimer = null;
+  let copyFeedbackTimer = null;
   let shareFeedbackTimer = null;
-  let shareFeedbackState = "default";
+  let copyFeedbackState = "default";
+  let nativeShareFeedbackState = "default";
   let stateApplyFrame = 0;
 
   function initImageBackgroundMode() {
@@ -613,27 +624,50 @@
     });
   }
 
-  function setShareButtonState(state = "default", options = {}) {
+  function setCopyButtonState(state = "default", options = {}) {
     const { autoReset = true } = options;
     const ui = getUi(currentLang);
-    shareFeedbackState = state;
+    copyFeedbackState = state;
 
-    if (!readingShareBtn || !readingShareBtnText) return;
+    if (!readingCopyBtn || !readingCopyBtnText) return;
+
+    clearTimeout(copyFeedbackTimer);
+
+    let label = ui.copyLink;
+    if (state === "copied") label = ui.linkCopied;
+    if (state === "error") label = ui.linkCopyFailed;
+
+    readingCopyBtnText.textContent = label;
+    readingCopyBtn.classList.toggle("is-success", state === "copied");
+    readingCopyBtn.classList.toggle("is-error", state === "error");
+
+    if (autoReset && state !== "default") {
+      copyFeedbackTimer = window.setTimeout(() => {
+        setCopyButtonState("default", { autoReset: false });
+      }, 1800);
+    }
+  }
+
+  function setNativeShareButtonState(state = "default", options = {}) {
+    const { autoReset = true } = options;
+    const ui = getUi(currentLang);
+    nativeShareFeedbackState = state;
+
+    if (!readingNativeShareBtn || !readingNativeShareBtnText) return;
 
     clearTimeout(shareFeedbackTimer);
 
-    let label = ui.shareLink;
-    if (state === "copied") label = ui.linkCopied;
+    let label = ui.shareNative;
     if (state === "shared") label = ui.linkShared;
-    if (state === "error") label = ui.linkCopyFailed;
+    if (state === "error") label = ui.shareFailed;
 
-    readingShareBtnText.textContent = label;
-    readingShareBtn.classList.toggle("is-success", state === "copied" || state === "shared");
-    readingShareBtn.classList.toggle("is-error", state === "error");
+    readingNativeShareBtnText.textContent = label;
+    readingNativeShareBtn.classList.toggle("is-success", state === "shared");
+    readingNativeShareBtn.classList.toggle("is-error", state === "error");
 
     if (autoReset && state !== "default") {
       shareFeedbackTimer = window.setTimeout(() => {
-        setShareButtonState("default", { autoReset: false });
+        setNativeShareButtonState("default", { autoReset: false });
       }, 1800);
     }
   }
@@ -648,15 +682,17 @@
       readingBackBtnText.textContent = ui.back;
     }
 
-    if (readingShareBtn) {
-      readingShareBtn.disabled = !currentOpenDisciplineKey;
+    if (readingCopyBtn) {
+      readingCopyBtn.disabled = !currentOpenDisciplineKey;
     }
 
-    if (shareFeedbackState === "default") {
-      setShareButtonState("default", { autoReset: false });
-    } else {
-      setShareButtonState(shareFeedbackState, { autoReset: false });
+    if (readingNativeShareBtn) {
+      readingNativeShareBtn.hidden = !supportsNativeShare;
+      readingNativeShareBtn.disabled = !currentOpenDisciplineKey || !supportsNativeShare;
     }
+
+    setCopyButtonState(copyFeedbackState, { autoReset: false });
+    setNativeShareButtonState(nativeShareFeedbackState, { autoReset: false });
 
     const summaryLabels = document.querySelectorAll(".reading-summary__label");
     if (summaryLabels[0]) summaryLabels[0].textContent = ui.disciplineLabel;
@@ -781,8 +817,39 @@
     }
   }
 
-  async function handleShareAction() {
+  async function handleCopyLinkAction() {
     if (!currentOpenDisciplineKey) return;
+
+    const item = getDisciplineByKey(currentOpenDisciplineKey);
+    if (!item) return;
+
+    const shareUrl = buildAbsoluteStateUrl({
+      disciplineKey: item.key,
+      language: currentLang
+    });
+
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(shareUrl);
+      } else {
+        fallbackCopyText(shareUrl);
+      }
+
+      setCopyButtonState("copied");
+      sendShareAnalytics("copy_link", item, currentLang);
+    } catch (_) {
+      try {
+        fallbackCopyText(shareUrl);
+        setCopyButtonState("copied");
+        sendShareAnalytics("copy_link", item, currentLang);
+      } catch (error) {
+        setCopyButtonState("error");
+      }
+    }
+  }
+
+  async function handleNativeShareAction() {
+    if (!supportsNativeShare || !currentOpenDisciplineKey) return;
 
     const item = getDisciplineByKey(currentOpenDisciplineKey);
     if (!item) return;
@@ -794,45 +861,17 @@
     });
 
     try {
-      if (navigator.share && pointerMode.matches) {
-        await navigator.share({
-          title: `${localized.title} – Aethereal Nexus`,
-          text: localized.conclusion || localized.discipline || "",
-          url: shareUrl
-        });
+      await navigator.share({
+        title: `${localized.title} – Aethereal Nexus`,
+        text: localized.conclusion || localized.discipline || "",
+        url: shareUrl
+      });
 
-        setShareButtonState("shared");
-        sendShareAnalytics("native_share", item, currentLang);
-        return;
-      }
-
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(shareUrl);
-      } else {
-        fallbackCopyText(shareUrl);
-      }
-
-      setShareButtonState("copied");
-      sendShareAnalytics("copy_link", item, currentLang);
+      setNativeShareButtonState("shared");
+      sendShareAnalytics("native_share", item, currentLang);
     } catch (error) {
-      if (navigator.clipboard && window.isSecureContext) {
-        try {
-          await navigator.clipboard.writeText(shareUrl);
-          setShareButtonState("copied");
-          sendShareAnalytics("copy_link", item, currentLang);
-          return;
-        } catch (_) {
-          // continue to fallback below
-        }
-      }
-
-      try {
-        fallbackCopyText(shareUrl);
-        setShareButtonState("copied");
-        sendShareAnalytics("copy_link", item, currentLang);
-      } catch (_) {
-        setShareButtonState("error");
-      }
+      if (error && error.name === "AbortError") return;
+      setNativeShareButtonState("error");
     }
   }
 
@@ -848,6 +887,9 @@
 
     currentOpenDisciplineKey = key;
     clearTimeout(clearStateTimer);
+
+    setCopyButtonState("default", { autoReset: false });
+    setNativeShareButtonState("default", { autoReset: false });
 
     const selectedNode = nodes.find((node) => node.dataset.key === key);
 
@@ -890,6 +932,9 @@
 
     currentOpenDisciplineKey = null;
     screen.classList.remove("is-reading");
+
+    setCopyButtonState("default", { autoReset: false });
+    setNativeShareButtonState("default", { autoReset: false });
 
     if (readingLayer) {
       readingLayer.setAttribute("aria-hidden", "true");
@@ -1091,9 +1136,15 @@
     });
   }
 
-  if (readingShareBtn) {
-    readingShareBtn.addEventListener("click", () => {
-      handleShareAction();
+  if (readingCopyBtn) {
+    readingCopyBtn.addEventListener("click", () => {
+      handleCopyLinkAction();
+    });
+  }
+
+  if (readingNativeShareBtn) {
+    readingNativeShareBtn.addEventListener("click", () => {
+      handleNativeShareAction();
     });
   }
 
@@ -1164,9 +1215,15 @@
     syncUrl: false
   });
 
-  if (readingShareBtn) {
-    readingShareBtn.disabled = true;
-    setShareButtonState("default", { autoReset: false });
+  if (readingCopyBtn) {
+    readingCopyBtn.disabled = true;
+    setCopyButtonState("default", { autoReset: false });
+  }
+
+  if (readingNativeShareBtn) {
+    readingNativeShareBtn.hidden = !supportsNativeShare;
+    readingNativeShareBtn.disabled = true;
+    setNativeShareButtonState("default", { autoReset: false });
   }
 
   applyUrlState({

@@ -259,12 +259,22 @@ Para voltar às imagens random no futuro:
 
               <button
                 type="button"
-                class="reading-share-btn"
-                id="readingShareBtn"
-                aria-label="Share direct link"
+                class="reading-copy-btn"
+                id="readingCopyBtn"
+                aria-label="Copy direct link"
+              >
+                <span aria-hidden="true">⧉</span>
+                <span id="readingCopyBtnText">Copy Link</span>
+              </button>
+
+              <button
+                type="button"
+                class="reading-native-share-btn"
+                id="readingNativeShareBtn"
+                aria-label="Open native share"
               >
                 <span aria-hidden="true">↗</span>
-                <span id="readingShareBtnText">Share Link</span>
+                <span id="readingNativeShareBtnText">Share</span>
               </button>
             </div>
 

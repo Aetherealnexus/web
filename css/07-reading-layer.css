@@ -77,7 +77,8 @@
 }
 
 .reading-back-btn,
-.reading-share-btn {
+.reading-copy-btn,
+.reading-native-share-btn {
   appearance: none;
   border: 1px solid rgba(255,255,255,0.10);
   background: rgba(8, 14, 27, 0.74);
@@ -103,8 +104,10 @@
 
 .reading-back-btn:hover,
 .reading-back-btn:focus-visible,
-.reading-share-btn:hover,
-.reading-share-btn:focus-visible {
+.reading-copy-btn:hover,
+.reading-copy-btn:focus-visible,
+.reading-native-share-btn:hover,
+.reading-native-share-btn:focus-visible {
   transform: translateY(-1px);
   border-color: hsla(var(--discipline-hue), 100%, 84%, 0.34);
   background: rgba(12, 20, 38, 0.92);
@@ -112,7 +115,8 @@
   outline: none;
 }
 
-.reading-share-btn.is-success {
+.reading-copy-btn.is-success,
+.reading-native-share-btn.is-success {
   border-color: hsla(var(--discipline-hue), 100%, 88%, 0.44);
   background:
     linear-gradient(180deg, rgba(20, 35, 70, 0.92), rgba(11, 20, 39, 0.98));
@@ -121,7 +125,8 @@
     0 0 22px hsla(var(--discipline-hue), 100%, 76%, 0.08);
 }
 
-.reading-share-btn.is-error {
+.reading-copy-btn.is-error,
+.reading-native-share-btn.is-error {
   border-color: rgba(255, 120, 120, 0.42);
   background: rgba(46, 12, 18, 0.92);
   box-shadow:
@@ -129,12 +134,17 @@
     0 0 22px rgba(255, 80, 80, 0.08);
 }
 
-.reading-share-btn:disabled {
+.reading-copy-btn:disabled,
+.reading-native-share-btn:disabled {
   opacity: 0.55;
   cursor: default;
   pointer-events: none;
   transform: none;
   box-shadow: none;
+}
+
+.reading-native-share-btn[hidden] {
+  display: none !important;
 }
 
 .reading-head {
@@ -543,7 +553,8 @@
   }
 
   .reading-back-btn,
-  .reading-share-btn {
+  .reading-copy-btn,
+  .reading-native-share-btn {
     justify-content: center;
   }
 
