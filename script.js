@@ -1,4 +1,44 @@
 (() => {
+  function sendDisciplineAnalytics(discipline, language = "en") {
+    if (!discipline || !discipline.key) return;
+
+    if (typeof window.trackDisciplineOpen === "function") {
+      window.trackDisciplineOpen(
+        discipline.key,
+        discipline.title || "",
+        language || document.documentElement.lang || "en"
+      );
+    }
+
+    if (typeof window.gtag === "function") {
+      const virtualHash = `#${discipline.key}`;
+
+      window.gtag("event", "page_view", {
+        page_title: `${discipline.title || discipline.key} – Aethereal Nexus`,
+        page_location: `${window.location.origin}${window.location.pathname}${virtualHash}`,
+        page_path: `/${virtualHash}`,
+        language: language || document.documentElement.lang || "en"
+      });
+    }
+  }
+
+  function sendLanguageAnalytics(language = "en", discipline = null) {
+    if (typeof window.trackLanguageChange === "function") {
+      window.trackLanguageChange(language || document.documentElement.lang || "en");
+    }
+
+    if (discipline && typeof window.gtag === "function") {
+      const virtualHash = `#${discipline.key || "discipline"}`;
+
+      window.gtag("event", "page_view", {
+        page_title: `${discipline.title || "Discipline"} – Aethereal Nexus (${language.toUpperCase()})`,
+        page_location: `${window.location.origin}${window.location.pathname}${virtualHash}?lang=${language}`,
+        page_path: `/${virtualHash}?lang=${language}`,
+        language: language || document.documentElement.lang || "en"
+      });
+    }
+  }
+
   const body = document.body;
   const bgMode = (body?.dataset?.bgMode || "fx").toLowerCase();
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -521,6 +561,8 @@
     requestAnimationFrame(() => {
       screen.classList.add("is-reading");
     });
+
+    sendDisciplineAnalytics(item, currentLang);
   }
 
   function closeDiscipline() {
@@ -544,18 +586,27 @@
     }, 520);
   }
 
-  function setLanguage(lang) {
+  function setLanguage(lang, options = {}) {
     if (!SUPPORTED_LANGS.includes(lang)) return;
+
+    const { emitAnalytics = true } = options;
+    const previousLang = currentLang;
 
     currentLang = lang;
     localStorage.setItem("aen_lang", lang);
     updateStaticUiLanguage();
 
+    let currentItem = null;
+
     if (currentOpenDisciplineKey) {
-      const item = getDisciplineByKey(currentOpenDisciplineKey);
-      if (item) {
-        applyReadingContent(item);
+      currentItem = getDisciplineByKey(currentOpenDisciplineKey);
+      if (currentItem) {
+        applyReadingContent(currentItem);
       }
+    }
+
+    if (emitAnalytics && previousLang !== lang) {
+      sendLanguageAnalytics(lang, currentItem);
     }
   }
 
@@ -675,5 +726,5 @@
   }
 
   updateStaticUiLanguage();
-  setLanguage(currentLang);
+  setLanguage(currentLang, { emitAnalytics: false });
 })();
