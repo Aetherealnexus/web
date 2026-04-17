@@ -79,27 +79,65 @@
 .reading-back-btn,
 .reading-copy-btn,
 .reading-native-share-btn {
+  position: relative;
+  isolation: isolate;
   appearance: none;
   border: 1px solid rgba(255,255,255,0.10);
-  background: rgba(8, 14, 27, 0.74);
+  background:
+    linear-gradient(180deg, rgba(13, 22, 42, 0.92), rgba(8, 14, 27, 0.88));
   color: var(--text-0);
   border-radius: 999px;
-  padding: 10px 14px;
+  padding: 9px 14px 9px 10px;
   display: inline-flex;
   align-items: center;
   gap: 10px;
   font: inherit;
   font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
+  font-weight: 650;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   cursor: pointer;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.04),
+    0 10px 30px rgba(0,0,0,0.22),
+    0 0 0 1px rgba(255,255,255,0.02);
   transition:
     transform 180ms ease,
     border-color 180ms ease,
     background 180ms ease,
     box-shadow 180ms ease,
-    opacity 180ms ease;
+    opacity 180ms ease,
+    color 180ms ease;
+}
+
+.reading-back-btn::before,
+.reading-copy-btn::before,
+.reading-native-share-btn::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+  opacity: 0.7;
+  z-index: -1;
+}
+
+.reading-back-btn::after,
+.reading-copy-btn::after,
+.reading-native-share-btn::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 50%, hsla(var(--discipline-hue), 100%, 80%, 0.14), transparent 42%),
+    radial-gradient(circle at 80% 50%, hsla(var(--discipline-hue), 100%, 72%, 0.10), transparent 48%);
+  opacity: 0;
+  transition: opacity 180ms ease;
+  z-index: -2;
 }
 
 .reading-back-btn:hover,
@@ -110,28 +148,128 @@
 .reading-native-share-btn:focus-visible {
   transform: translateY(-1px);
   border-color: hsla(var(--discipline-hue), 100%, 84%, 0.34);
-  background: rgba(12, 20, 38, 0.92);
-  box-shadow: 0 0 0 1px hsla(var(--discipline-hue), 100%, 80%, 0.10);
+  background:
+    linear-gradient(180deg, rgba(18, 30, 57, 0.96), rgba(10, 18, 35, 0.94));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.06),
+    0 14px 36px rgba(0,0,0,0.26),
+    0 0 0 1px hsla(var(--discipline-hue), 100%, 80%, 0.10),
+    0 0 24px hsla(var(--discipline-hue), 100%, 76%, 0.08);
   outline: none;
+}
+
+.reading-back-btn:hover::after,
+.reading-back-btn:focus-visible::after,
+.reading-copy-btn:hover::after,
+.reading-copy-btn:focus-visible::after,
+.reading-native-share-btn:hover::after,
+.reading-native-share-btn:focus-visible::after {
+  opacity: 1;
+}
+
+.reading-action-btn__icon {
+  position: relative;
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  color: hsla(var(--discipline-hue), 100%, 88%, 0.96);
+  background:
+    radial-gradient(circle at 50% 30%, hsla(var(--discipline-hue), 100%, 82%, 0.18), transparent 62%),
+    linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  border: 1px solid hsla(var(--discipline-hue), 100%, 84%, 0.16);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.04),
+    0 0 18px hsla(var(--discipline-hue), 100%, 76%, 0.08);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease;
+}
+
+.reading-action-btn__icon::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, hsla(var(--discipline-hue), 100%, 80%, 0.16), transparent 70%);
+  filter: blur(10px);
+  opacity: 0.55;
+}
+
+.reading-action-btn__icon svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.reading-action-btn__label {
+  position: relative;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.reading-back-btn:hover .reading-action-btn__icon,
+.reading-back-btn:focus-visible .reading-action-btn__icon,
+.reading-copy-btn:hover .reading-action-btn__icon,
+.reading-copy-btn:focus-visible .reading-action-btn__icon,
+.reading-native-share-btn:hover .reading-action-btn__icon,
+.reading-native-share-btn:focus-visible .reading-action-btn__icon {
+  transform: scale(1.03);
+  border-color: hsla(var(--discipline-hue), 100%, 88%, 0.28);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.05),
+    0 0 22px hsla(var(--discipline-hue), 100%, 76%, 0.12);
 }
 
 .reading-copy-btn.is-success,
 .reading-native-share-btn.is-success {
   border-color: hsla(var(--discipline-hue), 100%, 88%, 0.44);
   background:
-    linear-gradient(180deg, rgba(20, 35, 70, 0.92), rgba(11, 20, 39, 0.98));
+    linear-gradient(180deg, rgba(20, 35, 70, 0.96), rgba(11, 20, 39, 0.98));
   box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.06),
     0 0 0 1px hsla(var(--discipline-hue), 100%, 80%, 0.14),
-    0 0 22px hsla(var(--discipline-hue), 100%, 76%, 0.08);
+    0 0 28px hsla(var(--discipline-hue), 100%, 76%, 0.12),
+    0 14px 34px rgba(0,0,0,0.24);
+}
+
+.reading-copy-btn.is-success .reading-action-btn__icon,
+.reading-native-share-btn.is-success .reading-action-btn__icon {
+  border-color: hsla(var(--discipline-hue), 100%, 88%, 0.34);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.06),
+    0 0 26px hsla(var(--discipline-hue), 100%, 76%, 0.16);
 }
 
 .reading-copy-btn.is-error,
 .reading-native-share-btn.is-error {
   border-color: rgba(255, 120, 120, 0.42);
-  background: rgba(46, 12, 18, 0.92);
+  background:
+    linear-gradient(180deg, rgba(54, 16, 24, 0.96), rgba(34, 10, 16, 0.94));
   box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.04),
     0 0 0 1px rgba(255, 120, 120, 0.10),
-    0 0 22px rgba(255, 80, 80, 0.08);
+    0 0 24px rgba(255, 80, 80, 0.10),
+    0 14px 34px rgba(0,0,0,0.24);
+}
+
+.reading-copy-btn.is-error .reading-action-btn__icon,
+.reading-native-share-btn.is-error .reading-action-btn__icon {
+  color: rgba(255, 210, 210, 0.96);
+  border-color: rgba(255, 120, 120, 0.28);
+  background:
+    radial-gradient(circle at 50% 30%, rgba(255, 120, 120, 0.16), transparent 62%),
+    linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
 }
 
 .reading-copy-btn:disabled,
@@ -140,7 +278,9 @@
   cursor: default;
   pointer-events: none;
   transform: none;
-  box-shadow: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.03),
+    0 8px 20px rgba(0,0,0,0.16);
 }
 
 .reading-native-share-btn[hidden] {
@@ -556,6 +696,7 @@
   .reading-copy-btn,
   .reading-native-share-btn {
     justify-content: center;
+    width: 100%;
   }
 
   .lang-switcher {
