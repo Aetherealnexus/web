@@ -1,4 +1,107 @@
 (() => {
+  const AEN_PERF = (() => {
+    const url = new URL(window.location.href);
+    const forcedMode = url.searchParams.get("perf"); // optimized | normal
+    const storedMode = localStorage.getItem("aen_perf_mode");
+
+    const weakDeviceHint =
+      (typeof navigator.deviceMemory === "number" && navigator.deviceMemory <= 4) ||
+      (typeof navigator.hardwareConcurrency === "number" && navigator.hardwareConcurrency <= 4) ||
+      navigator.connection?.saveData === true;
+
+    let optimized =
+      forcedMode === "optimized" ||
+      (forcedMode !== "normal" && (storedMode === "optimized" || weakDeviceHint));
+
+    let slowOpenCount = 0;
+
+    document.documentElement.dataset.performance = optimized ? "optimized" : "normal";
+
+    function broadcastMode() {
+      try {
+        window.dispatchEvent(
+          new CustomEvent("aen:performance-mode", {
+            detail: { optimized }
+          })
+        );
+      } catch (_) {
+        // ignore
+      }
+    }
+
+    function setOptimized(value, persist = true) {
+      const nextValue = Boolean(value);
+      const changed = optimized !== nextValue;
+
+      optimized = nextValue;
+      document.documentElement.dataset.performance = optimized ? "optimized" : "normal";
+
+      if (persist) {
+        if (optimized) {
+          localStorage.setItem("aen_perf_mode", "optimized");
+        } else {
+          localStorage.removeItem("aen_perf_mode");
+        }
+      }
+
+      if (changed) {
+        broadcastMode();
+      }
+    }
+
+    function isOptimized() {
+      return optimized;
+    }
+
+    function measureDisciplineOpen(startTime) {
+      const elapsed = performance.now() - startTime;
+
+      if (elapsed > 180) {
+        slowOpenCount += 1;
+
+        if (!optimized && slowOpenCount >= 2) {
+          setOptimized(true, true);
+        }
+      }
+
+      return elapsed;
+    }
+
+    function idle(callback, timeout = 800) {
+      if ("requestIdleCallback" in window) {
+        return window.requestIdleCallback(callback, { timeout });
+      }
+
+      return window.setTimeout(() => {
+        callback({
+          didTimeout: true,
+          timeRemaining: () => 8
+        });
+      }, 1);
+    }
+
+    function nonCritical(callback) {
+      return idle(() => callback(), 1200);
+    }
+
+    function afterPaint(callback) {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(callback);
+      });
+    }
+
+    return {
+      isOptimized,
+      setOptimized,
+      measureDisciplineOpen,
+      idle,
+      nonCritical,
+      afterPaint
+    };
+  })();
+
+  const readingDomCache = new Map();
+
   function sendDisciplineAnalytics(discipline, language = "en", options = {}) {
     const { includePageView = true } = options;
     if (!discipline || !discipline.key) return;
@@ -270,6 +373,7 @@
   let copyFeedbackState = "default";
   let nativeShareFeedbackState = "default";
   let stateApplyFrame = 0;
+  let metaUpdateSequence = 0;
 
   function initImageBackgroundMode() {
     if (!pageBg || backgrounds.length === 0) return;
@@ -300,7 +404,9 @@
       height: 0,
       dpr: 1,
       particles: [],
-      rafId: 0
+      rafId: 0,
+      pauseTimer: 0,
+      lastFrameTime: 0
     };
 
     function createParticle(index, width, height, count) {
@@ -322,7 +428,12 @@
     }
 
     function seedParticles() {
-      const count = Math.max(16, Math.min(38, Math.round(Math.min(state.width, state.height) / 42)));
+      const base = Math.min(state.width, state.height);
+      const divider = AEN_PERF.isOptimized() ? 58 : 42;
+      const maxCount = AEN_PERF.isOptimized() ? 18 : 38;
+      const minCount = AEN_PERF.isOptimized() ? 10 : 16;
+      const count = Math.max(minCount, Math.min(maxCount, Math.round(base / divider)));
+
       state.particles = Array.from({ length: count }, (_, index) =>
         createParticle(index, state.width, state.height, count)
       );
@@ -341,6 +452,7 @@
       ctx.scale(state.dpr, state.dpr);
 
       seedParticles();
+      state.lastFrameTime = 0;
       renderFrame(performance.now(), true);
     }
 
@@ -430,6 +542,15 @@
 
     function renderFrame(now, staticOnly = false) {
       const time = now || 0;
+      const targetFrameInterval = AEN_PERF.isOptimized() ? 1000 / 30 : 1000 / 60;
+
+      if (!staticOnly && time - state.lastFrameTime < targetFrameInterval) {
+        state.rafId = window.requestAnimationFrame(renderFrame);
+        return;
+      }
+
+      state.lastFrameTime = time;
+
       ctx.clearRect(0, 0, state.width, state.height);
 
       drawCoreGlow();
@@ -445,6 +566,7 @@
 
     function start() {
       cancelAnimationFrame(state.rafId);
+      clearTimeout(state.pauseTimer);
       resizeCanvas();
 
       if (!prefersReducedMotion.matches) {
@@ -454,11 +576,41 @@
 
     function stop() {
       cancelAnimationFrame(state.rafId);
+      clearTimeout(state.pauseTimer);
     }
+
+    window.AEN_BG_FX = {
+      pause() {
+        cancelAnimationFrame(state.rafId);
+      },
+      resume() {
+        cancelAnimationFrame(state.rafId);
+        state.lastFrameTime = 0;
+        if (!prefersReducedMotion.matches) {
+          state.rafId = window.requestAnimationFrame(renderFrame);
+        }
+      },
+      pauseFor(ms = 350) {
+        cancelAnimationFrame(state.rafId);
+        clearTimeout(state.pauseTimer);
+        state.pauseTimer = window.setTimeout(() => {
+          state.lastFrameTime = 0;
+          if (!prefersReducedMotion.matches) {
+            state.rafId = window.requestAnimationFrame(renderFrame);
+          }
+        }, ms);
+      },
+      refresh() {
+        start();
+      }
+    };
 
     window.addEventListener("resize", start, { passive: true });
     prefersReducedMotion.addEventListener?.("change", start);
     window.addEventListener("beforeunload", stop, { passive: true });
+    window.addEventListener("aen:performance-mode", () => {
+      start();
+    });
 
     start();
   }
@@ -579,11 +731,11 @@
     canonicalUrl.setAttribute("href", value || "");
   }
 
-  function applyDisciplineMeta(item) {
-    const localized = getLocalizedDiscipline(item, currentLang);
+  function applyDisciplineMeta(item, lang = currentLang) {
+    const localized = getLocalizedDiscipline(item, lang);
     const disciplineUrl = buildAbsoluteStateUrl({
       disciplineKey: item.key,
-      language: currentLang
+      language: lang
     });
 
     const title = `${localized.title} – Aethereal Nexus`;
@@ -717,8 +869,8 @@
     orbit.classList.remove("is-hovering");
   }
 
-  function buildDefaultReadingMarkup(item, localized) {
-    const ui = getUi(currentLang);
+  function buildDefaultReadingMarkup(item, localized, lang = currentLang) {
+    const ui = getUi(lang);
     const orientationTextA = ui.orientationTextA.replace("{title}", escapeHtml(localized.title));
 
     return `
@@ -749,8 +901,8 @@
     `;
   }
 
-  function getReadingMarkup(item) {
-    const localized = getLocalizedDiscipline(item, currentLang);
+  function getReadingMarkup(item, lang = currentLang) {
+    const localized = getLocalizedDiscipline(item, lang);
 
     if (item.status === "research_in_progress") {
       return `
@@ -768,7 +920,48 @@
       return localized.readingHtml;
     }
 
-    return buildDefaultReadingMarkup(item, localized);
+    return buildDefaultReadingMarkup(item, localized, lang);
+  }
+
+  function getReadingFragment(item, lang = currentLang) {
+    const cacheKey = `${item.key}::${lang}`;
+
+    if (!readingDomCache.has(cacheKey)) {
+      const template = document.createElement("template");
+      template.innerHTML = getReadingMarkup(item, lang);
+      readingDomCache.set(cacheKey, template.content.cloneNode(true));
+    }
+
+    return readingDomCache.get(cacheKey).cloneNode(true);
+  }
+
+  function warmReadingCacheForLanguage(lang) {
+    const queue = disciplines.map((item) => ({ item, lang }));
+
+    const processQueue = (deadline) => {
+      while (queue.length && (deadline.didTimeout || deadline.timeRemaining() > 4)) {
+        const { item, lang: queuedLang } = queue.shift();
+        getReadingFragment(item, queuedLang);
+      }
+
+      if (queue.length) {
+        AEN_PERF.idle(processQueue, 1200);
+      }
+    };
+
+    AEN_PERF.idle(processQueue, 1200);
+  }
+
+  function warmReadingCache() {
+    warmReadingCacheForLanguage(currentLang);
+
+    if (!AEN_PERF.isOptimized()) {
+      SUPPORTED_LANGS.filter((lang) => lang !== currentLang).forEach((lang, index) => {
+        window.setTimeout(() => {
+          warmReadingCacheForLanguage(lang);
+        }, 250 * (index + 1));
+      });
+    }
   }
 
   function applyReadingContent(item) {
@@ -778,6 +971,8 @@
     const index = disciplines.findIndex((entry) => entry.key === item.key) + 1;
     const hue = Math.round((360 / total) * (index - 1));
     const svgMarkup = typeof item.svg === "string" && item.svg.trim() ? item.svg : fallbackSvg;
+    const langSnapshot = currentLang;
+    const metaSequence = ++metaUpdateSequence;
 
     document.documentElement.style.setProperty("--discipline-hue", String(hue));
 
@@ -789,11 +984,26 @@
     if (readingDiscipline) readingDiscipline.textContent = localized.discipline;
     if (readingIntersection) readingIntersection.textContent = localized.intersection;
     if (readingConclusion) readingConclusion.textContent = localized.conclusion;
-    if (readingArticle) readingArticle.innerHTML = getReadingMarkup(item);
+
+    if (readingArticle) {
+      const fragment = getReadingFragment(item, langSnapshot);
+      readingArticle.textContent = "";
+      readingArticle.appendChild(fragment);
+    }
+
     if (readingScroll) readingScroll.scrollTop = 0;
 
-    applyDisciplineMeta(item);
     updateStaticUiLanguage();
+
+    AEN_PERF.nonCritical(() => {
+      if (
+        metaSequence === metaUpdateSequence &&
+        currentOpenDisciplineKey === item.key &&
+        currentLang === langSnapshot
+      ) {
+        applyDisciplineMeta(item, langSnapshot);
+      }
+    });
   }
 
   function fallbackCopyText(text) {
@@ -836,12 +1046,16 @@
       }
 
       setCopyButtonState("copied");
-      sendShareAnalytics("copy_link", item, currentLang);
+      AEN_PERF.nonCritical(() => {
+        sendShareAnalytics("copy_link", item, currentLang);
+      });
     } catch (_) {
       try {
         fallbackCopyText(shareUrl);
         setCopyButtonState("copied");
-        sendShareAnalytics("copy_link", item, currentLang);
+        AEN_PERF.nonCritical(() => {
+          sendShareAnalytics("copy_link", item, currentLang);
+        });
       } catch (error) {
         setCopyButtonState("error");
       }
@@ -868,7 +1082,9 @@
       });
 
       setNativeShareButtonState("shared");
-      sendShareAnalytics("native_share", item, currentLang);
+      AEN_PERF.nonCritical(() => {
+        sendShareAnalytics("native_share", item, currentLang);
+      });
     } catch (error) {
       if (error && error.name === "AbortError") return;
       setNativeShareButtonState("error");
@@ -885,6 +1101,8 @@
     const item = getDisciplineByKey(key);
     if (!item) return;
 
+    const openStartTime = performance.now();
+
     currentOpenDisciplineKey = key;
     clearTimeout(clearStateTimer);
 
@@ -900,10 +1118,19 @@
     });
 
     orbit.classList.add("is-hovering");
+
+    if (window.AEN_BG_FX && AEN_PERF.isOptimized()) {
+      window.AEN_BG_FX.pauseFor(380);
+    }
+
     applyReadingContent(item);
 
     requestAnimationFrame(() => {
       screen.classList.add("is-reading");
+    });
+
+    AEN_PERF.afterPaint(() => {
+      AEN_PERF.measureDisciplineOpen(openStartTime);
     });
 
     if (syncUrl) {
@@ -915,9 +1142,13 @@
     }
 
     if (analyticsMode === "full") {
-      sendDisciplineAnalytics(item, currentLang, { includePageView: true });
+      AEN_PERF.nonCritical(() => {
+        sendDisciplineAnalytics(item, currentLang, { includePageView: true });
+      });
     } else if (analyticsMode === "event-only") {
-      sendDisciplineAnalytics(item, currentLang, { includePageView: false });
+      AEN_PERF.nonCritical(() => {
+        sendDisciplineAnalytics(item, currentLang, { includePageView: false });
+      });
     }
   }
 
@@ -940,6 +1171,7 @@
       readingLayer.setAttribute("aria-hidden", "true");
     }
 
+    metaUpdateSequence += 1;
     restoreBaseMeta();
     updateStaticUiLanguage();
 
@@ -952,7 +1184,9 @@
     }
 
     if (analyticsMode === "full" && hadOpenDiscipline) {
-      sendHomeAnalytics(currentLang);
+      AEN_PERF.nonCritical(() => {
+        sendHomeAnalytics(currentLang);
+      });
     }
 
     clearTimeout(clearStateTimer);
@@ -996,12 +1230,18 @@
       });
     }
 
-    if (emitAnalytics && previousLang !== lang) {
-      sendLanguageAnalytics(lang, currentItem);
+    AEN_PERF.nonCritical(() => {
+      warmReadingCacheForLanguage(lang);
+    });
 
-      if (!currentItem) {
-        sendHomeAnalytics(lang);
-      }
+    if (emitAnalytics && previousLang !== lang) {
+      AEN_PERF.nonCritical(() => {
+        sendLanguageAnalytics(lang, currentItem);
+
+        if (!currentItem) {
+          sendHomeAnalytics(lang);
+        }
+      });
     }
   }
 
@@ -1032,7 +1272,9 @@
       } else if (langChanged && analyticsMode === "full") {
         const item = getDisciplineByKey(targetDisciplineKey);
         if (item) {
-          sendLanguageAnalytics(targetLang, item);
+          AEN_PERF.nonCritical(() => {
+            sendLanguageAnalytics(targetLang, item);
+          });
         }
       }
       return;
@@ -1046,11 +1288,14 @@
       return;
     }
 
+    metaUpdateSequence += 1;
     restoreBaseMeta();
     updateStaticUiLanguage();
 
     if (langChanged && analyticsMode === "full") {
-      sendHomeAnalytics(currentLang);
+      AEN_PERF.nonCritical(() => {
+        sendHomeAnalytics(currentLang);
+      });
     }
   }
 
@@ -1225,6 +1470,14 @@
     readingNativeShareBtn.disabled = true;
     setNativeShareButtonState("default", { autoReset: false });
   }
+
+  window.addEventListener(
+    "load",
+    () => {
+      warmReadingCache();
+    },
+    { once: true }
+  );
 
   applyUrlState({
     analyticsMode: getDisciplineKeyFromUrl() ? "event-only" : "none"
