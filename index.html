@@ -33,6 +33,41 @@
   <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="style.css" />
 
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W1S35P7CJG"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag("js", new Date());
+    gtag("config", "G-XXXXXXXXXX", {
+      page_title: document.title,
+      page_location: window.location.href,
+      page_path: window.location.pathname
+    });
+
+    window.trackDisciplineOpen = function (disciplineKey, disciplineTitle, language) {
+      if (typeof gtag !== "function") return;
+
+      gtag("event", "discipline_open", {
+        discipline_key: disciplineKey || "",
+        discipline_title: disciplineTitle || "",
+        language_selected: language || document.documentElement.lang || "en"
+      });
+    };
+
+    window.trackLanguageChange = function (language) {
+      if (typeof gtag !== "function") return;
+
+      gtag("event", "language_change", {
+        language_selected: language || document.documentElement.lang || "en"
+      });
+    };
+  </script>
+
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Aethereal Nexus" />
   <meta property="og:locale" content="en_US" />
