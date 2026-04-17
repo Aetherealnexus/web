@@ -1,5 +1,4 @@
-(() => {
-  window.NEXUS_DISCIPLINES_META = [
+export const disciplines = [
   {
     "key": "ontheia",
     "title": "ONTHEIA",
@@ -253,4 +252,3 @@
     "placeholderText": "This discipline is currently under active development. The investigation is ongoing, but this section of the Aethereal Nexus is not yet publicly available."
   }
 ];
-})();

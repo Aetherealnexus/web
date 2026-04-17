@@ -1,7 +1,7 @@
 (() => {
   const AEN_PERF = (() => {
     const url = new URL(window.location.href);
-    const forcedMode = url.searchParams.get("perf"); // optimized | normal
+    const forcedMode = url.searchParams.get("perf");
     const storedMode = localStorage.getItem("aen_perf_mode");
 
     const weakDeviceHint =
@@ -17,35 +17,16 @@
 
     document.documentElement.dataset.performance = optimized ? "optimized" : "normal";
 
-    function broadcastMode() {
-      try {
-        window.dispatchEvent(
-          new CustomEvent("aen:performance-mode", {
-            detail: { optimized }
-          })
-        );
-      } catch (_) {
-        // ignore
-      }
-    }
-
     function setOptimized(value, persist = true) {
-      const nextValue = Boolean(value);
-      const changed = optimized !== nextValue;
-
-      optimized = nextValue;
+      optimized = Boolean(value);
       document.documentElement.dataset.performance = optimized ? "optimized" : "normal";
 
-      if (persist) {
-        if (optimized) {
-          localStorage.setItem("aen_perf_mode", "optimized");
-        } else {
-          localStorage.removeItem("aen_perf_mode");
-        }
-      }
+      if (!persist) return;
 
-      if (changed) {
-        broadcastMode();
+      if (optimized) {
+        localStorage.setItem("aen_perf_mode", "optimized");
+      } else {
+        localStorage.removeItem("aen_perf_mode");
       }
     }
 
@@ -56,7 +37,7 @@
     function measureDisciplineOpen(startTime) {
       const elapsed = performance.now() - startTime;
 
-      if (elapsed > 180) {
+      if (elapsed > 220) {
         slowOpenCount += 1;
 
         if (!optimized && slowOpenCount >= 2) {
@@ -67,7 +48,7 @@
       return elapsed;
     }
 
-    function idle(callback, timeout = 800) {
+    function idle(callback, timeout = 900) {
       if ("requestIdleCallback" in window) {
         return window.requestIdleCallback(callback, { timeout });
       }
@@ -77,11 +58,11 @@
           didTimeout: true,
           timeRemaining: () => 8
         });
-      }, 1);
+      }, 16);
     }
 
-    function nonCritical(callback) {
-      return idle(() => callback(), 1200);
+    function nonCritical(callback, timeout = 1200) {
+      return idle(() => callback(), timeout);
     }
 
     function afterPaint(callback) {
@@ -99,8 +80,6 @@
       afterPaint
     };
   })();
-
-  const readingDomCache = new Map();
 
   function sendDisciplineAnalytics(discipline, language = "en", options = {}) {
     const { includePageView = true } = options;
@@ -208,7 +187,16 @@
   const pageBg = document.getElementById("pageBg");
   const pageBgCanvas = document.getElementById("pageBgCanvas");
 
-  const disciplines = Array.isArray(window.NEXUS_DISCIPLINES) ? window.NEXUS_DISCIPLINES : [];
+  const disciplinesFull = Array.isArray(window.NEXUS_DISCIPLINES)
+    ? window.NEXUS_DISCIPLINES
+    : [];
+
+  const disciplinesMeta = Array.isArray(window.NEXUS_DISCIPLINES_META)
+    ? window.NEXUS_DISCIPLINES_META
+    : [];
+
+  const disciplines = disciplinesFull.length > 0 ? disciplinesFull : disciplinesMeta;
+
   const orbit = document.getElementById("discipline-orbit");
   const screen = document.querySelector(".orbit-screen");
   const pointerMode = window.matchMedia("(hover: none), (pointer: coarse)");
@@ -233,14 +221,14 @@
 
   const readingArticle = document.getElementById("readingArticle");
   const readingScroll = document.getElementById("readingScroll");
-  const metaDescription = document.getElementById("metaDescription");
 
-  const canonicalUrl = document.getElementById("canonicalUrl");
-  const metaOgTitle = document.getElementById("metaOgTitle");
-  const metaOgDescription = document.getElementById("metaOgDescription");
-  const metaOgUrl = document.getElementById("metaOgUrl");
-  const metaTwitterTitle = document.getElementById("metaTwitterTitle");
-  const metaTwitterDescription = document.getElementById("metaTwitterDescription");
+  const metaDescription = document.querySelector('meta[name="description"]');
+  const canonicalUrl = document.querySelector('link[rel="canonical"]');
+  const metaOgTitle = document.querySelector('meta[property="og:title"]');
+  const metaOgDescription = document.querySelector('meta[property="og:description"]');
+  const metaOgUrl = document.querySelector('meta[property="og:url"]');
+  const metaTwitterTitle = document.querySelector('meta[name="twitter:title"]');
+  const metaTwitterDescription = document.querySelector('meta[name="twitter:description"]');
 
   const langSwitcher = document.getElementById("langSwitcher");
   const langButtons = Array.from(document.querySelectorAll(".lang-flag"));
@@ -270,13 +258,16 @@
       orientationTextB:
         "The visual system remains the same as the entrance state so the discipline feels born from the same symbolic world rather than disconnected from it.",
       readingZoneTextA:
-        "This is the scrollable area intended for your real research corpus. You can later replace this default text by adding a new field such as <strong>readingHtml</strong> inside the corresponding object in <strong>disciplines-data.js</strong>.",
+        "This is the scrollable area intended for your real research corpus.",
       readingZoneTextB:
-        "You can place essays, nested sections, source notes, structured arguments, ontological maps, historical context, equations, symbolic interpretations, or any other long-form material here.",
+        "Add long-form essays, nested sections, source notes, structured arguments, ontological maps, or any other deep material here.",
       researchInProgress: "Research in progress",
       unfolding: "UNFOLDING",
       researchPlaceholderText:
-        "This discipline is currently under active development. The investigation is ongoing, but this section of the Aethereal Nexus is not yet publicly available."
+        "This discipline is currently under active development. The investigation is ongoing, but this section of the Aethereal Nexus is not yet publicly available.",
+      loading: "Loading discipline",
+      loadingText:
+        "The reading shell opens immediately. The full text is being streamed in phases."
     },
     pt: {
       back: "Voltar",
@@ -294,17 +285,20 @@
       currentDefinitionTitle: "Definição Atual",
       readingZoneTitle: "Zona de Leitura",
       orientationTextA:
-        "<strong>{title}</strong> é a gateway ativa. Esta câmara de leitura está agora pronta para receber as tuas investigações, notas, frameworks, citações, hipóteses e reflexões de longo formato.",
+        "<strong>{title}</strong> é a gateway ativa. Esta câmara de leitura está pronta para receber investigação, notas, frameworks, citações, hipóteses e reflexão longa.",
       orientationTextB:
-        "O sistema visual mantém-se igual ao estado de entrada para que a disciplina pareça nascer do mesmo mundo simbólico e não como algo desligado dele.",
+        "O sistema visual mantém-se igual ao estado de entrada para a disciplina continuar ligada ao mesmo mundo simbólico.",
       readingZoneTextA:
-        "Esta é a área com scroll destinada ao teu corpus real de investigação. Mais tarde, podes substituir este texto por defeito adicionando um novo campo como <strong>readingHtml</strong> dentro do objeto correspondente em <strong>disciplines-data.js</strong>.",
+        "Esta é a área com scroll destinada ao teu corpus real de investigação.",
       readingZoneTextB:
-        "Podes colocar aqui ensaios, secções aninhadas, notas de fontes, argumentos estruturados, mapas ontológicos, contexto histórico, equações, interpretações simbólicas ou qualquer outro material de longo formato.",
+        "Aqui podes colocar ensaios, secções aninhadas, notas de fontes, argumentos estruturados, mapas ontológicos e material longo.",
       researchInProgress: "Investigação em curso",
       unfolding: "EM DESENVOLVIMENTO",
       researchPlaceholderText:
-        "Esta disciplina encontra-se atualmente em desenvolvimento ativo. A investigação está a decorrer, mas esta secção do Aethereal Nexus ainda não está publicamente disponível."
+        "Esta disciplina encontra-se em desenvolvimento ativo. A investigação está a decorrer, mas esta secção ainda não está publicamente disponível.",
+      loading: "A carregar disciplina",
+      loadingText:
+        "O painel abre logo. O texto completo está a ser carregado por fases."
     },
     fr: {
       back: "Retour",
@@ -322,17 +316,20 @@
       currentDefinitionTitle: "Définition Actuelle",
       readingZoneTitle: "Zone de Lecture",
       orientationTextA:
-        "<strong>{title}</strong> est la passerelle active. Cette chambre de lecture est maintenant prête à recevoir vos recherches, notes, cadres, citations, hypothèses et réflexions longues.",
+        "<strong>{title}</strong> est la passerelle active. Cette chambre de lecture est prête à recevoir recherches, notes, cadres, citations, hypothèses et réflexions longues.",
       orientationTextB:
-        "Le système visuel reste identique à l’état d’entrée afin que la discipline semble née du même monde symbolique plutôt que détachée de celui-ci.",
+        "Le système visuel reste identique à l’état d’entrée afin que la discipline demeure liée au même monde symbolique.",
       readingZoneTextA:
-        "Il s’agit de la zone défilante destinée à votre véritable corpus de recherche. Vous pourrez plus tard remplacer ce texte par défaut en ajoutant un nouveau champ comme <strong>readingHtml</strong> dans l’objet correspondant de <strong>disciplines-data.js</strong>.",
+        "Voici la zone défilante destinée à votre véritable corpus de recherche.",
       readingZoneTextB:
-        "Vous pouvez y placer des essais, des sections imbriquées, des notes de sources, des arguments structurés, des cartes ontologiques, du contexte historique, des équations, des interprétations symboliques ou tout autre matériau long format.",
+        "Vous pouvez y placer essais, sections imbriquées, notes de sources, arguments structurés, cartes ontologiques et matériaux longs.",
       researchInProgress: "Recherche en cours",
       unfolding: "EN DÉPLOIEMENT",
       researchPlaceholderText:
-        "Cette discipline est actuellement en développement actif. La recherche est en cours, mais cette section de l’Aethereal Nexus n’est pas encore publiquement disponible."
+        "Cette discipline est actuellement en développement actif. La recherche est en cours, mais cette section n’est pas encore publiquement disponible.",
+      loading: "Chargement de la discipline",
+      loadingText:
+        "Le panneau s’ouvre immédiatement. Le texte complet arrive par phases."
     }
   };
 
@@ -373,7 +370,10 @@
   let copyFeedbackState = "default";
   let nativeShareFeedbackState = "default";
   let stateApplyFrame = 0;
-  let metaUpdateSequence = 0;
+  let readingRenderToken = 0;
+  let nodes = [];
+
+  const readingPayloadCache = new Map();
 
   function initImageBackgroundMode() {
     if (!pageBg || backgrounds.length === 0) return;
@@ -394,10 +394,20 @@
   }
 
   function initFxBackgroundMode() {
-    if (!pageBgCanvas) return;
+    if (!pageBgCanvas) {
+      return {
+        pause() {},
+        resume() {}
+      };
+    }
 
     const ctx = pageBgCanvas.getContext("2d");
-    if (!ctx) return;
+    if (!ctx) {
+      return {
+        pause() {},
+        resume() {}
+      };
+    }
 
     const state = {
       width: 0,
@@ -405,8 +415,7 @@
       dpr: 1,
       particles: [],
       rafId: 0,
-      pauseTimer: 0,
-      lastFrameTime: 0
+      isPaused: false
     };
 
     function createParticle(index, width, height, count) {
@@ -428,12 +437,7 @@
     }
 
     function seedParticles() {
-      const base = Math.min(state.width, state.height);
-      const divider = AEN_PERF.isOptimized() ? 58 : 42;
-      const maxCount = AEN_PERF.isOptimized() ? 18 : 38;
-      const minCount = AEN_PERF.isOptimized() ? 10 : 16;
-      const count = Math.max(minCount, Math.min(maxCount, Math.round(base / divider)));
-
+      const count = Math.max(16, Math.min(38, Math.round(Math.min(state.width, state.height) / 42)));
       state.particles = Array.from({ length: count }, (_, index) =>
         createParticle(index, state.width, state.height, count)
       );
@@ -452,7 +456,6 @@
       ctx.scale(state.dpr, state.dpr);
 
       seedParticles();
-      state.lastFrameTime = 0;
       renderFrame(performance.now(), true);
     }
 
@@ -542,15 +545,6 @@
 
     function renderFrame(now, staticOnly = false) {
       const time = now || 0;
-      const targetFrameInterval = AEN_PERF.isOptimized() ? 1000 / 30 : 1000 / 60;
-
-      if (!staticOnly && time - state.lastFrameTime < targetFrameInterval) {
-        state.rafId = window.requestAnimationFrame(renderFrame);
-        return;
-      }
-
-      state.lastFrameTime = time;
-
       ctx.clearRect(0, 0, state.width, state.height);
 
       drawCoreGlow();
@@ -559,67 +553,58 @@
       drawConnections(positions);
       drawParticles(positions, time);
 
-      if (!staticOnly && !prefersReducedMotion.matches) {
+      if (!staticOnly && !prefersReducedMotion.matches && !state.isPaused) {
         state.rafId = window.requestAnimationFrame(renderFrame);
       }
     }
 
     function start() {
       cancelAnimationFrame(state.rafId);
-      clearTimeout(state.pauseTimer);
       resizeCanvas();
+
+      if (!prefersReducedMotion.matches && !state.isPaused) {
+        state.rafId = window.requestAnimationFrame(renderFrame);
+      }
+    }
+
+    function pause() {
+      state.isPaused = true;
+      cancelAnimationFrame(state.rafId);
+      renderFrame(performance.now(), true);
+    }
+
+    function resume() {
+      state.isPaused = false;
+      cancelAnimationFrame(state.rafId);
+      renderFrame(performance.now(), true);
 
       if (!prefersReducedMotion.matches) {
         state.rafId = window.requestAnimationFrame(renderFrame);
       }
     }
 
-    function stop() {
-      cancelAnimationFrame(state.rafId);
-      clearTimeout(state.pauseTimer);
-    }
-
-    window.AEN_BG_FX = {
-      pause() {
-        cancelAnimationFrame(state.rafId);
-      },
-      resume() {
-        cancelAnimationFrame(state.rafId);
-        state.lastFrameTime = 0;
-        if (!prefersReducedMotion.matches) {
-          state.rafId = window.requestAnimationFrame(renderFrame);
-        }
-      },
-      pauseFor(ms = 350) {
-        cancelAnimationFrame(state.rafId);
-        clearTimeout(state.pauseTimer);
-        state.pauseTimer = window.setTimeout(() => {
-          state.lastFrameTime = 0;
-          if (!prefersReducedMotion.matches) {
-            state.rafId = window.requestAnimationFrame(renderFrame);
-          }
-        }, ms);
-      },
-      refresh() {
-        start();
-      }
-    };
-
     window.addEventListener("resize", start, { passive: true });
     prefersReducedMotion.addEventListener?.("change", start);
-    window.addEventListener("beforeunload", stop, { passive: true });
-    window.addEventListener("aen:performance-mode", () => {
-      start();
-    });
+    window.addEventListener(
+      "beforeunload",
+      () => {
+        cancelAnimationFrame(state.rafId);
+      },
+      { passive: true }
+    );
 
     start();
+
+    return {
+      pause,
+      resume
+    };
   }
 
-  if (bgMode === "image") {
-    initImageBackgroundMode();
-  } else {
-    initFxBackgroundMode();
-  }
+  const fxController =
+    bgMode === "image"
+      ? (initImageBackgroundMode(), { pause() {}, resume() {} })
+      : initFxBackgroundMode();
 
   if (!orbit || !screen || total === 0) return;
 
@@ -655,11 +640,32 @@
       discipline: localized.discipline || item.discipline,
       intersection: localized.intersection || item.intersection,
       conclusion: localized.conclusion || item.conclusion,
-      readingHtml: localized.readingHtml || item.readingHtml || "",
       placeholderWord: localized.placeholderWord || item.placeholderWord || ui.unfolding,
       placeholderLabel: localized.placeholderLabel || item.placeholderLabel || ui.researchInProgress,
       placeholderText: localized.placeholderText || item.placeholderText || ui.researchPlaceholderText
     };
+  }
+
+  function extractInlineReadingHtml(item, lang = currentLang) {
+    if (!item) return "";
+
+    const localizedHtml = item?.translations?.[lang]?.readingHtml;
+    if (typeof localizedHtml === "string" && localizedHtml.trim()) {
+      return localizedHtml.trim();
+    }
+
+    if (lang !== DEFAULT_LANG) {
+      const defaultLangHtml = item?.translations?.[DEFAULT_LANG]?.readingHtml;
+      if (typeof defaultLangHtml === "string" && defaultLangHtml.trim()) {
+        return defaultLangHtml.trim();
+      }
+    }
+
+    if (typeof item.readingHtml === "string" && item.readingHtml.trim()) {
+      return item.readingHtml.trim();
+    }
+
+    return "";
   }
 
   function getLanguageFromUrl() {
@@ -731,11 +737,11 @@
     canonicalUrl.setAttribute("href", value || "");
   }
 
-  function applyDisciplineMeta(item, lang = currentLang) {
-    const localized = getLocalizedDiscipline(item, lang);
+  function applyDisciplineMeta(item) {
+    const localized = getLocalizedDiscipline(item, currentLang);
     const disciplineUrl = buildAbsoluteStateUrl({
       disciplineKey: item.key,
-      language: lang
+      language: currentLang
     });
 
     const title = `${localized.title} – Aethereal Nexus`;
@@ -770,6 +776,17 @@
     setMetaContent(metaTwitterDescription, baseTwitterDescription);
   }
 
+  function setButtonLabel(button, textNode, label) {
+    if (textNode) {
+      textNode.textContent = label;
+    }
+
+    if (button) {
+      button.setAttribute("aria-label", label);
+      button.setAttribute("title", label);
+    }
+  }
+
   function updateLanguageButtons() {
     langButtons.forEach((button) => {
       button.classList.toggle("is-active", button.dataset.lang === currentLang);
@@ -781,7 +798,7 @@
     const ui = getUi(currentLang);
     copyFeedbackState = state;
 
-    if (!readingCopyBtn || !readingCopyBtnText) return;
+    if (!readingCopyBtn) return;
 
     clearTimeout(copyFeedbackTimer);
 
@@ -789,7 +806,7 @@
     if (state === "copied") label = ui.linkCopied;
     if (state === "error") label = ui.linkCopyFailed;
 
-    readingCopyBtnText.textContent = label;
+    setButtonLabel(readingCopyBtn, readingCopyBtnText, label);
     readingCopyBtn.classList.toggle("is-success", state === "copied");
     readingCopyBtn.classList.toggle("is-error", state === "error");
 
@@ -805,7 +822,7 @@
     const ui = getUi(currentLang);
     nativeShareFeedbackState = state;
 
-    if (!readingNativeShareBtn || !readingNativeShareBtnText) return;
+    if (!readingNativeShareBtn) return;
 
     clearTimeout(shareFeedbackTimer);
 
@@ -813,7 +830,7 @@
     if (state === "shared") label = ui.linkShared;
     if (state === "error") label = ui.shareFailed;
 
-    readingNativeShareBtnText.textContent = label;
+    setButtonLabel(readingNativeShareBtn, readingNativeShareBtnText, label);
     readingNativeShareBtn.classList.toggle("is-success", state === "shared");
     readingNativeShareBtn.classList.toggle("is-error", state === "error");
 
@@ -830,9 +847,7 @@
     setDocumentLang(currentLang);
     updateLanguageButtons();
 
-    if (readingBackBtnText) {
-      readingBackBtnText.textContent = ui.back;
-    }
+    setButtonLabel(readingBackBtn, readingBackBtnText, ui.back);
 
     if (readingCopyBtn) {
       readingCopyBtn.disabled = !currentOpenDisciplineKey;
@@ -869,8 +884,8 @@
     orbit.classList.remove("is-hovering");
   }
 
-  function buildDefaultReadingMarkup(item, localized, lang = currentLang) {
-    const ui = getUi(lang);
+  function buildDefaultReadingMarkup(item, localized) {
+    const ui = getUi(currentLang);
     const orientationTextA = ui.orientationTextA.replace("{title}", escapeHtml(localized.title));
 
     return `
@@ -901,78 +916,70 @@
     `;
   }
 
-  function getReadingMarkup(item, lang = currentLang) {
-    const localized = getLocalizedDiscipline(item, lang);
-
-    if (item.status === "research_in_progress") {
-      return `
-        <section class="reading-placeholder">
-          <div class="reading-placeholder__core">
-            <p class="reading-placeholder__label">${escapeHtml(localized.placeholderLabel)}</p>
-            <div class="reading-placeholder__word">${escapeHtml(localized.placeholderWord)}</div>
-            <p class="reading-placeholder__text">${escapeHtml(localized.placeholderText)}</p>
-          </div>
-        </section>
-      `;
-    }
-
-    if (typeof localized.readingHtml === "string" && localized.readingHtml.trim()) {
-      return localized.readingHtml;
-    }
-
-    return buildDefaultReadingMarkup(item, localized, lang);
-  }
-
-  function getReadingFragment(item, lang = currentLang) {
-    const cacheKey = `${item.key}::${lang}`;
-
-    if (!readingDomCache.has(cacheKey)) {
-      const template = document.createElement("template");
-      template.innerHTML = getReadingMarkup(item, lang);
-      readingDomCache.set(cacheKey, template.content.cloneNode(true));
-    }
-
-    return readingDomCache.get(cacheKey).cloneNode(true);
-  }
-
-  function warmReadingCacheForLanguage(lang) {
-    const queue = disciplines.map((item) => ({ item, lang }));
-
-    const processQueue = (deadline) => {
-      while (queue.length && (deadline.didTimeout || deadline.timeRemaining() > 4)) {
-        const { item, lang: queuedLang } = queue.shift();
-        getReadingFragment(item, queuedLang);
-      }
-
-      if (queue.length) {
-        AEN_PERF.idle(processQueue, 1200);
-      }
-    };
-
-    AEN_PERF.idle(processQueue, 1200);
-  }
-
-  function warmReadingCache() {
-    warmReadingCacheForLanguage(currentLang);
-
-    if (!AEN_PERF.isOptimized()) {
-      SUPPORTED_LANGS.filter((lang) => lang !== currentLang).forEach((lang, index) => {
-        window.setTimeout(() => {
-          warmReadingCacheForLanguage(lang);
-        }, 250 * (index + 1));
-      });
-    }
-  }
-
-  function applyReadingContent(item) {
+  function getResearchPlaceholderMarkup(item) {
     const localized = getLocalizedDiscipline(item, currentLang);
+
+    return `
+      <section class="reading-placeholder">
+        <div class="reading-placeholder__core">
+          <p class="reading-placeholder__label">${escapeHtml(localized.placeholderLabel)}</p>
+          <div class="reading-placeholder__word">${escapeHtml(localized.placeholderWord)}</div>
+          <p class="reading-placeholder__text">${escapeHtml(localized.placeholderText)}</p>
+        </div>
+      </section>
+    `;
+  }
+
+  function createReadingLoadingMarkup() {
     const ui = getUi(currentLang);
+
+    return `
+      <section class="reading-loading">
+        <div class="reading-loading__pill"></div>
+        <div class="reading-loading__title"></div>
+        <div class="reading-loading__line"></div>
+        <div class="reading-loading__line reading-loading__line--wide"></div>
+      </section>
+
+      <section class="reading-block reading-block--skeleton">
+        <div class="reading-skeleton reading-skeleton--eyebrow"></div>
+        <div class="reading-skeleton reading-skeleton--title"></div>
+        <div class="reading-skeleton reading-skeleton--text"></div>
+        <div class="reading-skeleton reading-skeleton--text reading-skeleton--wide"></div>
+        <p class="reading-loading__caption">${escapeHtml(ui.loadingText)}</p>
+      </section>
+
+      <section class="reading-block reading-block--skeleton">
+        <div class="reading-skeleton reading-skeleton--section"></div>
+        <div class="reading-skeleton reading-skeleton--text"></div>
+        <div class="reading-skeleton reading-skeleton--text"></div>
+        <div class="reading-skeleton reading-skeleton--text reading-skeleton--wide"></div>
+      </section>
+    `;
+  }
+
+  function createStreamingTailMarkup() {
+    return `
+      <div class="reading-streaming-tail" aria-hidden="true">
+        <div class="reading-streaming-tail__line"></div>
+        <div class="reading-streaming-tail__line reading-streaming-tail__line--wide"></div>
+      </div>
+    `;
+  }
+
+  function setReadingLoadingState(isLoading) {
+    if (!readingArticle) return;
+    readingArticle.classList.toggle("is-loading-content", Boolean(isLoading));
+    readingArticle.setAttribute("aria-busy", isLoading ? "true" : "false");
+  }
+
+  function applyReadingShell(item) {
+    const localized = getLocalizedDiscipline(item, currentLang);
 
     const index = disciplines.findIndex((entry) => entry.key === item.key) + 1;
     const hue = Math.round((360 / total) * (index - 1));
     const svgMarkup = typeof item.svg === "string" && item.svg.trim() ? item.svg : fallbackSvg;
-    const langSnapshot = currentLang;
-    const metaSequence = ++metaUpdateSequence;
+    const ui = getUi(currentLang);
 
     document.documentElement.style.setProperty("--discipline-hue", String(hue));
 
@@ -985,25 +992,231 @@
     if (readingIntersection) readingIntersection.textContent = localized.intersection;
     if (readingConclusion) readingConclusion.textContent = localized.conclusion;
 
-    if (readingArticle) {
-      const fragment = getReadingFragment(item, langSnapshot);
-      readingArticle.textContent = "";
-      readingArticle.appendChild(fragment);
+    if (readingScroll) {
+      readingScroll.scrollTop = 0;
     }
 
-    if (readingScroll) readingScroll.scrollTop = 0;
-
+    applyDisciplineMeta(item);
     updateStaticUiLanguage();
+  }
+
+  function getCacheKey(key, lang) {
+    return `${lang}::${key}`;
+  }
+
+  function buildContentUrl(key, lang) {
+    return `content/${lang}/${encodeURIComponent(key)}.html`;
+  }
+
+  async function fetchContentText(url) {
+    const response = await fetch(url, {
+      cache: "force-cache"
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to load content: ${url}`);
+    }
+
+    return response.text();
+  }
+
+  function chunkReadingHtml(html) {
+    const template = document.createElement("template");
+    template.innerHTML = html.trim();
+
+    const nodesInTemplate = Array.from(template.content.childNodes).filter((node) => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        return node.textContent.trim().length > 0;
+      }
+
+      return true;
+    });
+
+    const chunks = nodesInTemplate
+      .map((node) => {
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          return node.outerHTML;
+        }
+
+        const text = node.textContent.trim();
+        return text
+          ? `<section class="reading-block"><p class="reading-block__text">${escapeHtml(text)}</p></section>`
+          : "";
+      })
+      .filter(Boolean);
+
+    return chunks.length > 0 ? chunks : [html];
+  }
+
+  async function prepareReadingPayload(item, lang = currentLang) {
+    const cacheKey = getCacheKey(item.key, lang);
+    const cached = readingPayloadCache.get(cacheKey);
+
+    if (cached) {
+      return cached instanceof Promise ? cached : Promise.resolve(cached);
+    }
+
+    const promise = (async () => {
+      if (item.status === "research_in_progress") {
+        const placeholderHtml = getResearchPlaceholderMarkup(item);
+        const placeholderPayload = {
+          html: placeholderHtml,
+          chunks: chunkReadingHtml(placeholderHtml)
+        };
+        readingPayloadCache.set(cacheKey, placeholderPayload);
+        return placeholderPayload;
+      }
+
+      const localized = getLocalizedDiscipline(item, lang);
+
+      const inlineHtml = extractInlineReadingHtml(item, lang);
+      if (inlineHtml) {
+        const payload = {
+          html: inlineHtml,
+          chunks: chunkReadingHtml(inlineHtml)
+        };
+        readingPayloadCache.set(cacheKey, payload);
+        return payload;
+      }
+
+      let html = "";
+
+      const candidates = [
+        buildContentUrl(item.key, lang),
+        ...(lang !== DEFAULT_LANG ? [buildContentUrl(item.key, DEFAULT_LANG)] : [])
+      ];
+
+      for (const url of candidates) {
+        try {
+          html = (await fetchContentText(url)).trim();
+          if (html) break;
+        } catch {
+          // tenta a próxima opção
+        }
+      }
+
+      if (!html) {
+        html = buildDefaultReadingMarkup(item, localized);
+      }
+
+      const payload = {
+        html,
+        chunks: chunkReadingHtml(html)
+      };
+
+      readingPayloadCache.set(cacheKey, payload);
+      return payload;
+    })();
+
+    readingPayloadCache.set(cacheKey, promise);
+
+    try {
+      return await promise;
+    } catch (error) {
+      readingPayloadCache.delete(cacheKey);
+      throw error;
+    }
+  }
+
+  function prefetchRelatedDisciplines(item, lang = currentLang) {
+    if (AEN_PERF.isOptimized()) return;
+
+    const currentIndex = disciplines.findIndex((entry) => entry.key === item.key);
+    if (currentIndex < 0) return;
+
+    const candidates = [disciplines[currentIndex + 1], disciplines[currentIndex - 1]].filter(Boolean);
 
     AEN_PERF.nonCritical(() => {
-      if (
-        metaSequence === metaUpdateSequence &&
-        currentOpenDisciplineKey === item.key &&
-        currentLang === langSnapshot
-      ) {
-        applyDisciplineMeta(item, langSnapshot);
+      candidates.forEach((candidate) => {
+        if (!candidate || candidate.status === "research_in_progress") return;
+        prepareReadingPayload(candidate, lang).catch(() => {});
+      });
+    }, 1400);
+  }
+
+  async function renderReadingContentInPhases(item, lang, token, startTime) {
+    if (!readingArticle) return;
+
+    setReadingLoadingState(true);
+    readingArticle.innerHTML = createReadingLoadingMarkup();
+
+    try {
+      const payload = await prepareReadingPayload(item, lang);
+      if (token !== readingRenderToken) return;
+
+      const chunks = payload.chunks || [];
+      readingArticle.innerHTML = "";
+
+      const immediateCount = AEN_PERF.isOptimized() ? 1 : Math.min(2, chunks.length);
+      const immediateChunks = chunks.slice(0, immediateCount);
+
+      if (immediateChunks.length > 0) {
+        readingArticle.insertAdjacentHTML("beforeend", immediateChunks.join(""));
       }
-    });
+
+      const hasMore = chunks.length > immediateCount;
+
+      if (hasMore) {
+        readingArticle.insertAdjacentHTML("beforeend", createStreamingTailMarkup());
+      }
+
+      AEN_PERF.afterPaint(() => {
+        if (token !== readingRenderToken) return;
+
+        AEN_PERF.measureDisciplineOpen(startTime);
+
+        if (!hasMore) {
+          setReadingLoadingState(false);
+          prefetchRelatedDisciplines(item, lang);
+          return;
+        }
+
+        let index = immediateCount;
+
+        const pump = () => {
+          if (token !== readingRenderToken) return;
+
+          const batchSize = AEN_PERF.isOptimized() ? 1 : 2;
+          const batch = chunks.slice(index, index + batchSize);
+
+          if (batch.length === 0) {
+            const tail = readingArticle.querySelector(".reading-streaming-tail");
+            tail?.remove();
+            setReadingLoadingState(false);
+            prefetchRelatedDisciplines(item, lang);
+            return;
+          }
+
+          const tail = readingArticle.querySelector(".reading-streaming-tail");
+          const html = batch.join("");
+
+          if (tail) {
+            tail.insertAdjacentHTML("beforebegin", html);
+          } else {
+            readingArticle.insertAdjacentHTML("beforeend", html);
+          }
+
+          index += batch.length;
+
+          if (index < chunks.length) {
+            AEN_PERF.nonCritical(pump, 700);
+          } else {
+            const finalTail = readingArticle.querySelector(".reading-streaming-tail");
+            finalTail?.remove();
+            setReadingLoadingState(false);
+            prefetchRelatedDisciplines(item, lang);
+          }
+        };
+
+        AEN_PERF.nonCritical(pump, 500);
+      });
+    } catch {
+      if (token !== readingRenderToken) return;
+
+      const localized = getLocalizedDiscipline(item, lang);
+      readingArticle.innerHTML = buildDefaultReadingMarkup(item, localized);
+      setReadingLoadingState(false);
+    }
   }
 
   function fallbackCopyText(text) {
@@ -1046,17 +1259,13 @@
       }
 
       setCopyButtonState("copied");
-      AEN_PERF.nonCritical(() => {
-        sendShareAnalytics("copy_link", item, currentLang);
-      });
-    } catch (_) {
+      sendShareAnalytics("copy_link", item, currentLang);
+    } catch {
       try {
         fallbackCopyText(shareUrl);
         setCopyButtonState("copied");
-        AEN_PERF.nonCritical(() => {
-          sendShareAnalytics("copy_link", item, currentLang);
-        });
-      } catch (error) {
+        sendShareAnalytics("copy_link", item, currentLang);
+      } catch {
         setCopyButtonState("error");
       }
     }
@@ -1082,9 +1291,7 @@
       });
 
       setNativeShareButtonState("shared");
-      AEN_PERF.nonCritical(() => {
-        sendShareAnalytics("native_share", item, currentLang);
-      });
+      sendShareAnalytics("native_share", item, currentLang);
     } catch (error) {
       if (error && error.name === "AbortError") return;
       setNativeShareButtonState("error");
@@ -1092,18 +1299,16 @@
   }
 
   function openDiscipline(key, options = {}) {
-    const {
-      syncUrl = true,
-      analyticsMode = "full",
-      replaceHistory = false
-    } = options;
+    const { syncUrl = true, analyticsMode = "full", replaceHistory = false } = options;
 
     const item = getDisciplineByKey(key);
     if (!item) return;
 
-    const openStartTime = performance.now();
+    const startTime = performance.now();
 
     currentOpenDisciplineKey = key;
+    readingRenderToken += 1;
+
     clearTimeout(clearStateTimer);
 
     setCopyButtonState("default", { autoReset: false });
@@ -1118,20 +1323,20 @@
     });
 
     orbit.classList.add("is-hovering");
+    applyReadingShell(item);
 
-    if (window.AEN_BG_FX && AEN_PERF.isOptimized()) {
-      window.AEN_BG_FX.pauseFor(380);
+    if (readingArticle) {
+      setReadingLoadingState(true);
+      readingArticle.innerHTML = createReadingLoadingMarkup();
     }
-
-    applyReadingContent(item);
 
     requestAnimationFrame(() => {
       screen.classList.add("is-reading");
     });
 
-    AEN_PERF.afterPaint(() => {
-      AEN_PERF.measureDisciplineOpen(openStartTime);
-    });
+    if (AEN_PERF.isOptimized()) {
+      fxController.pause();
+    }
 
     if (syncUrl) {
       syncUrlState({
@@ -1142,26 +1347,21 @@
     }
 
     if (analyticsMode === "full") {
-      AEN_PERF.nonCritical(() => {
-        sendDisciplineAnalytics(item, currentLang, { includePageView: true });
-      });
+      sendDisciplineAnalytics(item, currentLang, { includePageView: true });
     } else if (analyticsMode === "event-only") {
-      AEN_PERF.nonCritical(() => {
-        sendDisciplineAnalytics(item, currentLang, { includePageView: false });
-      });
+      sendDisciplineAnalytics(item, currentLang, { includePageView: false });
     }
+
+    renderReadingContentInPhases(item, currentLang, readingRenderToken, startTime);
   }
 
   function closeDiscipline(options = {}) {
-    const {
-      syncUrl = true,
-      analyticsMode = "full",
-      replaceHistory = false
-    } = options;
+    const { syncUrl = true, analyticsMode = "full", replaceHistory = false } = options;
 
     const hadOpenDiscipline = Boolean(currentOpenDisciplineKey);
 
     currentOpenDisciplineKey = null;
+    readingRenderToken += 1;
     screen.classList.remove("is-reading");
 
     setCopyButtonState("default", { autoReset: false });
@@ -1171,9 +1371,15 @@
       readingLayer.setAttribute("aria-hidden", "true");
     }
 
-    metaUpdateSequence += 1;
+    if (readingArticle) {
+      readingArticle.innerHTML = "";
+      setReadingLoadingState(false);
+    }
+
     restoreBaseMeta();
     updateStaticUiLanguage();
+
+    fxController.resume();
 
     if (syncUrl) {
       syncUrlState({
@@ -1184,9 +1390,7 @@
     }
 
     if (analyticsMode === "full" && hadOpenDiscipline) {
-      AEN_PERF.nonCritical(() => {
-        sendHomeAnalytics(currentLang);
-      });
+      sendHomeAnalytics(currentLang);
     }
 
     clearTimeout(clearStateTimer);
@@ -1202,11 +1406,7 @@
   function setLanguage(lang, options = {}) {
     if (!SUPPORTED_LANGS.includes(lang)) return;
 
-    const {
-      emitAnalytics = true,
-      syncUrl = true,
-      replaceHistory = false
-    } = options;
+    const { emitAnalytics = true, syncUrl = true, replaceHistory = false } = options;
 
     const previousLang = currentLang;
     currentLang = lang;
@@ -1217,8 +1417,12 @@
 
     if (currentOpenDisciplineKey) {
       currentItem = getDisciplineByKey(currentOpenDisciplineKey);
+
       if (currentItem) {
-        applyReadingContent(currentItem);
+        const startTime = performance.now();
+        applyReadingShell(currentItem);
+        readingRenderToken += 1;
+        renderReadingContentInPhases(currentItem, currentLang, readingRenderToken, startTime);
       }
     }
 
@@ -1230,18 +1434,12 @@
       });
     }
 
-    AEN_PERF.nonCritical(() => {
-      warmReadingCacheForLanguage(lang);
-    });
-
     if (emitAnalytics && previousLang !== lang) {
-      AEN_PERF.nonCritical(() => {
-        sendLanguageAnalytics(lang, currentItem);
+      sendLanguageAnalytics(lang, currentItem);
 
-        if (!currentItem) {
-          sendHomeAnalytics(lang);
-        }
-      });
+      if (!currentItem) {
+        sendHomeAnalytics(lang);
+      }
     }
   }
 
@@ -1272,9 +1470,7 @@
       } else if (langChanged && analyticsMode === "full") {
         const item = getDisciplineByKey(targetDisciplineKey);
         if (item) {
-          AEN_PERF.nonCritical(() => {
-            sendLanguageAnalytics(targetLang, item);
-          });
+          sendLanguageAnalytics(targetLang, item);
         }
       }
       return;
@@ -1288,14 +1484,11 @@
       return;
     }
 
-    metaUpdateSequence += 1;
     restoreBaseMeta();
     updateStaticUiLanguage();
 
     if (langChanged && analyticsMode === "full") {
-      AEN_PERF.nonCritical(() => {
-        sendHomeAnalytics(currentLang);
-      });
+      sendHomeAnalytics(currentLang);
     }
   }
 
@@ -1338,7 +1531,7 @@
     })
     .join("");
 
-  const nodes = Array.from(orbit.querySelectorAll(".orbit-node"));
+  nodes = Array.from(orbit.querySelectorAll(".orbit-node"));
 
   nodes.forEach((node) => {
     node.addEventListener("pointerenter", () => {
@@ -1455,6 +1648,7 @@
   }
 
   updateStaticUiLanguage();
+
   setLanguage(currentLang, {
     emitAnalytics: false,
     syncUrl: false
@@ -1470,14 +1664,6 @@
     readingNativeShareBtn.disabled = true;
     setNativeShareButtonState("default", { autoReset: false });
   }
-
-  window.addEventListener(
-    "load",
-    () => {
-      warmReadingCache();
-    },
-    { once: true }
-  );
 
   applyUrlState({
     analyticsMode: getDisciplineKeyFromUrl() ? "event-only" : "none"

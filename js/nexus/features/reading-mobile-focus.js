@@ -1,4 +1,4 @@
-(() => {
+export function initReadingMobileFocus() {
   const mainContent = document.getElementById("main-content");
   const readingLayer = document.getElementById("readingLayer");
   const readingPanel = document.getElementById("readingPanel");
@@ -6,13 +6,16 @@
   const readingArticle = document.getElementById("readingArticle");
   const readingSummary = document.querySelector(".reading-summary");
 
-  if (!mainContent || !readingLayer || !readingPanel || !readingScroll) return;
+  if (!mainContent || !readingLayer || !readingPanel || !readingScroll) {
+    return () => {};
+  }
 
   const mobileQuery = window.matchMedia("(max-width: 768px)");
   const COMPACT_AT = 36;
   const EXPAND_AT = 6;
 
   let rafPending = false;
+  let rafId = 0;
 
   const isReadingOpen = () => {
     return (
@@ -27,6 +30,7 @@
 
   const evaluateCompactState = () => {
     rafPending = false;
+    rafId = 0;
 
     if (!mobileQuery.matches || !isReadingOpen()) {
       setCompactState(false);
@@ -47,8 +51,9 @@
 
   const requestEvaluation = () => {
     if (rafPending) return;
+
     rafPending = true;
-    window.requestAnimationFrame(evaluateCompactState);
+    rafId = window.requestAnimationFrame(evaluateCompactState);
   };
 
   const resetCompactMode = () => {
@@ -104,11 +109,36 @@
     requestEvaluation();
   };
 
-  if (typeof mobileQuery.addEventListener === "function") {
+  const supportsModernMediaListener =
+    typeof mobileQuery.addEventListener === "function";
+
+  if (supportsModernMediaListener) {
     mobileQuery.addEventListener("change", handleViewportChange);
   } else if (typeof mobileQuery.addListener === "function") {
     mobileQuery.addListener(handleViewportChange);
   }
 
   requestEvaluation();
-})();
+
+  return function cleanupReadingMobileFocus() {
+    readingScroll.removeEventListener("scroll", requestEvaluation);
+
+    stateObserver.disconnect();
+    contentObserver.disconnect();
+
+    if (rafId) {
+      window.cancelAnimationFrame(rafId);
+    }
+
+    rafPending = false;
+    rafId = 0;
+
+    if (supportsModernMediaListener) {
+      mobileQuery.removeEventListener("change", handleViewportChange);
+    } else if (typeof mobileQuery.removeListener === "function") {
+      mobileQuery.removeListener(handleViewportChange);
+    }
+
+    resetCompactMode();
+  };
+}
