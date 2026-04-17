@@ -12,6 +12,89 @@ export function createBackgroundController({
     };
   }
 
+  function getFxProfile() {
+    const isTouchLike = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+    const isSmallViewport = window.matchMedia("(max-width: 768px)").matches;
+
+    const deviceMemory =
+      typeof navigator.deviceMemory === "number" ? navigator.deviceMemory : null;
+
+    const hardwareConcurrency =
+      typeof navigator.hardwareConcurrency === "number"
+        ? navigator.hardwareConcurrency
+        : null;
+
+    const saveData = navigator.connection?.saveData === true;
+    const reducedMotion = prefersReducedMotion.matches;
+
+    const weakDeviceHint =
+      saveData ||
+      (deviceMemory !== null && deviceMemory <= 4) ||
+      (hardwareConcurrency !== null && hardwareConcurrency <= 4);
+
+    const mediumDeviceHint =
+      (deviceMemory !== null && deviceMemory <= 6) ||
+      (hardwareConcurrency !== null && hardwareConcurrency <= 6);
+
+    if (reducedMotion) {
+      return {
+        staticMode: true,
+        dprCap: 1,
+        minParticles: 8,
+        maxParticles: 12,
+        densityDivisor: 82,
+        showConnections: false,
+        connectionDistanceFactor: 0.12
+      };
+    }
+
+    if (weakDeviceHint) {
+      return {
+        staticMode: true,
+        dprCap: 1,
+        minParticles: 8,
+        maxParticles: 14,
+        densityDivisor: 78,
+        showConnections: false,
+        connectionDistanceFactor: 0.12
+      };
+    }
+
+    if (isTouchLike && isSmallViewport && mediumDeviceHint) {
+      return {
+        staticMode: false,
+        dprCap: 1.2,
+        minParticles: 12,
+        maxParticles: 18,
+        densityDivisor: 66,
+        showConnections: false,
+        connectionDistanceFactor: 0.13
+      };
+    }
+
+    if (isTouchLike && isSmallViewport) {
+      return {
+        staticMode: false,
+        dprCap: 1.4,
+        minParticles: 18,
+        maxParticles: 28,
+        densityDivisor: 54,
+        showConnections: true,
+        connectionDistanceFactor: 0.15
+      };
+    }
+
+    return {
+      staticMode: false,
+      dprCap: 1.8,
+      minParticles: 22,
+      maxParticles: 38,
+      densityDivisor: 42,
+      showConnections: true,
+      connectionDistanceFactor: 0.16
+    };
+  }
+
   function initImageBackgroundMode() {
     if (!pageBg || !Array.isArray(backgrounds) || backgrounds.length === 0) {
       return createNoopController();
@@ -50,31 +133,38 @@ export function createBackgroundController({
       dpr: 1,
       particles: [],
       rafId: 0,
-      isPaused: false
+      isPaused: false,
+      profile: getFxProfile()
     };
 
     function createParticle(index, width, height, count) {
-      const baseRadius = Math.min(width, height) * (0.14 + Math.random() * 0.26);
-      const orbitStretch = 0.72 + Math.random() * 0.48;
+      const baseRadius = Math.min(width, height) * (0.14 + Math.random() * 0.22);
+      const orbitStretch = 0.76 + Math.random() * 0.32;
+      const profile = fxState.profile;
 
       return {
         angle: (Math.PI * 2 * index) / count + Math.random() * 0.8,
-        speed: 0.00008 + Math.random() * 0.00022,
-        radiusX: baseRadius * (0.78 + Math.random() * 0.54),
+        speed: profile.staticMode ? 0 : 0.00008 + Math.random() * 0.00018,
+        radiusX: baseRadius * (0.82 + Math.random() * 0.38),
         radiusY: baseRadius * orbitStretch,
-        drift: 0.3 + Math.random() * 0.9,
-        driftSpeed: 0.00018 + Math.random() * 0.00045,
-        size: 1.2 + Math.random() * 3.1,
-        alpha: 0.16 + Math.random() * 0.42,
+        drift: profile.staticMode ? 0 : 0.22 + Math.random() * 0.58,
+        driftSpeed: profile.staticMode ? 0 : 0.00018 + Math.random() * 0.00032,
+        size: profile.staticMode ? 1 + Math.random() * 1.8 : 1.2 + Math.random() * 2.6,
+        alpha: profile.staticMode ? 0.14 + Math.random() * 0.18 : 0.16 + Math.random() * 0.34,
         hue: 180 + Math.random() * 110,
         phase: Math.random() * Math.PI * 2
       };
     }
 
     function seedParticles() {
+      const profile = fxState.profile;
+
       const count = Math.max(
-        16,
-        Math.min(38, Math.round(Math.min(fxState.width, fxState.height) / 42))
+        profile.minParticles,
+        Math.min(
+          profile.maxParticles,
+          Math.round(Math.min(fxState.width, fxState.height) / profile.densityDivisor)
+        )
       );
 
       fxState.particles = Array.from({ length: count }, (_, index) =>
@@ -112,10 +202,13 @@ export function createBackgroundController({
     }
 
     function drawConnections(positions) {
-      const maxDistance = Math.min(fxState.width, fxState.height) * 0.16;
+      if (!fxState.profile.showConnections) return;
+
+      const maxDistance =
+        Math.min(fxState.width, fxState.height) * fxState.profile.connectionDistanceFactor;
 
       ctx.save();
-      ctx.lineWidth = 0.85;
+      ctx.lineWidth = 0.8;
       ctx.globalCompositeOperation = "lighter";
 
       for (let i = 0; i < positions.length; i += 1) {
@@ -126,7 +219,7 @@ export function createBackgroundController({
 
           if (distance > maxDistance) continue;
 
-          const alpha = (1 - distance / maxDistance) * 0.12;
+          const alpha = (1 - distance / maxDistance) * 0.09;
           ctx.strokeStyle = `rgba(170, 205, 255, ${alpha.toFixed(4)})`;
           ctx.beginPath();
           ctx.moveTo(positions[i].x, positions[i].y);
@@ -144,20 +237,25 @@ export function createBackgroundController({
 
       positions.forEach((pos, index) => {
         const particle = fxState.particles[index];
-        const pulse = 0.72 + 0.28 * Math.sin(time * 0.0012 + particle.phase);
+        const pulse = fxState.profile.staticMode
+          ? 1
+          : 0.76 + 0.24 * Math.sin(time * 0.0012 + particle.phase);
+
         const radius = particle.size * pulse;
 
-        const gradient = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, radius * 5.2);
+        const glowMultiplier = fxState.profile.staticMode ? 3.4 : 4.6;
+        const gradient = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, radius * glowMultiplier);
+
         gradient.addColorStop(0, `hsla(${particle.hue}, 100%, 86%, ${particle.alpha})`);
-        gradient.addColorStop(0.34, `hsla(${particle.hue}, 100%, 72%, ${particle.alpha * 0.46})`);
+        gradient.addColorStop(0.34, `hsla(${particle.hue}, 100%, 72%, ${particle.alpha * 0.42})`);
         gradient.addColorStop(1, `hsla(${particle.hue}, 100%, 68%, 0)`);
 
         ctx.fillStyle = gradient;
         ctx.beginPath();
-        ctx.arc(pos.x, pos.y, radius * 5.2, 0, Math.PI * 2);
+        ctx.arc(pos.x, pos.y, radius * glowMultiplier, 0, Math.PI * 2);
         ctx.fill();
 
-        ctx.fillStyle = `hsla(${particle.hue}, 100%, 88%, ${Math.min(0.95, particle.alpha + 0.12)})`;
+        ctx.fillStyle = `hsla(${particle.hue}, 100%, 88%, ${Math.min(0.9, particle.alpha + 0.08)})`;
         ctx.beginPath();
         ctx.arc(pos.x, pos.y, radius, 0, Math.PI * 2);
         ctx.fill();
@@ -168,6 +266,7 @@ export function createBackgroundController({
 
     function renderFrame(now, staticOnly = false) {
       const time = now || 0;
+
       ctx.clearRect(0, 0, fxState.width, fxState.height);
 
       drawCoreGlow();
@@ -176,14 +275,21 @@ export function createBackgroundController({
       drawConnections(positions);
       drawParticles(positions, time);
 
-      if (!staticOnly && !prefersReducedMotion.matches && !fxState.isPaused) {
+      if (
+        !staticOnly &&
+        !fxState.profile.staticMode &&
+        !prefersReducedMotion.matches &&
+        !fxState.isPaused
+      ) {
         fxState.rafId = window.requestAnimationFrame(renderFrame);
       }
     }
 
     function resizeCanvas() {
       const rect = pageBgCanvas.getBoundingClientRect();
-      fxState.dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      fxState.profile = getFxProfile();
+      fxState.dpr = Math.min(window.devicePixelRatio || 1, fxState.profile.dprCap);
       fxState.width = Math.max(1, Math.floor(rect.width));
       fxState.height = Math.max(1, Math.floor(rect.height));
 
@@ -201,7 +307,11 @@ export function createBackgroundController({
       cancelAnimationFrame(fxState.rafId);
       resizeCanvas();
 
-      if (!prefersReducedMotion.matches && !fxState.isPaused) {
+      if (
+        !fxState.profile.staticMode &&
+        !prefersReducedMotion.matches &&
+        !fxState.isPaused
+      ) {
         fxState.rafId = window.requestAnimationFrame(renderFrame);
       }
     }
@@ -217,7 +327,10 @@ export function createBackgroundController({
       cancelAnimationFrame(fxState.rafId);
       renderFrame(performance.now(), true);
 
-      if (!prefersReducedMotion.matches) {
+      if (
+        !fxState.profile.staticMode &&
+        !prefersReducedMotion.matches
+      ) {
         fxState.rafId = window.requestAnimationFrame(renderFrame);
       }
     }
