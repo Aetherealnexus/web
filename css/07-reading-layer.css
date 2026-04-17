@@ -72,8 +72,9 @@
 .reading-toolbar__actions {
   width: min(100%, 620px);
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 10px;
+  align-items: stretch;
 }
 
 @keyframes readingActionHaloPulse {
@@ -84,7 +85,7 @@
   }
   50% {
     opacity: 0.96;
-    transform: scale(1.025);
+    transform: scale(1.02);
   }
 }
 
@@ -95,8 +96,21 @@
     transform: scale(1);
   }
   50% {
-    opacity: 0.92;
-    transform: scale(1.04);
+    opacity: 0.88;
+    transform: scale(1.035);
+  }
+}
+
+@keyframes readingActionSweep {
+  0% {
+    background-position:
+      0 0,
+      -180% 50%;
+  }
+  100% {
+    background-position:
+      0 0,
+      220% 50%;
   }
 }
 
@@ -117,24 +131,17 @@
   isolation: isolate;
   appearance: none;
   width: 100%;
-  min-height: 94px;
+  min-height: 68px;
   border: 1px solid var(--btn-border);
   background:
     linear-gradient(180deg, rgba(14, 23, 44, 0.94), rgba(8, 14, 27, 0.90));
   color: var(--text-0);
-  border-radius: 26px;
-  padding: 12px 10px;
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
+  border-radius: 22px;
   font: inherit;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 650;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  text-align: center;
   cursor: pointer;
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.04),
@@ -152,9 +159,27 @@
     filter 180ms ease;
 }
 
-.reading-back-btn::before,
+.reading-back-btn {
+  padding: 10px 16px 10px 12px;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  text-align: left;
+}
+
+.reading-copy-btn,
+.reading-native-share-btn {
+  padding: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .reading-copy-btn::before,
-.reading-native-share-btn::before {
+.reading-native-share-btn::before,
+.reading-back-btn::before {
   content: "";
   position: absolute;
   inset: 1px;
@@ -162,14 +187,26 @@
   pointer-events: none;
   background:
     linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.01)),
-    linear-gradient(90deg, transparent, var(--btn-sheen), transparent);
+    linear-gradient(
+      105deg,
+      transparent 0%,
+      transparent 38%,
+      hsla(var(--discipline-hue), 100%, 96%, 0.02) 46%,
+      hsla(var(--discipline-hue), 100%, 96%, 0.22) 50%,
+      hsla(var(--discipline-hue), 100%, 96%, 0.04) 54%,
+      transparent 62%,
+      transparent 100%
+    );
+  background-repeat: no-repeat, no-repeat;
+  background-size: 100% 100%, 140% 100%;
+  background-position: 0 0, -180% 50%;
   opacity: 0.9;
   z-index: -1;
 }
 
-.reading-back-btn::after,
 .reading-copy-btn::after,
-.reading-native-share-btn::after {
+.reading-native-share-btn::after,
+.reading-back-btn::after {
   content: "";
   position: absolute;
   inset: -1px;
@@ -194,7 +231,10 @@
 .reading-copy-btn:hover,
 .reading-copy-btn:focus-visible,
 .reading-native-share-btn:hover,
-.reading-native-share-btn:focus-visible {
+.reading-native-share-btn:focus-visible,
+.reading-back-btn:active,
+.reading-copy-btn:active,
+.reading-native-share-btn:active {
   transform: translateY(-2px);
   border-color: var(--btn-border-hover);
   background:
@@ -210,12 +250,27 @@
   filter: saturate(1.05);
 }
 
+.reading-back-btn:hover::before,
+.reading-back-btn:focus-visible::before,
+.reading-copy-btn:hover::before,
+.reading-copy-btn:focus-visible::before,
+.reading-native-share-btn:hover::before,
+.reading-native-share-btn:focus-visible::before,
+.reading-back-btn:active::before,
+.reading-copy-btn:active::before,
+.reading-native-share-btn:active::before {
+  animation: readingActionSweep 700ms cubic-bezier(.22,.9,.24,1) 1;
+}
+
 .reading-back-btn:hover::after,
 .reading-back-btn:focus-visible::after,
 .reading-copy-btn:hover::after,
 .reading-copy-btn:focus-visible::after,
 .reading-native-share-btn:hover::after,
-.reading-native-share-btn:focus-visible::after {
+.reading-native-share-btn:focus-visible::after,
+.reading-back-btn:active::after,
+.reading-copy-btn:active::after,
+.reading-native-share-btn:active::after {
   opacity: 1;
   transform: scale(1.015);
   filter: blur(0px);
@@ -225,8 +280,8 @@
 .reading-action-btn__icon {
   position: relative;
   flex: 0 0 auto;
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
   border-radius: 999px;
   display: grid;
   place-items: center;
@@ -274,8 +329,8 @@
 }
 
 .reading-action-btn__icon svg {
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
   display: block;
   stroke: currentColor;
   stroke-width: 1.9;
@@ -288,6 +343,12 @@
   position: relative;
   z-index: 1;
   white-space: nowrap;
+  line-height: 1;
+}
+
+.reading-copy-btn .reading-action-btn__label,
+.reading-native-share-btn .reading-action-btn__label {
+  display: none;
 }
 
 .reading-back-btn:hover .reading-action-btn__icon,
@@ -295,7 +356,10 @@
 .reading-copy-btn:hover .reading-action-btn__icon,
 .reading-copy-btn:focus-visible .reading-action-btn__icon,
 .reading-native-share-btn:hover .reading-action-btn__icon,
-.reading-native-share-btn:focus-visible .reading-action-btn__icon {
+.reading-native-share-btn:focus-visible .reading-action-btn__icon,
+.reading-back-btn:active .reading-action-btn__icon,
+.reading-copy-btn:active .reading-action-btn__icon,
+.reading-native-share-btn:active .reading-action-btn__icon {
   transform: scale(1.06);
   border-color: hsla(var(--discipline-hue), 100%, 88%, 0.32);
   box-shadow:
@@ -309,7 +373,10 @@
 .reading-copy-btn:hover .reading-action-btn__icon::before,
 .reading-copy-btn:focus-visible .reading-action-btn__icon::before,
 .reading-native-share-btn:hover .reading-action-btn__icon::before,
-.reading-native-share-btn:focus-visible .reading-action-btn__icon::before {
+.reading-native-share-btn:focus-visible .reading-action-btn__icon::before,
+.reading-back-btn:active .reading-action-btn__icon::before,
+.reading-copy-btn:active .reading-action-btn__icon::before,
+.reading-native-share-btn:active .reading-action-btn__icon::before {
   opacity: 0.92;
   transform: scale(1.06);
   animation-play-state: paused;
@@ -692,6 +759,18 @@
   .reading-action-btn__icon::before {
     animation: none;
   }
+
+  .reading-back-btn:hover::before,
+  .reading-back-btn:focus-visible::before,
+  .reading-copy-btn:hover::before,
+  .reading-copy-btn:focus-visible::before,
+  .reading-native-share-btn:hover::before,
+  .reading-native-share-btn:focus-visible::before,
+  .reading-back-btn:active::before,
+  .reading-copy-btn:active::before,
+  .reading-native-share-btn:active::before {
+    animation: none;
+  }
 }
 
 @media (max-width: 768px) {
@@ -799,34 +878,42 @@
 
   .reading-toolbar__actions {
     width: 100%;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: 2fr 1fr 1fr;
     gap: 8px;
   }
 
   .reading-back-btn,
   .reading-copy-btn,
   .reading-native-share-btn {
-    min-height: 82px;
-    padding: 10px 8px;
-    border-radius: 22px;
-    gap: 7px;
+    min-height: 62px;
+    border-radius: 18px;
+  }
+
+  .reading-back-btn {
+    padding: 8px 10px 8px 8px;
+    gap: 9px;
     font-size: 9px;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.10em;
+  }
+
+  .reading-copy-btn,
+  .reading-native-share-btn {
+    padding: 8px;
   }
 
   .reading-action-btn__icon {
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
   }
 
   .reading-action-btn__icon svg {
-    width: 15px;
-    height: 15px;
+    width: 14px;
+    height: 14px;
   }
 
   .reading-action-btn__label {
-    white-space: normal;
-    line-height: 1.15;
+    white-space: nowrap;
+    line-height: 1;
   }
 
   .lang-switcher {
