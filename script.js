@@ -2,39 +2,58 @@
   function sendDisciplineAnalytics(discipline, language = "en") {
     if (!discipline || !discipline.key) return;
 
+    const localized = getLocalizedDiscipline(discipline, language);
+    const safeLanguage = language || document.documentElement.lang || "en";
+    const virtualHash = `#${discipline.key}`;
+
     if (typeof window.trackDisciplineOpen === "function") {
       window.trackDisciplineOpen(
         discipline.key,
-        discipline.title || "",
-        language || document.documentElement.lang || "en"
+        localized.title || discipline.title || "",
+        safeLanguage
       );
     }
 
     if (typeof window.gtag === "function") {
-      const virtualHash = `#${discipline.key}`;
-
       window.gtag("event", "page_view", {
-        page_title: `${discipline.title || discipline.key} – Aethereal Nexus`,
-        page_location: `${window.location.origin}${window.location.pathname}${virtualHash}`,
-        page_path: `/${virtualHash}`,
-        language: language || document.documentElement.lang || "en"
+        page_title: `${localized.title || discipline.title || discipline.key} – Aethereal Nexus`,
+        page_location: `${window.location.origin}${window.location.pathname}${virtualHash}${safeLanguage !== DEFAULT_LANG ? `?lang=${safeLanguage}` : ""}`,
+        page_path: `/${virtualHash}${safeLanguage !== DEFAULT_LANG ? `?lang=${safeLanguage}` : ""}`,
+        language: safeLanguage
       });
     }
   }
 
   function sendLanguageAnalytics(language = "en", discipline = null) {
+    const safeLanguage = language || document.documentElement.lang || "en";
+
     if (typeof window.trackLanguageChange === "function") {
-      window.trackLanguageChange(language || document.documentElement.lang || "en");
+      window.trackLanguageChange(safeLanguage);
     }
 
     if (discipline && typeof window.gtag === "function") {
+      const localized = getLocalizedDiscipline(discipline, safeLanguage);
       const virtualHash = `#${discipline.key || "discipline"}`;
 
       window.gtag("event", "page_view", {
-        page_title: `${discipline.title || "Discipline"} – Aethereal Nexus (${language.toUpperCase()})`,
-        page_location: `${window.location.origin}${window.location.pathname}${virtualHash}?lang=${language}`,
-        page_path: `/${virtualHash}?lang=${language}`,
-        language: language || document.documentElement.lang || "en"
+        page_title: `${localized.title || discipline.title || "Discipline"} – Aethereal Nexus (${safeLanguage.toUpperCase()})`,
+        page_location: `${window.location.origin}${window.location.pathname}${safeLanguage !== DEFAULT_LANG ? `?lang=${safeLanguage}` : ""}${virtualHash}`,
+        page_path: `/${safeLanguage !== DEFAULT_LANG ? `?lang=${safeLanguage}` : ""}${virtualHash}`,
+        language: safeLanguage
+      });
+    }
+  }
+
+  function sendHomeAnalytics(language = "en") {
+    const safeLanguage = language || document.documentElement.lang || "en";
+    const search = safeLanguage !== DEFAULT_LANG ? `?lang=${safeLanguage}` : "";
+
+    if (typeof window.gtag === "function") {
+      window.gtag("event", "page_view", {
+        page_title: baseTitle,
+        page_location: `${window.location.origin}${window.location.pathname}${search}`,
+        page_path: `${window.location.pathname}${search}`,
+        language: safeLanguage
       });
     }
   }
@@ -161,6 +180,10 @@
   const total = disciplines.length;
 
   let currentLang = (() => {
+    const url = new URL(window.location.href);
+    const langFromUrl = url.searchParams.get("lang");
+    if (SUPPORTED_LANGS.includes(langFromUrl)) return langFromUrl;
+
     const saved = localStorage.getItem("aen_lang");
     return SUPPORTED_LANGS.includes(saved) ? saved : DEFAULT_LANG;
   })();
@@ -407,6 +430,58 @@
     };
   }
 
+  function getLanguageFromUrl() {
+    const url = new URL(window.location.href);
+    const lang = url.searchParams.get("lang");
+    return SUPPORTED_LANGS.includes(lang) ? lang : null;
+  }
+
+  function getDisciplineKeyFromUrl() {
+    const rawHash = window.location.hash.replace(/^#/, "").trim();
+    if (!rawHash) return null;
+
+    const decodedKey = decodeURIComponent(rawHash);
+    return getDisciplineByKey(decodedKey) ? decodedKey : null;
+  }
+
+  function buildStateUrl({
+    disciplineKey = currentOpenDisciplineKey,
+    language = currentLang
+  } = {}) {
+    const url = new URL(window.location.href);
+
+    if (language && language !== DEFAULT_LANG) {
+      url.searchParams.set("lang", language);
+    } else {
+      url.searchParams.delete("lang");
+    }
+
+    url.hash = disciplineKey ? encodeURIComponent(disciplineKey) : "";
+
+    return `${url.pathname}${url.search}${url.hash}`;
+  }
+
+  function syncUrlState({
+    disciplineKey = currentOpenDisciplineKey,
+    language = currentLang,
+    replace = false
+  } = {}) {
+    const nextUrl = buildStateUrl({ disciplineKey, language });
+    const currentUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+
+    if (nextUrl === currentUrl) return;
+
+    const method = replace ? "replaceState" : "pushState";
+    window.history[method](
+      {
+        disciplineKey: disciplineKey || null,
+        language: language || DEFAULT_LANG
+      },
+      "",
+      nextUrl
+    );
+  }
+
   function updateLanguageButtons() {
     langButtons.forEach((button) => {
       button.classList.toggle("is-active", button.dataset.lang === currentLang);
@@ -540,7 +615,13 @@
     }
   }
 
-  function openDiscipline(key) {
+  function openDiscipline(key, options = {}) {
+    const {
+      syncUrl = true,
+      emitAnalytics = true,
+      replaceHistory = false
+    } = options;
+
     const item = getDisciplineByKey(key);
     if (!item) return;
 
@@ -562,10 +643,28 @@
       screen.classList.add("is-reading");
     });
 
-    sendDisciplineAnalytics(item, currentLang);
+    if (syncUrl) {
+      syncUrlState({
+        disciplineKey: key,
+        language: currentLang,
+        replace: replaceHistory
+      });
+    }
+
+    if (emitAnalytics) {
+      sendDisciplineAnalytics(item, currentLang);
+    }
   }
 
-  function closeDiscipline() {
+  function closeDiscipline(options = {}) {
+    const {
+      syncUrl = true,
+      emitAnalytics = true,
+      replaceHistory = false
+    } = options;
+
+    const hadOpenDiscipline = Boolean(currentOpenDisciplineKey);
+
     currentOpenDisciplineKey = null;
     screen.classList.remove("is-reading");
 
@@ -575,6 +674,18 @@
 
     restoreBaseMeta();
     updateStaticUiLanguage();
+
+    if (syncUrl) {
+      syncUrlState({
+        disciplineKey: null,
+        language: currentLang,
+        replace: replaceHistory
+      });
+    }
+
+    if (emitAnalytics && hadOpenDiscipline) {
+      sendHomeAnalytics(currentLang);
+    }
 
     clearTimeout(clearStateTimer);
     clearStateTimer = window.setTimeout(() => {
@@ -589,9 +700,13 @@
   function setLanguage(lang, options = {}) {
     if (!SUPPORTED_LANGS.includes(lang)) return;
 
-    const { emitAnalytics = true } = options;
-    const previousLang = currentLang;
+    const {
+      emitAnalytics = true,
+      syncUrl = true,
+      replaceHistory = false
+    } = options;
 
+    const previousLang = currentLang;
     currentLang = lang;
     localStorage.setItem("aen_lang", lang);
     updateStaticUiLanguage();
@@ -605,8 +720,56 @@
       }
     }
 
+    if (syncUrl) {
+      syncUrlState({
+        disciplineKey: currentOpenDisciplineKey,
+        language: lang,
+        replace: replaceHistory
+      });
+    }
+
     if (emitAnalytics && previousLang !== lang) {
       sendLanguageAnalytics(lang, currentItem);
+
+      if (!currentItem) {
+        sendHomeAnalytics(lang);
+      }
+    }
+  }
+
+  function applyUrlState(options = {}) {
+    const { emitAnalytics = true } = options;
+
+    const urlLang = getLanguageFromUrl();
+    const targetLang = urlLang || currentLang || DEFAULT_LANG;
+    const targetDisciplineKey = getDisciplineKeyFromUrl();
+
+    setLanguage(targetLang, {
+      emitAnalytics: false,
+      syncUrl: false
+    });
+
+    if (targetDisciplineKey) {
+      openDiscipline(targetDisciplineKey, {
+        syncUrl: false,
+        emitAnalytics
+      });
+      return;
+    }
+
+    if (currentOpenDisciplineKey) {
+      closeDiscipline({
+        syncUrl: false,
+        emitAnalytics
+      });
+      return;
+    }
+
+    restoreBaseMeta();
+    updateStaticUiLanguage();
+
+    if (emitAnalytics) {
+      sendHomeAnalytics(currentLang);
     }
   }
 
@@ -659,7 +822,10 @@
 
     node.addEventListener("click", (event) => {
       event.preventDefault();
-      openDiscipline(node.dataset.key);
+      openDiscipline(node.dataset.key, {
+        syncUrl: true,
+        emitAnalytics: true
+      });
     });
   });
 
@@ -675,7 +841,10 @@
 
   if (readingBackBtn) {
     readingBackBtn.addEventListener("click", () => {
-      closeDiscipline();
+      closeDiscipline({
+        syncUrl: true,
+        emitAnalytics: true
+      });
     });
   }
 
@@ -683,13 +852,24 @@
     langSwitcher.addEventListener("click", (event) => {
       const button = event.target.closest(".lang-flag");
       if (!button) return;
-      setLanguage(button.dataset.lang);
+
+      setLanguage(button.dataset.lang, {
+        syncUrl: true,
+        emitAnalytics: true
+      });
     });
   }
 
+  window.addEventListener("popstate", () => {
+    applyUrlState({ emitAnalytics: true });
+  });
+
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && screen.classList.contains("is-reading")) {
-      closeDiscipline();
+      closeDiscipline({
+        syncUrl: true,
+        emitAnalytics: true
+      });
     }
   });
 
@@ -726,5 +906,12 @@
   }
 
   updateStaticUiLanguage();
-  setLanguage(currentLang, { emitAnalytics: false });
+  setLanguage(currentLang, {
+    emitAnalytics: false,
+    syncUrl: false
+  });
+
+  applyUrlState({
+    emitAnalytics: Boolean(getDisciplineKeyFromUrl())
+  });
 })();
