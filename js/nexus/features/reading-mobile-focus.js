@@ -3,8 +3,6 @@ export function initReadingMobileFocus() {
   const readingLayer = document.getElementById("readingLayer");
   const readingPanel = document.getElementById("readingPanel");
   const readingScroll = document.getElementById("readingScroll");
-  const readingArticle = document.getElementById("readingArticle");
-  const readingSummary = document.querySelector(".reading-summary");
 
   if (!mainContent || !readingLayer || !readingPanel || !readingScroll) {
     return () => {};
@@ -16,6 +14,7 @@ export function initReadingMobileFocus() {
 
   let rafPending = false;
   let rafId = 0;
+  let compactState = false;
 
   const isReadingOpen = () => {
     return (
@@ -25,7 +24,14 @@ export function initReadingMobileFocus() {
   };
 
   const setCompactState = (shouldCompact) => {
-    readingPanel.classList.toggle("is-mobile-reading-compact", Boolean(shouldCompact));
+    const nextState = Boolean(shouldCompact);
+
+    if (compactState === nextState) {
+      return;
+    }
+
+    compactState = nextState;
+    readingPanel.classList.toggle("is-mobile-reading-compact", compactState);
   };
 
   const evaluateCompactState = () => {
@@ -60,7 +66,11 @@ export function initReadingMobileFocus() {
     setCompactState(false);
   };
 
-  readingScroll.addEventListener("scroll", requestEvaluation, { passive: true });
+  const handleScroll = () => {
+    requestEvaluation();
+  };
+
+  readingScroll.addEventListener("scroll", handleScroll, { passive: true });
 
   const stateObserver = new MutationObserver(() => {
     if (!isReadingOpen()) {
@@ -81,24 +91,6 @@ export function initReadingMobileFocus() {
     attributes: true,
     attributeFilter: ["aria-hidden"]
   });
-
-  const contentObserver = new MutationObserver(() => {
-    requestEvaluation();
-  });
-
-  if (readingArticle) {
-    contentObserver.observe(readingArticle, {
-      childList: true,
-      subtree: true
-    });
-  }
-
-  if (readingSummary) {
-    contentObserver.observe(readingSummary, {
-      childList: true,
-      subtree: true
-    });
-  }
 
   const handleViewportChange = () => {
     if (!mobileQuery.matches) {
@@ -121,10 +113,9 @@ export function initReadingMobileFocus() {
   requestEvaluation();
 
   return function cleanupReadingMobileFocus() {
-    readingScroll.removeEventListener("scroll", requestEvaluation);
+    readingScroll.removeEventListener("scroll", handleScroll);
 
     stateObserver.disconnect();
-    contentObserver.disconnect();
 
     if (rafId) {
       window.cancelAnimationFrame(rafId);

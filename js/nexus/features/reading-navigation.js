@@ -45,7 +45,7 @@ export function createReadingNavigation({
       screen?.classList.add("is-reading");
     });
 
-    if (AEN_PERF.isOptimized()) {
+    if (fxController && typeof fxController.pause === "function") {
       fxController.pause();
     }
 
@@ -90,6 +90,10 @@ export function createReadingNavigation({
       onResetFeedback();
     }
 
+    if (typeof contentService.clearActiveStreaming === "function") {
+      contentService.clearActiveStreaming();
+    }
+
     shell.hideReadingShell();
 
     if (readingArticle) {
@@ -99,7 +103,10 @@ export function createReadingNavigation({
 
     restoreBaseMeta();
     updateStaticUiLanguage();
-    fxController.resume();
+
+    if (fxController && typeof fxController.resume === "function") {
+      fxController.resume();
+    }
 
     if (syncUrl) {
       syncUrlState({
