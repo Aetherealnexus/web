@@ -1,16 +1,16 @@
 .orbit-screen.is-reading {
-  --orbit-multiplier: 1.12;
+  --orbit-multiplier: 1.08;
 }
 
 .orbit-screen.is-reading .orbit-aura {
-  opacity: 0.35;
-  transform: scale(1.08);
+  opacity: 0.24;
+  transform: scale(1.03);
 }
 
 .orbit-screen.is-reading .orbit-rings {
-  opacity: 0.22;
-  transform: scale(1.06);
-  filter: blur(1px);
+  opacity: 0.14;
+  transform: scale(1.03);
+  filter: blur(0.5px);
 }
 
 .orbit-screen.is-reading .orbit-node {
@@ -19,15 +19,15 @@
 
 .orbit-screen.is-reading .orbit-system.is-hovering .orbit-node:not(.is-active) .orbit-node__inner,
 .orbit-screen.is-reading .orbit-node:not(.is-selected) .orbit-node__inner {
-  transform: scale(1.72);
+  transform: scale(1.18);
   opacity: 0;
-  filter: blur(10px);
+  filter: blur(3px);
 }
 
 .orbit-screen.is-reading .orbit-node.is-selected .orbit-node__inner {
-  transform: scale(2.22);
+  transform: scale(1.28);
   opacity: 0;
-  filter: blur(8px);
+  filter: blur(2px);
 }
 
 .orbit-screen.is-reading .reading-layer {
@@ -38,5 +38,49 @@
 .orbit-screen.is-reading .reading-panel {
   transform: translateY(0) scale(1);
   opacity: 1;
-  transition-delay: 120ms;
+  transition-delay: 60ms;
+}
+
+html[data-performance="optimized"] .orbit-screen.is-reading .orbit-aura,
+html[data-performance="optimized"] .orbit-screen.is-reading .orbit-rings {
+  opacity: 0;
+  transform: none;
+  filter: none;
+}
+
+html[data-performance="optimized"] .orbit-screen.is-reading .orbit-system.is-hovering .orbit-node:not(.is-active) .orbit-node__inner,
+html[data-performance="optimized"] .orbit-screen.is-reading .orbit-node:not(.is-selected) .orbit-node__inner,
+html[data-performance="optimized"] .orbit-screen.is-reading .orbit-node.is-selected .orbit-node__inner {
+  transform: none;
+  opacity: 0;
+  filter: none;
+}
+
+html[data-performance="optimized"] .orbit-screen.is-reading .reading-panel {
+  transition-delay: 0ms;
+}
+
+@media (max-width: 768px) {
+  .orbit-screen.is-reading {
+    --orbit-multiplier: 1;
+  }
+
+  .orbit-screen.is-reading .orbit-aura,
+  .orbit-screen.is-reading .orbit-rings {
+    opacity: 0;
+    transform: none;
+    filter: none;
+  }
+
+  .orbit-screen.is-reading .orbit-system.is-hovering .orbit-node:not(.is-active) .orbit-node__inner,
+  .orbit-screen.is-reading .orbit-node:not(.is-selected) .orbit-node__inner,
+  .orbit-screen.is-reading .orbit-node.is-selected .orbit-node__inner {
+    transform: none;
+    opacity: 0;
+    filter: none;
+  }
+
+  .orbit-screen.is-reading .reading-panel {
+    transition-delay: 0ms;
+  }
 }
