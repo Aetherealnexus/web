@@ -1,0 +1,123 @@
+body[data-render-mode="fallback"] .nexus-stage {
+  opacity: 0;
+}
+
+body[data-render-mode="fallback"] .nexus-stage-fallback {
+  display: block;
+}
+
+body[data-ui-mode="minimal"] .nexus-presence__subtitle,
+body[data-ui-mode="minimal"] .nexus-presence__signature,
+body[data-ui-mode="minimal"] .nexus-hints,
+body[data-ui-mode="minimal"] .nexus-minimap {
+  opacity: 0;
+  pointer-events: none;
+}
+
+body[data-map-mode="neural"] .nexus-core__sigil {
+  border-radius: 50%;
+}
+
+body[data-emotion-state="explore"] .nexus-atmosphere__halo {
+  opacity: 0.8;
+}
+
+body[data-emotion-state="attune"] .nexus-atmosphere__halo {
+  opacity: 1;
+  filter: blur(26px);
+}
+
+body[data-emotion-state="attune"] .nexus-core__pulse {
+  box-shadow:
+    0 0 40px rgba(139, 232, 255, 0.22),
+    inset 0 0 32px rgba(139, 232, 255, 0.1);
+}
+
+body[data-emotion-state="surge"] .nexus-stage-wrap,
+body[data-emotion-state="surge"] .nexus-atmosphere {
+  filter: saturate(1.16) brightness(1.04);
+}
+
+body[data-emotion-state="surge"] .nexus-core__sigil {
+  box-shadow:
+    0 0 36px rgba(184, 230, 255, 0.26),
+    inset 0 0 28px rgba(184, 230, 255, 0.1);
+}
+
+body[data-emotion-state="descent"] .nexus-atmosphere__vignette {
+  opacity: 1;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 28%, rgba(0, 0, 0, 0.18) 48%, rgba(0, 0, 0, 0.6) 100%);
+}
+
+body[data-emotion-state="converge"] .nexus-lens.is-visible .nexus-lens__inner {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.02),
+    0 20px 80px rgba(1, 8, 20, 0.52),
+    0 0 46px rgba(139, 232, 255, 0.12);
+}
+
+body[data-emotion-state="revelation"] .nexus-secret-layer__inner,
+body[data-emotion-state="revelation"] .nexus-core__pulse {
+  box-shadow:
+    0 0 56px rgba(139, 232, 255, 0.14),
+    0 0 84px rgba(182, 156, 255, 0.08);
+}
+
+body[data-emotion-state="command"] .nexus-hud {
+  border-color: rgba(139, 232, 255, 0.2);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.02),
+    0 20px 80px rgba(1, 8, 20, 0.52),
+    0 0 46px rgba(139, 232, 255, 0.12);
+}
+
+body[data-emotion-state="dormant"] .nexus-atmosphere,
+body[data-emotion-state="dormant"] .nexus-stage-wrap {
+  filter: saturate(0.88) brightness(0.92);
+}
+
+body[data-emotion-state="dormant"] .nexus-hints {
+  opacity: 0.76;
+}
+
+body.is-lens-open .nexus-lens {
+  opacity: 1;
+  visibility: visible;
+}
+
+body.is-command-open {
+  overflow: hidden;
+}
+
+body.is-command-open .nexus-command-palette {
+  display: grid;
+}
+
+body.is-secret-open .nexus-secret-layer {
+  display: grid;
+}
+
+body.is-init-complete .nexus-init {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+body.is-hints-hidden .nexus-hints {
+  opacity: 0;
+}
+
+body.is-audio-active #toggleAudioBtn {
+  border-color: rgba(139, 232, 255, 0.22);
+  background:
+    linear-gradient(180deg, rgba(139, 232, 255, 0.14), rgba(139, 232, 255, 0.06));
+}
+
+body.is-zoomed .nexus-core {
+  filter: saturate(1.08);
+}
+
+body.is-focus-deep .nexus-atmosphere__halo {
+  opacity: 1;
+}

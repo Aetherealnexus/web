@@ -1,0 +1,168 @@
+:root {
+  --nx-weather-intensity: 0;
+  --nx-weather-core-bias: 0;
+  --nx-weather-atmo-bias: 0;
+  --nx-temporal-lux: 1;
+  --nx-temporal-vignette-bias: 0;
+  --nx-temporal-core-bias: 0;
+}
+
+.nexus-stage-wrap::after {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  pointer-events: none;
+  opacity: calc(0.04 + var(--nx-weather-intensity) * 0.18);
+  transition:
+    opacity 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(139, 232, 255, 0.06), transparent 36%),
+    radial-gradient(circle at 50% 50%, rgba(182, 156, 255, 0.03), transparent 52%);
+  mix-blend-mode: screen;
+}
+
+.nexus-stage-wrap {
+  filter:
+    saturate(calc(var(--nx-postfx-sat, 1) * var(--nx-temporal-lux)))
+    brightness(calc(var(--nx-postfx-bright, 1) * var(--nx-temporal-lux)))
+    contrast(var(--nx-postfx-contrast, 1));
+}
+
+.nexus-atmosphere__veil--a {
+  opacity: calc(0.75 + var(--nx-weather-atmo-bias) * 0.18);
+}
+
+.nexus-atmosphere__veil--b {
+  opacity: calc(0.70 + var(--nx-weather-atmo-bias) * 0.2);
+}
+
+.nexus-atmosphere__veil--c {
+  opacity: calc(0.42 + var(--nx-weather-atmo-bias) * 0.16);
+}
+
+.nexus-core__halo {
+  opacity: calc(0.9 + var(--nx-weather-core-bias) * 0.18 + var(--nx-temporal-core-bias) * 0.14);
+}
+
+.nexus-atmosphere__vignette {
+  opacity: calc(1 + var(--nx-temporal-vignette-bias));
+}
+
+/* symbolic weather */
+
+body[data-weather-state="lucid"] .nexus-stage-wrap::after {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(139, 232, 255, 0.06), transparent 36%),
+    radial-gradient(circle at 50% 50%, rgba(182, 156, 255, 0.03), transparent 52%);
+}
+
+body[data-weather-state="ion-storm"] .nexus-stage-wrap::after {
+  background:
+    radial-gradient(circle at 34% 34%, rgba(139, 232, 255, 0.1), transparent 24%),
+    radial-gradient(circle at 72% 42%, rgba(109, 168, 255, 0.12), transparent 28%),
+    radial-gradient(circle at 48% 66%, rgba(182, 156, 255, 0.08), transparent 34%);
+  filter: blur(6px);
+}
+
+body[data-weather-state="ion-storm"] .nexus-atmosphere {
+  transform: scale(1.015);
+}
+
+body[data-weather-state="veil"] .nexus-stage-wrap::after {
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 255, 255, 0.04), transparent 28%),
+    radial-gradient(circle at 50% 50%, rgba(139, 232, 255, 0.06), transparent 42%);
+  filter: blur(14px);
+}
+
+body[data-weather-state="veil"] .nexus-atmosphere__grain {
+  opacity: calc(var(--nx-noise-opacity) + 0.02);
+}
+
+body[data-weather-state="cathedral"] .nexus-stage-wrap::after {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(139, 232, 255, 0.08), transparent 28%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03), transparent 14%),
+    radial-gradient(circle at 50% 50%, rgba(182, 156, 255, 0.04), transparent 44%);
+}
+
+body[data-weather-state="cathedral"] .nexus-core__pulse {
+  box-shadow:
+    0 0 calc(26px + var(--nx-postfx-core-glow, 0px) + 18px) rgba(139, 232, 255, 0.22),
+    inset 0 0 calc(26px + var(--nx-postfx-core-glow, 0px) * 0.35 + 10px) rgba(139, 232, 255, 0.1);
+}
+
+body[data-weather-state="ember"] .nexus-stage-wrap::after {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 238, 186, 0.1), transparent 24%),
+    radial-gradient(circle at 60% 44%, rgba(182, 156, 255, 0.06), transparent 34%),
+    radial-gradient(circle at 44% 60%, rgba(139, 232, 255, 0.04), transparent 42%);
+}
+
+body[data-weather-state="ember"] .nexus-core__halo {
+  filter: blur(22px);
+}
+
+body[data-weather-state="eclipse"] .nexus-stage-wrap::after {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.02), transparent 12%),
+    radial-gradient(circle at 50% 50%, rgba(109, 168, 255, 0.03), transparent 32%),
+    radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.14), transparent 58%);
+}
+
+body[data-weather-state="eclipse"] .nexus-atmosphere {
+  filter:
+    blur(var(--nx-postfx-atmo-blur, 0px))
+    saturate(calc(var(--nx-postfx-atmo-sat, 1) * 0.92))
+    brightness(calc(var(--nx-postfx-atmo-bright, 1) * 0.92));
+}
+
+/* temporal presence */
+
+body[data-temporal-phase="dawn"] {
+  --nx-temporal-lux: 1.018;
+  --nx-temporal-core-bias: 0.12;
+  --nx-temporal-vignette-bias: -0.04;
+}
+
+body[data-temporal-phase="dawn"] .nexus-stage-wrap::after {
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 238, 186, 0.06), transparent 22%),
+    radial-gradient(circle at 50% 58%, rgba(139, 232, 255, 0.04), transparent 38%);
+}
+
+body[data-temporal-phase="day"] {
+  --nx-temporal-lux: 1;
+  --nx-temporal-core-bias: 0.02;
+  --nx-temporal-vignette-bias: -0.01;
+}
+
+body[data-temporal-phase="dusk"] {
+  --nx-temporal-lux: 0.985;
+  --nx-temporal-core-bias: 0.08;
+  --nx-temporal-vignette-bias: 0.04;
+}
+
+body[data-temporal-phase="dusk"] .nexus-stage-wrap::after {
+  background:
+    radial-gradient(circle at 50% 46%, rgba(255, 238, 186, 0.06), transparent 22%),
+    radial-gradient(circle at 56% 58%, rgba(182, 156, 255, 0.04), transparent 38%);
+}
+
+body[data-temporal-phase="night"] {
+  --nx-temporal-lux: 0.97;
+  --nx-temporal-core-bias: 0.04;
+  --nx-temporal-vignette-bias: 0.06;
+}
+
+body[data-temporal-phase="deep-night"] {
+  --nx-temporal-lux: 0.94;
+  --nx-temporal-core-bias: -0.02;
+  --nx-temporal-vignette-bias: 0.12;
+}
+
+body[data-temporal-phase="deep-night"] .nexus-atmosphere__grain {
+  opacity: calc(var(--nx-noise-opacity) + 0.014);
+}

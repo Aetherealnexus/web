@@ -44,151 +44,6 @@
 
   <link rel="stylesheet" href="style.css" />
 
-  <style>
-    .orbit-viewport {
-      position: relative;
-    }
-
-    .nexus-v2-trigger {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 168px;
-      height: 168px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      border-radius: 50%;
-      z-index: 12;
-      pointer-events: auto;
-      outline: none;
-    }
-
-    .nexus-v2-trigger__halo,
-    .nexus-v2-trigger__ring,
-    .nexus-v2-trigger__core,
-    .nexus-v2-trigger__label {
-      position: absolute;
-      border-radius: 50%;
-      transition:
-        transform 220ms ease,
-        opacity 220ms ease,
-        box-shadow 220ms ease,
-        border-color 220ms ease,
-        filter 220ms ease;
-    }
-
-    .nexus-v2-trigger__halo {
-      inset: -18px;
-      background:
-        radial-gradient(circle at 50% 50%, rgba(139, 232, 255, 0.14), rgba(139, 232, 255, 0.05) 42%, transparent 74%);
-      filter: blur(18px);
-      opacity: 0.9;
-    }
-
-    .nexus-v2-trigger__ring {
-      inset: 10px;
-      border: 1px solid rgba(184, 227, 255, 0.18);
-      background:
-        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02), transparent 72%);
-      box-shadow:
-        0 0 26px rgba(139, 232, 255, 0.08),
-        inset 0 0 20px rgba(139, 232, 255, 0.04);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-    }
-
-    .nexus-v2-trigger__core {
-      inset: 48px;
-      background:
-        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.94), rgba(139,232,255,0.22) 44%, rgba(139,232,255,0.03) 78%);
-      box-shadow:
-        0 0 34px rgba(139, 232, 255, 0.16),
-        0 0 68px rgba(139, 232, 255, 0.06);
-    }
-
-    .nexus-v2-trigger__label {
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, 78px);
-      border-radius: 999px;
-      min-height: 30px;
-      padding: 7px 12px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid rgba(184, 227, 255, 0.14);
-      background:
-        linear-gradient(180deg, rgba(8, 12, 24, 0.82), rgba(6, 10, 20, 0.72));
-      color: rgba(237, 246, 255, 0.88);
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      white-space: nowrap;
-      box-shadow:
-        0 12px 40px rgba(0, 0, 0, 0.24),
-        0 0 16px rgba(139, 232, 255, 0.05);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-    }
-
-    .nexus-v2-trigger:hover .nexus-v2-trigger__halo,
-    .nexus-v2-trigger:focus-visible .nexus-v2-trigger__halo {
-      transform: scale(1.08);
-      filter: blur(22px);
-      opacity: 1;
-    }
-
-    .nexus-v2-trigger:hover .nexus-v2-trigger__ring,
-    .nexus-v2-trigger:focus-visible .nexus-v2-trigger__ring {
-      transform: scale(1.04);
-      border-color: rgba(184, 227, 255, 0.28);
-      box-shadow:
-        0 0 36px rgba(139, 232, 255, 0.14),
-        inset 0 0 24px rgba(139, 232, 255, 0.08);
-    }
-
-    .nexus-v2-trigger:hover .nexus-v2-trigger__core,
-    .nexus-v2-trigger:focus-visible .nexus-v2-trigger__core {
-      transform: scale(1.05);
-      box-shadow:
-        0 0 42px rgba(139, 232, 255, 0.2),
-        0 0 88px rgba(139, 232, 255, 0.08);
-    }
-
-    .nexus-v2-trigger:hover .nexus-v2-trigger__label,
-    .nexus-v2-trigger:focus-visible .nexus-v2-trigger__label {
-      transform: translate(-50%, 74px);
-      color: rgba(255,255,255,0.96);
-      border-color: rgba(184, 227, 255, 0.2);
-    }
-
-    @media (max-width: 900px) {
-      .nexus-v2-trigger {
-        width: 142px;
-        height: 142px;
-      }
-
-      .nexus-v2-trigger__core {
-        inset: 40px;
-      }
-
-      .nexus-v2-trigger__label {
-        transform: translate(-50%, 66px);
-        font-size: 8px;
-        padding: 6px 10px;
-      }
-
-      .nexus-v2-trigger:hover .nexus-v2-trigger__label,
-      .nexus-v2-trigger:focus-visible .nexus-v2-trigger__label {
-        transform: translate(-50%, 62px);
-      }
-    }
-  </style>
-
   <!-- Google Analytics 4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-LSLBCB2YR8"></script>
   <script>
@@ -220,15 +75,6 @@
 
       gtag("event", "language_change", {
         language_selected: language || document.documentElement.lang || "en"
-      });
-    };
-
-    window.trackLivingFieldEnter = function () {
-      if (typeof gtag !== "function") return;
-
-      gtag("event", "living_field_enter", {
-        source_page: "main_index",
-        target_page: "v2_index"
       });
     };
   </script>
@@ -357,6 +203,16 @@
   </script>
 </head>
 
+<!-- Como alternar entre os dois modos
+
+No <body>:
+
+<body class="nexus-home" data-bg-mode="fx">
+
+Para voltar às imagens random no futuro:
+
+<body class="nexus-home" data-bg-mode="image"> -->
+
 <body class="nexus-home" data-bg-mode="fx">
   <div class="page-bg" id="pageBg" aria-hidden="true"></div>
 
@@ -388,19 +244,6 @@
     <div class="orbit-viewport">
       <div class="orbit-aura" aria-hidden="true"></div>
       <div class="orbit-rings" aria-hidden="true"></div>
-
-      <a
-        href="./v2/"
-        class="nexus-v2-trigger"
-        id="nexusV2Trigger"
-        aria-label="Enter the living field"
-        title="Enter the living field"
-      >
-        <span class="nexus-v2-trigger__halo" aria-hidden="true"></span>
-        <span class="nexus-v2-trigger__ring" aria-hidden="true"></span>
-        <span class="nexus-v2-trigger__core" aria-hidden="true"></span>
-        <span class="nexus-v2-trigger__label">Enter Living Field</span>
-      </a>
 
       <section
         class="orbit-system"
@@ -575,13 +418,6 @@
     </noscript>
   </main>
 
-  <script type="module" src="js/nexus/app.js?v=home-root-2"></script>
-  <script>
-    document.getElementById("nexusV2Trigger")?.addEventListener("click", () => {
-      if (typeof window.trackLivingFieldEnter === "function") {
-        window.trackLivingFieldEnter();
-      }
-    });
-  </script>
+  <script type="module" src="js/nexus/app.js"></script>
 </body>
 </html>

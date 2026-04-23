@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+  />
+
+  <title>Aethereal Nexus | A Living Neural Map of Ideas, Meaning and Reality</title>
+
+  <meta
+    id="metaDescription"
+    name="description"
+    content="Aethereal Nexus is a living neural map of ideas, concepts, intersections and meaning — an immersive single-page conceptual universe exploring consciousness, reality, symbolism, intelligence, science, philosophy and emergence."
+  />
+
+  <meta
+    name="robots"
+    content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
+  />
+  <meta
+    name="googlebot"
+    content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
+  />
+
+  <meta name="application-name" content="Aethereal Nexus" />
+  <meta name="apple-mobile-web-app-title" content="Aethereal Nexus" />
+  <meta name="author" content="Bruno Cerqueira" />
+  <meta name="theme-color" content="#050816" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="format-detection" content="telephone=no" />
+
+  <link id="canonicalUrl" rel="canonical" href="https://www.aethereal.nexus/" />
+
+  <!-- Favicons -->
+  <link rel="icon" href="/images/fav/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/images/fav/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/fav/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/fav/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/fav/apple-touch-icon.png" />
+  <link rel="manifest" href="/images/fav/site.webmanifest" />
+  <link rel="mask-icon" href="/images/fav/safari-pinned-tab.svg" color="#050816" />
+
+  <!-- IMPORTANT: point v2 HTML to the real v3 CSS entry -->
+  <link rel="stylesheet" href="./style.css" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Aethereal Nexus" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="pt_PT" />
+  <meta property="og:locale:alternate" content="fr_FR" />
+
+  <meta
+    id="metaOgTitle"
+    property="og:title"
+    content="Aethereal Nexus | A Living Neural Map of Ideas, Meaning and Reality"
+  />
+  <meta
+    id="metaOgDescription"
+    property="og:description"
+    content="Enter a living one-page conceptual universe of ideas, intersections, symbols, emergence, intelligence, consciousness and meaning."
+  />
+  <meta
+    id="metaOgUrl"
+    property="og:url"
+    content="https://www.aethereal.nexus/"
+  />
+  <meta property="og:image" content="https://www.aethereal.nexus/images/aethereal_nexus.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta
+    property="og:image:alt"
+    content="Aethereal Nexus immersive visual identity representing a living neural map of ideas, concepts and meaning."
+  />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta
+    id="metaTwitterTitle"
+    name="twitter:title"
+    content="Aethereal Nexus | A Living Neural Map of Ideas, Meaning and Reality"
+  />
+  <meta
+    id="metaTwitterDescription"
+    name="twitter:description"
+    content="A living one-page conceptual universe where ideas, symbols, tensions and meaning become explorable through an immersive neural map."
+  />
+  <meta name="twitter:image" content="https://www.aethereal.nexus/images/aethereal_nexus.png" />
+  <meta
+    name="twitter:image:alt"
+    content="Aethereal Nexus immersive visual identity representing a living neural map of ideas, concepts and meaning."
+  />
+
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LSLBCB2YR8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag("js", new Date());
+    gtag("config", "G-LSLBCB2YR8", {
+      page_title: document.title,
+      page_location: window.location.href,
+      page_path: window.location.pathname
+    });
+
+    window.trackNodeFocus = function (nodeId, nodeTitle, nodeType) {
+      if (typeof gtag !== "function") return;
+
+      gtag("event", "node_focus", {
+        node_id: nodeId || "",
+        node_title: nodeTitle || "",
+        node_type: nodeType || ""
+      });
+    };
+
+    window.trackIntersectionOpen = function (intersectionId, sourceId, targetId) {
+      if (typeof gtag !== "function") return;
+
+      gtag("event", "intersection_open", {
+        intersection_id: intersectionId || "",
+        source_node_id: sourceId || "",
+        target_node_id: targetId || ""
+      });
+    };
+
+    window.trackMapZoom = function (zoomLevel) {
+      if (typeof gtag !== "function") return;
+
+      gtag("event", "map_zoom", {
+        zoom_level: typeof zoomLevel === "number" ? zoomLevel : null
+      });
+    };
+
+    window.trackCommandUsed = function (commandName) {
+      if (typeof gtag !== "function") return;
+
+      gtag("event", "command_used", {
+        command_name: commandName || ""
+      });
+    };
+
+    window.trackLanguageChange = function (language) {
+      if (typeof gtag !== "function") return;
+
+      gtag("event", "language_change", {
+        language_selected: language || document.documentElement.lang || "en"
+      });
+    };
+
+    window.trackSecretReveal = function (secretId) {
+      if (typeof gtag !== "function") return;
+
+      gtag("event", "secret_reveal", {
+        secret_id: secretId || ""
+      });
+    };
+  </script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://www.aethereal.nexus/#organization",
+    "name": "Aethereal Nexus",
+    "url": "https://www.aethereal.nexus/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.aethereal.nexus/images/aethereal_nexus.png"
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": "https://www.aethereal.nexus/#person",
+    "name": "Bruno Cerqueira"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://www.aethereal.nexus/#website",
+    "url": "https://www.aethereal.nexus/",
+    "name": "Aethereal Nexus",
+    "alternateName": "Aethereal Nexus",
+    "description": "A living neural map of ideas, concepts, symbolic intersections and meaning.",
+    "inLanguage": ["en", "pt", "fr"],
+    "publisher": {
+      "@id": "https://www.aethereal.nexus/#organization"
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://www.aethereal.nexus/#webpage",
+    "url": "https://www.aethereal.nexus/",
+    "name": "Aethereal Nexus",
+    "description": "A single-page immersive conceptual universe where ideas, symbols, intersections, meaning and emergent knowledge can be explored through a living neural map.",
+    "isPartOf": {
+      "@id": "https://www.aethereal.nexus/#website"
+    },
+    "primaryImageOfPage": {
+      "@type": "ImageObject",
+      "url": "https://www.aethereal.nexus/images/aethereal_nexus.png"
+    },
+    "author": {
+      "@id": "https://www.aethereal.nexus/#person"
+    },
+    "publisher": {
+      "@id": "https://www.aethereal.nexus/#organization"
+    },
+    "inLanguage": ["en", "pt", "fr"],
+    "isAccessibleForFree": true,
+    "about": [
+      { "@type": "Thing", "name": "Consciousness" },
+      { "@type": "Thing", "name": "Reality" },
+      { "@type": "Thing", "name": "Meaning" },
+      { "@type": "Thing", "name": "Intelligence" },
+      { "@type": "Thing", "name": "Symbolism" },
+      { "@type": "Thing", "name": "Emergence" },
+      { "@type": "Thing", "name": "Philosophy" },
+      { "@type": "Thing", "name": "Science" },
+      { "@type": "Thing", "name": "Language" },
+      { "@type": "Thing", "name": "Cognition" },
+      { "@type": "Thing", "name": "Complexity" },
+      { "@type": "Thing", "name": "Cybernetics" }
+    ]
+  }
+  </script>
+</head>
+
+<body class="nexus-app" data-render-mode="auto" data-map-mode="neural" data-ui-mode="immersive">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <div class="nexus-root" id="nexusRoot">
+    <div class="nexus-stage-wrap" id="nexusStageWrap" aria-hidden="true">
+      <canvas
+        class="nexus-stage"
+        id="nexusStage"
+        aria-hidden="true"
+      ></canvas>
+
+      <div class="nexus-stage-fallback" id="nexusStageFallback" hidden></div>
+    </div>
+
+    <div class="nexus-atmosphere" id="nexusAtmosphere" aria-hidden="true">
+      <div class="nexus-atmosphere__veil nexus-atmosphere__veil--a"></div>
+      <div class="nexus-atmosphere__veil nexus-atmosphere__veil--b"></div>
+      <div class="nexus-atmosphere__veil nexus-atmosphere__veil--c"></div>
+      <div class="nexus-atmosphere__grain"></div>
+      <div class="nexus-atmosphere__vignette"></div>
+      <div class="nexus-atmosphere__halo"></div>
+    </div>
+
+    <main
+      class="nexus-shell"
+      id="main-content"
+      aria-labelledby="siteTitle"
+      role="main"
+    >
+      <header class="nexus-presence" id="nexusPresence">
+        <div class="nexus-presence__brand">
+          <p class="nexus-presence__eyebrow">LIVING COGNITIVE UNIVERSE</p>
+          <h1 class="nexus-presence__title" id="siteTitle">Aethereal Nexus</h1>
+          <p class="nexus-presence__subtitle">
+            A living neural map of ideas, intersections, symbols and meaning.
+          </p>
+        </div>
+
+        <div class="nexus-presence__meta">
+          <p class="nexus-presence__signature">
+            Envisioned by Bruno Cerqueira with support of non-human intelligence.
+          </p>
+        </div>
+      </header>
+
+      <section
+        class="nexus-hud"
+        id="nexusHud"
+        aria-label="Experience controls and status"
+      >
+        <div class="nexus-hud__group nexus-hud__group--left">
+          <button
+            type="button"
+            class="nexus-control-btn"
+            id="openCommandPaletteBtn"
+            aria-label="Open command palette"
+            title="Command"
+          >
+            <span class="nexus-control-btn__icon">⌘</span>
+            <span class="nexus-control-btn__label">Command</span>
+          </button>
+
+          <button
+            type="button"
+            class="nexus-control-btn"
+            id="resetViewBtn"
+            aria-label="Reset map view"
+            title="Reset View"
+          >
+            <span class="nexus-control-btn__icon">◎</span>
+            <span class="nexus-control-btn__label">Reset</span>
+          </button>
+
+          <button
+            type="button"
+            class="nexus-control-btn"
+            id="toggleHintsBtn"
+            aria-pressed="false"
+            aria-label="Toggle interaction hints"
+            title="Hints"
+          >
+            <span class="nexus-control-btn__icon">?</span>
+            <span class="nexus-control-btn__label">Hints</span>
+          </button>
+        </div>
+
+        <div class="nexus-hud__group nexus-hud__group--center">
+          <div class="nexus-status-chip" id="modeChip" aria-live="polite">
+            <span class="nexus-status-chip__label">Mode</span>
+            <span class="nexus-status-chip__value" id="modeChipValue">Explore</span>
+          </div>
+
+          <div class="nexus-status-chip" id="zoomChip" aria-live="polite">
+            <span class="nexus-status-chip__label">Zoom</span>
+            <span class="nexus-status-chip__value" id="zoomChipValue">100%</span>
+          </div>
+
+          <div class="nexus-status-chip" id="focusChip" aria-live="polite">
+            <span class="nexus-status-chip__label">Focus</span>
+            <span class="nexus-status-chip__value" id="focusChipValue">Field</span>
+          </div>
+        </div>
+
+        <div class="nexus-hud__group nexus-hud__group--right">
+          <div class="lang-switcher" id="langSwitcher" aria-label="Language selector">
+            <button type="button" class="lang-flag is-active" data-lang="en" aria-label="English">
+              <span class="lang-flag__emoji">🇬🇧</span>
+              <span class="lang-flag__label">EN</span>
+            </button>
+
+            <button type="button" class="lang-flag" data-lang="pt" aria-label="Português">
+              <span class="lang-flag__emoji">🇵🇹</span>
+              <span class="lang-flag__label">PT</span>
+            </button>
+
+            <button type="button" class="lang-flag" data-lang="fr" aria-label="Français">
+              <span class="lang-flag__emoji">🇫🇷</span>
+              <span class="lang-flag__label">FR</span>
+            </button>
+          </div>
+
+          <button
+            type="button"
+            class="nexus-control-btn"
+            id="toggleAudioBtn"
+            aria-pressed="false"
+            aria-label="Toggle ambient audio"
+            title="Audio"
+          >
+            <span class="nexus-control-btn__icon">♫</span>
+            <span class="nexus-control-btn__label">Audio</span>
+          </button>
+        </div>
+      </section>
+
+      <section
+        class="nexus-field"
+        id="nexusField"
+        aria-label="Interactive neural map space"
+      >
+        <div
+          class="nexus-field__interaction-plane"
+          id="interactionPlane"
+          tabindex="0"
+          aria-label="Interactive neural field. Use pointer, touch, wheel or keyboard to explore."
+        ></div>
+
+        <div
+          class="nexus-map"
+          id="nexusMap"
+          aria-hidden="true"
+        >
+          <div class="nexus-map__nodes" id="nexusMapNodes"></div>
+          <div class="nexus-map__labels" id="nexusMapLabels"></div>
+          <div class="nexus-map__intersections" id="nexusMapIntersections"></div>
+        </div>
+
+        <div class="nexus-core" id="nexusCore" aria-hidden="true">
+          <div class="nexus-core__halo"></div>
+          <div class="nexus-core__pulse"></div>
+          <div class="nexus-core__sigil" id="nexusCoreSigil"></div>
+        </div>
+
+        <div class="nexus-hints" id="nexusHints" aria-live="polite">
+          <p class="nexus-hints__text" id="nexusHintsText">
+            Move slowly. Pause. Trace. Zoom. Let the field answer.
+          </p>
+        </div>
+      </section>
+
+      <aside
+        class="nexus-lens"
+        id="nexusLens"
+        aria-labelledby="lensTitle"
+        aria-hidden="true"
+      >
+        <div class="nexus-lens__inner">
+          <header class="nexus-lens__header">
+            <div class="nexus-lens__identity">
+              <p class="nexus-lens__eyebrow" id="lensEyebrow">NODE</p>
+              <h2 class="nexus-lens__title" id="lensTitle">No active focus</h2>
+              <p class="nexus-lens__meta" id="lensMeta">Awaiting resonance</p>
+            </div>
+
+            <div class="nexus-lens__actions">
+              <button
+                type="button"
+                class="nexus-icon-btn"
+                id="pinLensBtn"
+                aria-pressed="false"
+                aria-label="Pin insight lens"
+                title="Pin"
+              >
+                ⌂
+              </button>
+
+              <button
+                type="button"
+                class="nexus-icon-btn"
+                id="closeLensBtn"
+                aria-label="Close insight lens"
+                title="Close"
+              >
+                ×
+              </button>
+            </div>
+          </header>
+
+          <div class="nexus-lens__body" id="nexusLensBody">
+            <section class="nexus-lens__section">
+              <h3 class="nexus-lens__section-title">Essence</h3>
+              <p class="nexus-lens__text" id="lensEssence">
+                Focus an idea, concept, symbol or intersection to reveal its local meaning.
+              </p>
+            </section>
+
+            <section class="nexus-lens__section">
+              <h3 class="nexus-lens__section-title">Connections</h3>
+              <ul class="nexus-lens__list" id="lensConnections">
+                <li>No active connections</li>
+              </ul>
+            </section>
+
+            <section class="nexus-lens__section">
+              <h3 class="nexus-lens__section-title">Tensions</h3>
+              <ul class="nexus-lens__list" id="lensTensions">
+                <li>No active tensions</li>
+              </ul>
+            </section>
+
+            <section class="nexus-lens__section">
+              <h3 class="nexus-lens__section-title">Intersections</h3>
+              <div class="nexus-lens__chips" id="lensIntersections"></div>
+            </section>
+          </div>
+        </div>
+      </aside>
+
+      <aside
+        class="nexus-minimap"
+        id="nexusMinimap"
+        aria-label="Mini map overview"
+      >
+        <div class="nexus-minimap__header">
+          <span class="nexus-minimap__title">Field Overview</span>
+        </div>
+        <div class="nexus-minimap__body" id="nexusMinimapBody"></div>
+      </aside>
+
+      <div class="nexus-zoom-controls" id="nexusZoomControls" aria-label="Zoom controls">
+        <button type="button" class="nexus-zoom-btn" id="zoomInBtn" aria-label="Zoom in">+</button>
+        <button type="button" class="nexus-zoom-btn" id="zoomOutBtn" aria-label="Zoom out">−</button>
+      </div>
+
+      <section
+        class="nexus-command-palette"
+        id="nexusCommandPalette"
+        aria-labelledby="commandPaletteTitle"
+        aria-hidden="true"
+        hidden
+      >
+        <div class="nexus-command-palette__backdrop" id="commandPaletteBackdrop"></div>
+
+        <div class="nexus-command-palette__dialog" role="dialog" aria-modal="true">
+          <header class="nexus-command-palette__header">
+            <h2 class="nexus-command-palette__title" id="commandPaletteTitle">
+              Command the Nexus
+            </h2>
+            <button
+              type="button"
+              class="nexus-icon-btn"
+              id="closeCommandPaletteBtn"
+              aria-label="Close command palette"
+            >
+              ×
+            </button>
+          </header>
+
+          <div class="nexus-command-palette__body">
+            <label class="sr-only" for="commandPaletteInput">Search nodes, concepts or actions</label>
+            <input
+              id="commandPaletteInput"
+              class="nexus-command-palette__input"
+              type="text"
+              placeholder="Search concepts, intersections, modes, or hidden pathways..."
+              autocomplete="off"
+              spellcheck="false"
+            />
+
+            <div class="nexus-command-palette__results" id="commandPaletteResults">
+              <button type="button" class="nexus-command-item">
+                <span class="nexus-command-item__title">Reset View</span>
+                <span class="nexus-command-item__meta">Action</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="nexus-secret-layer"
+        id="nexusSecretLayer"
+        aria-hidden="true"
+        hidden
+      >
+        <div class="nexus-secret-layer__inner">
+          <p class="nexus-secret-layer__eyebrow">REVELATION</p>
+          <h2 class="nexus-secret-layer__title" id="secretLayerTitle">Hidden pattern detected</h2>
+          <p class="nexus-secret-layer__text" id="secretLayerText">
+            The field recognized a rare sequence of interaction.
+          </p>
+        </div>
+      </section>
+
+      <section
+        class="nexus-init"
+        id="nexusInit"
+        aria-live="polite"
+      >
+        <div class="nexus-init__inner">
+          <p class="nexus-init__eyebrow">INITIALIZING</p>
+          <h2 class="nexus-init__title">Aethereal Nexus</h2>
+          <p class="nexus-init__status" id="nexusInitStatus">
+            Constructing the living field...
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <noscript>
+      <section
+        aria-labelledby="noscript-title"
+        style="
+          position: fixed;
+          inset: 24px;
+          max-width: 1100px;
+          margin: auto;
+          padding: 24px;
+          color: #f5f7ff;
+          background: rgba(8, 12, 26, 0.92);
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 18px;
+          line-height: 1.75;
+          box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+          overflow: auto;
+          z-index: 99999;
+        "
+      >
+        <h2 id="noscript-title" style="margin-top: 0;">Aethereal Nexus</h2>
+
+        <p>
+          Aethereal Nexus is a living neural map of ideas, concepts, symbols,
+          intersections and meaning.
+        </p>
+
+        <p>
+          The full experience is designed as a single-page immersive conceptual
+          universe with zoomable exploration, reactive visual motion and dynamic
+          conceptual relationships.
+        </p>
+
+        <h3 style="margin-bottom: 8px;">Core themes</h3>
+        <ul style="margin-top: 0; padding-left: 22px;">
+          <li>Consciousness and phenomenology</li>
+          <li>Reality and ontological structure</li>
+          <li>Language, symbolism and logic</li>
+          <li>Intelligence and cognition</li>
+          <li>Emergence and complexity</li>
+          <li>Technology and cybernetics</li>
+          <li>Ethics, meaning and human becoming</li>
+        </ul>
+
+        <p>
+          For the full living interface, JavaScript must be enabled.
+        </p>
+      </section>
+    </noscript>
+  </div>
+
+  <!-- IMPORTANT: load the real v3 module tree -->
+  <script type="module">
+    import("./js/nexus/app.js").catch((error) => {
+      console.error("Aethereal Nexus boot failed:", error);
+
+      const statusEl = document.getElementById("nexusInitStatus");
+      if (statusEl) {
+        statusEl.textContent = "Boot failed. Open browser console.";
+      }
+
+      const initEl = document.getElementById("nexusInit");
+      if (initEl) {
+        initEl.setAttribute("data-boot-failed", "true");
+      }
+    });
+  </script>
+</body>
+</html>

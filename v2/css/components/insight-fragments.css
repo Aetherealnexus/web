@@ -1,0 +1,95 @@
+.nexus-fragments {
+  position: absolute;
+  inset: 0;
+  z-index: 48;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.nx-fragment {
+  position: absolute;
+  left: 0;
+  top: 0;
+  min-width: 120px;
+  max-width: min(340px, calc(100vw - 32px));
+  padding: 12px 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(179, 223, 255, 0.12);
+  background:
+    linear-gradient(180deg, rgba(10, 16, 30, 0.84), rgba(6, 10, 20, 0.72));
+  color: rgba(237, 246, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.3),
+    0 0 22px rgba(139, 232, 255, 0.05);
+  transform: translate3d(-50%, -50%, 0) scale(0.92);
+  opacity: 0;
+  transition:
+    opacity 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 260ms cubic-bezier(0.22, 1, 0.36, 1);
+  filter: blur(6px);
+}
+
+.nx-fragment.is-visible {
+  opacity: 1;
+  transform: translate3d(-50%, -50%, 0) scale(1);
+  filter: blur(0);
+}
+
+.nx-fragment.is-exit {
+  opacity: 0;
+  transform: translate3d(-50%, calc(-50% - 18px), 0) scale(1.02);
+  filter: blur(6px);
+}
+
+.nx-fragment__eyebrow {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(237, 246, 255, 0.46);
+}
+
+.nx-fragment__text {
+  display: block;
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(237, 246, 255, 0.9);
+}
+
+.nx-fragment--node {
+  border-color: rgba(139, 232, 255, 0.16);
+}
+
+.nx-fragment--pathway {
+  border-color: rgba(109, 168, 255, 0.18);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.3),
+    0 0 28px rgba(109, 168, 255, 0.08);
+}
+
+.nx-fragment--secret {
+  border-color: rgba(255, 238, 186, 0.18);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(255, 238, 186, 0.08);
+}
+
+.nx-fragment--ambient {
+  border-color: rgba(182, 156, 255, 0.16);
+}
+
+@media (max-width: 680px) {
+  .nx-fragment {
+    max-width: min(280px, calc(100vw - 24px));
+    padding: 10px 12px;
+  }
+
+  .nx-fragment__text {
+    font-size: 12px;
+  }
+}

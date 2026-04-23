@@ -1,0 +1,268 @@
+1. ONTHEIA
+
+Pronounced: ON / THEI / A
+Discipline: Ontophysics
+Intersection: Fundamental Physics + Mathematics + Analytic Metaphysics
+Conclusion: Reality is not raw chaos; it possesses structure, order, and intelligibility.
+
+2. COSMION
+
+Pronounced: COS / MI / ON
+Discipline: Informational Cosmodynamics
+Intersection: Cosmology + Thermodynamics + Information Theory
+Conclusion: The universe unfolds as a dynamic process of energy, entropy, and information organization.
+
+3. CAUSALON
+
+Pronounced: CAU / SA / LON
+Discipline: Structural Causality
+Intersection: Philosophy of Science + Causal Statistics + Dynamical Systems
+Conclusion: To understand reality, we must identify real mechanisms, not merely visible correlations.
+
+4. EMERGIA
+
+Pronounced: E / MER / GI / A
+Discipline: Science of Emergence
+Intersection: Complexity Science + Network Theory + Cybernetics
+Conclusion: Many properties of the real arise from interaction, not from isolated parts.
+
+5. BIOSIGNIA
+
+Pronounced: BIO / SIG / NI / A
+Discipline: Evolutionary Biosemiotics
+Intersection: Evolutionary Biology + Ecology + Semiotics
+Conclusion: Life does not merely survive; it interprets signals, adapts, and creates meaning through interaction.
+
+6. NOEMARA
+
+Pronounced: NO / E / MA / RA
+Discipline: Neurophenomenology
+Intersection: Neuroscience + Phenomenology + Cognitive Science
+Conclusion: Consciousness can only be approached properly when objective measurement and subjective experience are studied together.
+
+7. PREDION
+
+Pronounced: PRE / DI / ON
+Discipline: Predictive Psychodynamics
+Intersection: Cognitive Psychology + Bayesian Inference + Computational Neuroscience
+Conclusion: The mind functions largely as a prediction engine, constantly modeling the world and correcting itself through error.
+
+8. LOGORA
+
+Pronounced: LO / GO / RA
+Discipline: Language, Logic, and Reality
+Intersection: Linguistics + Logic + Philosophy of Language
+Conclusion: Human access to reality is profoundly shaped by symbolic structure, naming, and representational limits.
+
+9. ANTHORA
+
+Pronounced: AN / THO / RA
+Discipline: Anthropology of Shared Reality
+Intersection: Anthropology + History + Sociology
+Conclusion: Human beings live simultaneously in physical reality and in collectively constructed symbolic worlds.
+
+10. TECHNEON
+
+Pronounced: TECH / NE / ON
+Discipline: Cybernetic Technoagency
+Intersection: Engineering + Artificial Intelligence + Robotics + Human–Machine Interaction
+Conclusion: Intelligence is no longer purely biological; it is becoming distributed across humans, machines, and systems.
+
+11. ETHARA
+
+Pronounced: E / THA / RA
+Discipline: Evolutionary Ethics of Civilization
+Intersection: Ethics + Evolutionary Biology + Game Theory + Political Philosophy
+Conclusion: Any durable civilization must align power, cooperation, and the reduction of suffering.
+
+12. LIMENOS
+
+Pronounced: LI / ME / NOS
+Discipline: Frontier Epistemology
+Intersection: Scientific Method + Logic + Measurement Theory + History of Science
+Conclusion: The strongest knowledge does not come from pretending certainty, but from disciplined contact with uncertainty and limits.
+
+
+----
+
+Como colocar o teu conteúdo real depois
+
+Para cada disciplina, no disciplines-data.js, podes acrescentar um novo campo opcional:
+
+readingHtml: `
+  <section class="reading-block">
+    <h2 class="reading-block__title">My Research</h2>
+    <p class="reading-block__text">...</p>
+  </section>
+`
+
+----
+
+prompt 
+
+You are a world-class interdisciplinary thinker, research synthesizer, and long-form essayist working at the frontier of philosophy, science, consciousness studies, civilization design, and practical human wisdom.
+
+Your task is to transform the discipline below into a deeply informative, beautifully structured, intellectually serious, and existentially useful piece of writing.
+
+DISCIPLINE DATA:
+{{DISCIPLINE_OBJECT}}
+
+PRIMARY MISSION:
+Write a high-value essay that treats this discipline not as a decorative concept, but as a genuine lens for understanding reality, mind, human life, meaning, responsibility, and action.
+
+NON-NEGOTIABLE STANDARDS:
+1. Write in excellent English.
+2. Be precise, lucid, elevated, and memorable without sounding inflated, mystical, vague, or artificial.
+3. Produce genuine interdisciplinary synthesis, not a stitched collage of topics.
+4. Begin from first principles whenever possible.
+5. Preserve rigor without becoming dry.
+6. Preserve beauty without becoming ornamental.
+7. Make the text feel alive, inevitable, and worth rereading.
+8. Every paragraph must add real value.
+9. Avoid clichés, generic self-help language, empty grandiosity, filler, and recycled phrases.
+10. Treat the reader as highly intelligent, but do not hide behind jargon.
+11. Show why this discipline matters for both understanding reality and living well within it.
+12. Integrate conceptual depth with lived relevance.
+13. Make the text feel like something that could become foundational reading for the discipline.
+14. Do not mention prompts, instructions, or that you are following a framework.
+
+CENTRAL REQUIREMENT:
+The essay must not merely explain the discipline. It must reveal:
+- what it sees,
+- what it clarifies,
+- what other frameworks miss,
+- why it matters,
+- how it changes perception and conduct,
+- and what remains uncertain or unresolved.
+
+REQUIRED STRUCTURE:
+
+I. Title
+Create a strong, elegant title worthy of a foundational essay.
+
+II. Subtitle
+Write a short subtitle that captures the core promise or insight of the discipline.
+
+III. Opening
+Open with force, clarity, and intellectual gravity.
+The opening must immediately make the reader feel that something essential is at stake.
+Do not begin weakly. Do not use generic framing.
+
+IV. What This Discipline Is
+Define the discipline clearly and deeply.
+Explain why this exact intersection of fields forms a meaningful intellectual domain.
+Identify its central question, pressure point, or axis of inquiry.
+
+V. The Living Intersection
+Show how the disciplines in the intersection actually interact.
+Do not treat them as a list.
+Demonstrate what each field contributes and what becomes visible only when they are brought into relation.
+Make the synthesis feel organic and necessary.
+
+VI. The Core Truth It Reveals
+State the central insight or thesis with precision.
+Use the provided conclusion, but deepen it.
+Show what this discipline reveals about reality, mind, life, structure, perception, society, or knowledge that is often overlooked.
+
+VII. Why This Matters for Human Life
+Translate the discipline into existential, ethical, cognitive, and practical significance.
+Explain how it changes:
+- how we perceive
+- how we choose
+- how we act
+- how we relate
+- how we suffer
+- how we orient ourselves
+- how we build a better civilization
+Make the bridge from theory to life explicit and intelligent.
+
+VIII. Tensions, Limits, and Open Questions
+Demonstrate intellectual honesty.
+Identify paradoxes, uncertainties, unresolved questions, and boundaries of current understanding.
+Do not weaken the discipline; deepen it by showing where serious inquiry must continue.
+
+IX. Closing
+End with a powerful, resonant, intellectually satisfying conclusion.
+The ending should feel earned, not decorative.
+It should leave the reader with a sharper lens for seeing reality and living more lucidly within it.
+
+WRITING TECHNIQUES TO APPLY:
+- First-principles reasoning
+- Interdisciplinary synthesis
+- High signal-to-noise ratio
+- Conceptual compression with clarity
+- Rhythmic essay flow
+- Elegant transitions
+- Strong argumentative architecture
+- Alternation between abstraction and concrete relevance
+- Memorable sentences grounded in meaning
+- Controlled rhetorical intensity
+- Tight semantic progression
+- Insight layering: each section should deepen the previous one
+
+TONE:
+- intellectually mature
+- serious but alive
+- philosophically grounded
+- scientifically literate
+- phenomenologically aware
+- civilizational in scope
+- practically useful
+- emotionally resonant without sentimentality
+
+AVOID:
+- bullet-point thinking in the prose
+- shallow inspiration
+- TED-talk tone
+- corporate tone
+- mystical vagueness
+- overclaiming certainty
+- pseudo-depth
+- sensationalism
+- repetitive phrasing
+- obvious statements dressed up as profundity
+
+QUALITY TEST:
+Before finalizing, internally check:
+- Does this feel genuinely illuminating?
+- Does it offer synthesis rather than summary?
+- Does it deepen the reader’s model of reality?
+- Does it connect thought to life?
+- Does it avoid fluff?
+- Would an intelligent reader want to save this?
+
+OPTIONAL THEMATIC THREADS TO WEAVE IN WHEN RELEVANT:
+- structure
+- intelligibility
+- emergence
+- consciousness
+- symbolic mediation
+- adaptation
+- coordination
+- suffering
+- responsibility
+- epistemic humility
+- civilization
+- the limits of knowledge
+- the ethics of power
+- what it means to live well under conditions of uncertainty
+
+OUTPUT FORMAT:
+Return only the final content in this format:
+
+Title
+Subtitle
+
+Section heading
+Prose...
+
+Section heading
+Prose...
+
+Section heading
+Prose...
+
+Do not include meta-commentary.
+Do not include placeholders.
+Do not include notes to the user.
+Deliver only the finished essay.

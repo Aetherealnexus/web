@@ -1,0 +1,54 @@
+.nexus-map::before,
+.nexus-map::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.nexus-map::before {
+  background-image:
+    linear-gradient(var(--nx-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--nx-grid-line) 1px, transparent 1px);
+  background-size: 72px 72px;
+  opacity: 0.32;
+  mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.95) 28%, transparent 82%);
+}
+
+.nexus-map::after {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(139, 232, 255, 0.06), transparent 24%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.015), transparent 58%);
+  filter: blur(20px);
+  opacity: 0.9;
+}
+
+.nexus-map__nodes {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(139, 232, 255, 0.18) 0.8px, transparent 1.3px),
+    radial-gradient(circle at 46% 58%, rgba(182, 156, 255, 0.16) 0.9px, transparent 1.35px),
+    radial-gradient(circle at 62% 44%, rgba(109, 168, 255, 0.14) 0.75px, transparent 1.25px);
+  background-size: 340px 340px, 460px 460px, 520px 520px;
+  background-position: center center, 20% 80%, 70% 10%;
+  opacity: 0.3;
+  filter: drop-shadow(0 0 10px rgba(139, 232, 255, 0.05));
+}
+
+.nexus-map__labels {
+  opacity: 0.16;
+  background:
+    radial-gradient(circle at 22% 38%, rgba(237, 246, 255, 0.9) 0.7px, transparent 1.1px),
+    radial-gradient(circle at 65% 28%, rgba(237, 246, 255, 0.7) 0.6px, transparent 1.05px),
+    radial-gradient(circle at 74% 66%, rgba(237, 246, 255, 0.8) 0.55px, transparent 1px);
+  background-size: 600px 600px, 540px 540px, 680px 680px;
+}
+
+.nexus-map__intersections {
+  opacity: 0.12;
+  background:
+    linear-gradient(115deg, transparent 44%, rgba(139, 232, 255, 0.18) 50%, transparent 56%),
+    linear-gradient(42deg, transparent 44%, rgba(182, 156, 255, 0.16) 50%, transparent 56%),
+    linear-gradient(168deg, transparent 46%, rgba(109, 168, 255, 0.14) 50%, transparent 54%);
+  background-size: 420px 420px, 560px 560px, 640px 640px;
+  filter: blur(0.4px);
+}

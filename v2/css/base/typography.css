@@ -1,0 +1,133 @@
+html {
+  font-family: var(--nx-font-sans);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(58, 119, 196, 0.12), transparent 28%),
+    radial-gradient(circle at 20% 20%, rgba(139, 232, 255, 0.05), transparent 22%),
+    linear-gradient(180deg, #050816 0%, #02040a 100%);
+  background-color: var(--nx-bg);
+}
+
+body {
+  font-family: var(--nx-font-sans);
+  color: var(--nx-text);
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--nx-font-display);
+  letter-spacing: -0.025em;
+  line-height: 1.04;
+  font-weight: 600;
+}
+
+p,
+li,
+span,
+button,
+input {
+  letter-spacing: 0.01em;
+}
+
+.skip-link {
+  position: fixed;
+  left: 16px;
+  top: 16px;
+  z-index: 9999;
+  padding: 10px 14px;
+  border-radius: var(--nx-radius-pill);
+  color: #02111c;
+  background: #dff9ff;
+  transform: translateY(-180%);
+  transition: transform var(--nx-tr-fast);
+  box-shadow: var(--nx-shadow-2);
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+.nexus-presence__eyebrow,
+.nexus-lens__eyebrow,
+.nexus-init__eyebrow,
+.nexus-secret-layer__eyebrow,
+.nexus-status-chip__label,
+.nexus-minimap__title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--nx-text-faint);
+}
+
+.nexus-presence__title {
+  font-size: clamp(28px, 4.6vw, 58px);
+  font-weight: 650;
+  line-height: 0.95;
+}
+
+.nexus-presence__subtitle {
+  font-size: clamp(14px, 1.35vw, 18px);
+  color: var(--nx-text-soft);
+}
+
+.nexus-presence__signature {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--nx-text-dim);
+}
+
+.nexus-lens__title,
+.nexus-init__title,
+.nexus-secret-layer__title,
+.nexus-command-palette__title {
+  font-size: clamp(20px, 2vw, 32px);
+}
+
+.nexus-lens__meta,
+.nexus-lens__text,
+.nexus-command-palette__input,
+.nexus-hints__text,
+.nexus-init__status,
+.nexus-secret-layer__text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--nx-text-soft);
+}
+
+.nexus-status-chip__value,
+.nexus-control-btn__label,
+.lang-flag__label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--nx-text-soft);
+}
+
+.nexus-command-item__title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.nexus-command-item__meta {
+  font-size: 12px;
+  color: var(--nx-text-faint);
+}
+
+.nexus-lens__section-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--nx-text-faint);
+}
+
+.nexus-lens__list,
+.nexus-lens__chips {
+  font-size: 13px;
+  color: var(--nx-text-soft);
+}

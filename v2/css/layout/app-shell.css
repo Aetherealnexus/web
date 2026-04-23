@@ -1,0 +1,174 @@
+body.nexus-app {
+  overflow: hidden;
+  background-color: var(--nx-bg);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+.nexus-root {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  min-height: 100dvh;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(85, 137, 245, 0.07), transparent 20%),
+    radial-gradient(circle at 12% 12%, rgba(139, 232, 255, 0.06), transparent 24%),
+    radial-gradient(circle at 84% 18%, rgba(182, 156, 255, 0.05), transparent 26%),
+    linear-gradient(180deg, rgba(5, 8, 22, 1) 0%, rgba(2, 4, 10, 1) 100%);
+}
+
+.nexus-shell {
+  position: relative;
+  z-index: var(--nx-z-shell);
+  width: 100%;
+  height: 100dvh;
+  min-height: 100dvh;
+  pointer-events: none;
+}
+
+.nexus-presence {
+  position: absolute;
+  top: var(--nx-safe-top);
+  left: var(--nx-safe-left);
+  right: var(--nx-safe-right);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--nx-space-7);
+  padding: 0;
+  pointer-events: none;
+}
+
+.nexus-presence__brand {
+  width: var(--nx-presence-width);
+  display: grid;
+  gap: 10px;
+}
+
+.nexus-presence__meta {
+  max-width: 280px;
+  display: flex;
+  justify-content: flex-end;
+  align-self: flex-start;
+  padding-top: 6px;
+}
+
+.nexus-field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.nexus-field__interaction-plane {
+  position: absolute;
+  inset: 0;
+  pointer-events: auto;
+  outline: none;
+}
+
+.nexus-field__interaction-plane:focus-visible {
+  box-shadow: inset 0 0 0 1px rgba(139, 232, 255, 0.18);
+}
+
+.nexus-map {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+.nexus-map__nodes,
+.nexus-map__labels,
+.nexus-map__intersections {
+  position: absolute;
+  inset: 0;
+}
+
+.nexus-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--nx-core-size);
+  height: var(--nx-core-size);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.nexus-hints {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--nx-safe-bottom) + 34px);
+  transform: translateX(-50%);
+  width: min(640px, calc(100vw - 48px));
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.nexus-hints__text {
+  padding: 12px 18px;
+  border: 1px solid rgba(179, 223, 255, 0.12);
+  border-radius: var(--nx-radius-pill);
+  background: rgba(6, 10, 20, 0.44);
+  backdrop-filter: blur(var(--nx-blur-md));
+  -webkit-backdrop-filter: blur(var(--nx-blur-md));
+  box-shadow: var(--nx-shadow-1);
+  text-align: center;
+}
+
+@media (max-width: 1180px) {
+  .nexus-presence {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .nexus-presence__meta {
+    max-width: 100%;
+    justify-content: flex-start;
+    padding-top: 0;
+  }
+}
+
+@media (max-width: 980px) {
+  .nexus-presence {
+    top: calc(var(--nx-safe-top) + 2px);
+  }
+
+  .nexus-presence__title {
+    max-width: 90vw;
+  }
+
+  .nexus-hints {
+    bottom: calc(var(--nx-safe-bottom) + 84px);
+    width: min(92vw, 620px);
+  }
+}
+
+@media (max-width: 680px) {
+  .nexus-presence {
+    left: 14px;
+    right: 14px;
+  }
+
+  .nexus-presence__brand {
+    width: 100%;
+    gap: 8px;
+  }
+
+  .nexus-presence__signature {
+    max-width: 70vw;
+  }
+
+  .nexus-hints {
+    bottom: calc(var(--nx-safe-bottom) + 96px);
+  }
+
+  .nexus-hints__text {
+    padding: 11px 14px;
+    font-size: 12px;
+  }
+}

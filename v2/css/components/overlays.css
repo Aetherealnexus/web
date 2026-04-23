@@ -1,0 +1,79 @@
+.nexus-secret-layer,
+.nexus-init {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: auto;
+}
+
+.nexus-secret-layer {
+  z-index: var(--nx-z-overlay);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(139, 232, 255, 0.08), transparent 18%),
+    linear-gradient(180deg, rgba(3, 6, 12, 0.58), rgba(2, 4, 10, 0.78));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.nexus-secret-layer__inner {
+  width: min(720px, calc(100vw - 32px));
+  padding: 28px;
+  border-radius: 30px;
+  border: 1px solid rgba(179, 223, 255, 0.16);
+  background:
+    linear-gradient(180deg, rgba(11, 18, 34, 0.86), rgba(7, 10, 20, 0.82));
+  box-shadow: var(--nx-shadow-2);
+  text-align: center;
+}
+
+.nexus-secret-layer__inner > * + * {
+  margin-top: 12px;
+}
+
+.nexus-init {
+  z-index: var(--nx-z-init);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(139, 232, 255, 0.08), transparent 16%),
+    linear-gradient(180deg, rgba(4, 7, 15, 0.96), rgba(2, 4, 10, 0.98));
+  transition:
+    opacity var(--nx-tr-slow),
+    visibility var(--nx-tr-slow);
+}
+
+.nexus-init.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.nexus-init__inner {
+  width: min(580px, calc(100vw - 32px));
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+  text-align: center;
+}
+
+.nexus-init__title {
+  position: relative;
+}
+
+.nexus-init__title::after {
+  content: "";
+  display: block;
+  width: 72px;
+  height: 1px;
+  margin: 16px auto 0;
+  background: linear-gradient(90deg, transparent, rgba(139, 232, 255, 0.55), transparent);
+}
+
+.nexus-init__status {
+  max-width: 440px;
+}
+
+@media (max-width: 680px) {
+  .nexus-secret-layer__inner {
+    padding: 22px 18px;
+  }
+}

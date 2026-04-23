@@ -1,0 +1,87 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:where(html) {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  color-scheme: dark;
+  scroll-behavior: auto;
+}
+
+:where(body, h1, h2, h3, h4, h5, h6, p, ul, ol, dl, dd, figure, blockquote) {
+  margin: 0;
+}
+
+:where(ul, ol) {
+  padding: 0;
+  list-style: none;
+}
+
+:where(button, input, textarea, select) {
+  font: inherit;
+  color: inherit;
+}
+
+:where(button) {
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+:where(a) {
+  color: inherit;
+  text-decoration: none;
+}
+
+:where(img, svg, video, canvas) {
+  display: block;
+  max-width: 100%;
+}
+
+:where(html, body) {
+  width: 100%;
+  min-height: 100%;
+}
+
+:where(body) {
+  min-height: 100dvh;
+}
+
+:where(input, textarea, select) {
+  background: transparent;
+  border: 0;
+  outline: 0;
+}
+
+:where(textarea) {
+  resize: vertical;
+}
+
+:where([hidden]) {
+  display: none !important;
+}
+
+:where(:focus-visible) {
+  outline: none;
+}
+
+:where(::selection) {
+  background: rgba(171, 238, 255, 0.22);
+  color: #f7fbff;
+}
+
+.sr-only {
+  position: absolute !important;
+  inline-size: 1px !important;
+  block-size: 1px !important;
+  overflow: hidden !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  padding: 0 !important;
+  margin: -1px !important;
+}

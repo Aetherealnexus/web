@@ -1,0 +1,135 @@
+@keyframes nxDriftA {
+  0% {
+    transform: translate3d(-2%, -1%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(2%, 1%, 0) scale(1.04);
+  }
+  100% {
+    transform: translate3d(-2%, -1%, 0) scale(1);
+  }
+}
+
+@keyframes nxDriftB {
+  0% {
+    transform: translate3d(1%, -2%, 0) scale(1.02);
+  }
+  50% {
+    transform: translate3d(-2%, 2%, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(1%, -2%, 0) scale(1.02);
+  }
+}
+
+@keyframes nxDriftC {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(10deg) scale(1.03);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+@keyframes nxPulse {
+  0%,
+  100% {
+    transform: scale(0.96);
+    opacity: 0.74;
+  }
+  50% {
+    transform: scale(1.06);
+    opacity: 1;
+  }
+}
+
+@keyframes nxSigilBreath {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    box-shadow:
+      0 0 18px rgba(184, 230, 255, 0.16),
+      inset 0 0 18px rgba(184, 230, 255, 0.05);
+  }
+  50% {
+    transform: scale(1.05) rotate(16deg);
+    box-shadow:
+      0 0 28px rgba(184, 230, 255, 0.24),
+      inset 0 0 24px rgba(184, 230, 255, 0.08);
+  }
+}
+
+@keyframes nxHintFloat {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-4px);
+  }
+}
+
+@keyframes nxInitFlicker {
+  0%,
+  100% {
+    opacity: 0.78;
+    letter-spacing: 0.18em;
+  }
+  50% {
+    opacity: 1;
+    letter-spacing: 0.24em;
+  }
+}
+
+.nexus-atmosphere__veil--a {
+  animation: nxDriftA 26s ease-in-out infinite;
+}
+
+.nexus-atmosphere__veil--b {
+  animation: nxDriftB 32s ease-in-out infinite;
+}
+
+.nexus-atmosphere__veil--c {
+  animation: nxDriftC 42s linear infinite;
+}
+
+.nexus-core__pulse {
+  animation: nxPulse 4.8s ease-in-out infinite;
+}
+
+.nexus-core__sigil {
+  animation: nxSigilBreath 8s ease-in-out infinite;
+}
+
+.nexus-hints {
+  animation: nxHintFloat 6s ease-in-out infinite;
+}
+
+.nexus-init__eyebrow {
+  animation: nxInitFlicker 2.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nexus-atmosphere__veil--a,
+  .nexus-atmosphere__veil--b,
+  .nexus-atmosphere__veil--c,
+  .nexus-core__pulse,
+  .nexus-core__sigil,
+  .nexus-hints,
+  .nexus-init__eyebrow {
+    animation: none !important;
+  }
+
+  .nexus-lens,
+  .nexus-command-palette,
+  .nexus-init,
+  .lang-flag,
+  .nexus-control-btn,
+  .nexus-icon-btn,
+  .nexus-zoom-btn {
+    transition: none !important;
+  }
+}

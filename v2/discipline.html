@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+  />
+  <title>Discipline – Aethereal Nexus</title>
+  <meta
+    name="description"
+    content="Aethereal Nexus discipline page."
+  />
+
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="discipline.css" />
+</head>
+<body class="discipline-body">
+  <main class="discipline-shell">
+    <header class="discipline-topbar">
+      <a class="discipline-back" href="index.html" aria-label="Back to Aethereal Nexus">
+        <span aria-hidden="true">←</span>
+        <span>Aethereal Nexus</span>
+      </a>
+    </header>
+
+    <section class="discipline-panel" aria-label="Discipline detail">
+      <div class="discipline-sigil">
+        <div class="discipline-sigil__frame" id="disciplineSigil" aria-hidden="true">
+          <span>SVG RESERVED</span>
+        </div>
+      </div>
+
+      <div class="discipline-content">
+        <p class="discipline-kicker" id="disciplineKicker">DISCIPLINE</p>
+        <h1 class="discipline-title" id="disciplineTitle">ONTHEIA</h1>
+        <p class="discipline-pronounced" id="disciplinePronounced">ON / THEI / A</p>
+
+        <div class="discipline-info">
+          <article class="discipline-row">
+            <span class="discipline-row__label">Discipline</span>
+            <p class="discipline-row__value" id="disciplineName"></p>
+          </article>
+
+          <article class="discipline-row">
+            <span class="discipline-row__label">Intersection</span>
+            <p class="discipline-row__value" id="disciplineIntersection"></p>
+          </article>
+
+          <article class="discipline-row">
+            <span class="discipline-row__label">Conclusion</span>
+            <p class="discipline-row__value" id="disciplineConclusion"></p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="disciplines-data.js"></script>
+  <script src="discipline.js"></script>
+</body>
+</html>
