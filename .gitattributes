@@ -1,0 +1,8 @@
+# Mark built assets as binary
+*.woff2 binary
+*.webp binary
+*.avif binary
+*.ttf binary
+*.png binary
+*.jpg binary
+*.jpeg binary

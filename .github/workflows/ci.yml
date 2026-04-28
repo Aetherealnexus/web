@@ -1,0 +1,51 @@
+name: CI — audits
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install global audit tools
+        run: |
+          npm install -g @lhci/cli@0.10.3 pa11y-ci@6
+
+      - name: Start simple HTTP server
+        run: |
+          python -m http.server 8080 &
+          sleep 2
+
+      - name: Run Lighthouse CI
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+        run: |
+          # collect a Lighthouse report for the root URL and upload to temporary storage
+          npx lhci autorun --collect.url=http://localhost:8080 --upload.target=temporary-public-storage
+
+      - name: Run pa11y accessibility checks
+        run: |
+          printf '{ "defaults": { "timeout": 30000 } }' > .pa11yci.json
+          npx pa11y-ci http://localhost:8080 || true
+
+      - name: Archive LHCI reports (optional)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lhci-report
+          path: ./lhci_report || ''
