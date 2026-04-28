@@ -4,8 +4,17 @@
   <meta charset="UTF-8" />
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
   />
+
+  <!-- Critical CSS (minimal) to render LCP quickly -->
+  <style id="critical-css">
+    :root { background-color: #03050b; color: #edf6ff; }
+    html,body { height:100%; margin:0; }
+    body { background: #03050b; -webkit-font-smoothing:antialiased; }
+    .site-top-signature { display:block; text-align:center; font-size:1.6rem; margin:24px 0 8px; color:#edf6ff; }
+    .nexus-v2-trigger { visibility:visible; }
+  </style>
 
   <title>Aethereal Nexus | Consciousness, Reality and Symbolic Disciplines</title>
 
@@ -32,6 +41,11 @@
   <meta name="format-detection" content="telephone=no" />
 
   <link id="canonicalUrl" rel="canonical" href="https://www.aethereal.nexus/" />
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <link rel="alternate" hreflang="en" href="https://www.aethereal.nexus/" />
+  <link rel="alternate" hreflang="pt" href="https://www.aethereal.nexus/pt/" />
+  <link rel="alternate" hreflang="fr" href="https://www.aethereal.nexus/fr/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.aethereal.nexus/" />
 
   <!-- Favicons -->
   <link rel="icon" href="/images/fav/favicon.svg" type="image/svg+xml" />
@@ -42,9 +56,91 @@
   <link rel="manifest" href="/images/fav/site.webmanifest" />
   <link rel="mask-icon" href="/images/fav/safari-pinned-tab.svg" color="#050816" />
 
-  <link rel="stylesheet" href="style.css" />
+  <!-- Preload Playfair Display fonts for faster headings render -->
+  <link rel="preload" href="/Playfair_Display/static/PlayfairDisplay-Regular.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="/Playfair_Display/static/PlayfairDisplay-Bold.ttf" as="font" type="font/ttf" crossorigin>
+
+  <link rel="preload" href="style.css" as="style" onload="this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="style.css">
+  </noscript>
+
+  <!-- Preload main social/hero image to improve LCP -->
+  <link rel="preload" href="/images/aethereal_nexus.webp" as="image" type="image/webp">
+  <link rel="preload" href="/images/aethereal_nexus.png" as="image">
 
   <style>
+    /* Embedded font-face (fallback to local system) */
+    @font-face {
+      font-family: 'PlayfairDisplay';
+      src: url('/Playfair_Display/static/PlayfairDisplay-Regular.woff2') format('woff2'),
+           url('/Playfair_Display/static/PlayfairDisplay-Regular.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'PlayfairDisplay';
+      src: url('/Playfair_Display/static/PlayfairDisplay-Bold.woff2') format('woff2'),
+           url('/Playfair_Display/static/PlayfairDisplay-Bold.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* Use Playfair for main identity and reading titles */
+    .site-top-signature,
+    .reading-head__title {
+      font-family: 'PlayfairDisplay', var(--font-ui);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .skip-link {
+      position: absolute;
+      left: -999px;
+      top: 0;
+      background: #050816;
+      color: #f5f7ff;
+      padding: 8px 12px;
+      z-index: 1000;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .skip-link:focus,
+    .skip-link:focus-visible {
+      left: 1rem;
+      top: 1rem;
+      outline: 3px solid rgba(139, 232, 255, 0.9);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.36);
+    }
+
+    /* Consent banner */
+    .consent-banner {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 20px;
+      background: rgba(6,10,20,0.96);
+      color: var(--nx-text);
+      padding: 14px 18px;
+      border-radius: 12px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      z-index: 1200;
+      max-width: calc(100% - 40px);
+    }
+
+    .consent-banner p { margin: 0; font-size: 13px; color: var(--nx-text-soft); }
+
+    .consent-banner button { background: transparent; color: var(--nx-text); border: 1px solid rgba(255,255,255,0.06); padding: 8px 12px; border-radius: 8px; cursor: pointer; }
+
+    .consent-banner button.primary { background: var(--nx-accent); color: #041124; border: none; }
+
     .orbit-viewport {
       position: relative;
     }
@@ -142,6 +238,19 @@
       opacity: 1;
     }
 
+    /* Visible focus styles for keyboard users */
+    .nexus-v2-trigger:focus-visible {
+      box-shadow: 0 0 0 6px rgba(139,232,255,0.08), 0 0 0 2px rgba(139,232,255,0.18);
+      transform: translate(-50%, -50%) scale(1.01);
+    }
+
+    button:focus-visible,
+    a:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(139,232,255,0.08), 0 0 0 2px rgba(139,232,255,0.18);
+      border-radius: 8px;
+    }
+
     .nexus-v2-trigger:hover .nexus-v2-trigger__ring,
     .nexus-v2-trigger:focus-visible .nexus-v2-trigger__ring {
       transform: scale(1.04);
@@ -187,50 +296,72 @@
         transform: translate(-50%, 62px);
       }
     }
+    /* Respect reduced motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
   </style>
 
-  <!-- Google Analytics 4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LSLBCB2YR8"></script>
+  <!-- Analytics loaded only after user consent -->
   <script>
-    window.dataLayer = window.dataLayer || [];
+    (function () {
+      const GA_ID = 'G-LSLBCB2YR8';
+      window.__aen_gtm_queue = window.__aen_gtm_queue || [];
 
-    function gtag() {
-      dataLayer.push(arguments);
-    }
+      function queueEvent(type, name, params) {
+        window.__aen_gtm_queue.push(['event', name, params || {}]);
+      }
 
-    gtag("js", new Date());
-    gtag("config", "G-LSLBCB2YR8", {
-      page_title: document.title,
-      page_location: window.location.href,
-      page_path: window.location.pathname
-    });
+      window.trackDisciplineOpen = function (disciplineKey, disciplineTitle, language) {
+        queueEvent('event', 'discipline_open', {
+          discipline_key: disciplineKey || '',
+          discipline_title: disciplineTitle || '',
+          language_selected: language || document.documentElement.lang || 'en'
+        });
+      };
 
-    window.trackDisciplineOpen = function (disciplineKey, disciplineTitle, language) {
-      if (typeof gtag !== "function") return;
+      window.trackLanguageChange = function (language) {
+        queueEvent('event', 'language_change', {
+          language_selected: language || document.documentElement.lang || 'en'
+        });
+      };
 
-      gtag("event", "discipline_open", {
-        discipline_key: disciplineKey || "",
-        discipline_title: disciplineTitle || "",
-        language_selected: language || document.documentElement.lang || "en"
-      });
-    };
+      window.trackLivingFieldEnter = function () {
+        queueEvent('event', 'living_field_enter', {
+          source_page: 'main_index',
+          target_page: 'v2_index'
+        });
+      };
 
-    window.trackLanguageChange = function (language) {
-      if (typeof gtag !== "function") return;
+      window.loadAnalytics = function (consent) {
+        if (!consent) return;
+        if (window.__aen_gtm_loaded) return;
+        window.__aen_gtm_loaded = true;
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', GA_ID, { page_title: document.title, page_location: window.location.href, page_path: window.location.pathname });
+        var s = document.createElement('script');
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        s.async = true;
+        s.onload = function () {
+          (window.__aen_gtm_queue || []).forEach(function (ev) {
+            if (ev[0] === 'event') gtag.apply(null, ev.slice(1));
+          });
+          window.__aen_gtm_queue = [];
+        };
+        document.head.appendChild(s);
+      };
 
-      gtag("event", "language_change", {
-        language_selected: language || document.documentElement.lang || "en"
-      });
-    };
-
-    window.trackLivingFieldEnter = function () {
-      if (typeof gtag !== "function") return;
-
-      gtag("event", "living_field_enter", {
-        source_page: "main_index",
-        target_page: "v2_index"
-      });
-    };
+      try {
+        var consent = localStorage.getItem('aen_ga_consent');
+        if (consent === 'granted') window.loadAnalytics(true);
+      } catch (e) { }
+    })();
   </script>
 
   <meta property="og:type" content="website" />
@@ -358,6 +489,14 @@
 </head>
 
 <body class="nexus-home" data-bg-mode="fx">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div id="consentBanner" class="consent-banner" role="dialog" aria-live="polite" aria-label="Cookie consent">
+    <p style="margin-right:12px;">We use anonymous analytics to improve Aethereal Nexus. Do you allow Google Analytics?</p>
+    <div>
+      <button id="aen-consent-accept" class="primary">Accept</button>
+      <button id="aen-consent-decline">Decline</button>
+    </div>
+  </div>
   <div class="page-bg" id="pageBg" aria-hidden="true"></div>
 
   <div class="page-bg-fx" id="pageBgFx" aria-hidden="true">
@@ -366,7 +505,7 @@
     <div class="page-fx__aurora page-fx__aurora--c"></div>
     <div class="page-fx__halo"></div>
     <div class="page-fx__grid"></div>
-    <canvas class="page-fx__canvas" id="pageBgCanvas"></canvas>
+    <canvas class="page-fx__canvas" id="pageBgCanvas" width="1920" height="1080" aria-hidden="true"></canvas>
   </div>
 
   <div class="page-overlay" id="pageOverlay" aria-hidden="true"></div>
@@ -575,13 +714,109 @@
     </noscript>
   </main>
 
-  <script type="module" src="js/nexus/app.js?v=home-root-2"></script>
+  <script>
+    (function () {
+      function loadApp() {
+        var s = document.createElement('script');
+        s.type = 'module';
+        s.src = 'js/nexus/app.js?v=home-root-2';
+        s.async = true;
+        document.body.appendChild(s);
+      }
+
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(loadApp, { timeout: 300 });
+      } else {
+        window.addEventListener('load', function () { setTimeout(loadApp, 200); });
+      }
+    })();
+  </script>
+  <script>
+    (function () {
+      let lastFocusedElement = null;
+      const readingLayer = document.getElementById('readingLayer');
+      const mainContent = document.getElementById('main-content');
+      const readingPanel = document.getElementById('readingPanel');
+
+      function getFocusable(container) {
+        return Array.from(container.querySelectorAll('a[href], button, textarea, input, select, [tabindex]:not([tabindex="-1"])'))
+          .filter(el => !el.hasAttribute('disabled') && el.getAttribute('aria-hidden') !== 'true');
+      }
+
+      function trapFocus(e) {
+        if (!readingLayer || readingLayer.getAttribute('aria-hidden') === 'true') return;
+        const focusable = getFocusable(readingPanel);
+        if (focusable.length === 0) { e.preventDefault(); return; }
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.key === 'Tab') {
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+      }
+
+      function openReadingLayer() {
+        lastFocusedElement = document.activeElement;
+        if (mainContent) mainContent.setAttribute('aria-hidden', 'true');
+        if (readingLayer) {
+          readingLayer.setAttribute('aria-hidden', 'false');
+          readingLayer.style.display = 'block';
+          const focusable = getFocusable(readingPanel);
+          (focusable[0] || readingPanel).focus();
+          document.addEventListener('keydown', trapFocus);
+        }
+      }
+
+      function closeReadingLayer() {
+        if (mainContent) mainContent.setAttribute('aria-hidden', 'false');
+        if (readingLayer) {
+          readingLayer.setAttribute('aria-hidden', 'true');
+          readingLayer.style.display = '';
+          document.removeEventListener('keydown', trapFocus);
+        }
+        try { if (lastFocusedElement) lastFocusedElement.focus(); } catch (e) { }
+      }
+
+      // Close on Escape when reading layer is open
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && readingLayer && readingLayer.getAttribute('aria-hidden') === 'false') {
+          closeReadingLayer();
+        }
+      });
+
+      // Expose controls globally for other scripts
+      window.AEN = window.AEN || {};
+      window.AEN.openReadingLayer = openReadingLayer;
+      window.AEN.closeReadingLayer = closeReadingLayer;
+    })();
+  </script>
   <script>
     document.getElementById("nexusV2Trigger")?.addEventListener("click", () => {
       if (typeof window.trackLivingFieldEnter === "function") {
         window.trackLivingFieldEnter();
       }
     });
+  </script>
+  <script>
+    (function () {
+      function hideBanner() { var b = document.getElementById('consentBanner'); if (b) b.style.display = 'none'; }
+      function showBanner() { var b = document.getElementById('consentBanner'); if (b) b.style.display = 'flex'; }
+      try {
+        var consent = localStorage.getItem('aen_ga_consent');
+        if (consent === 'granted' || consent === 'denied') hideBanner(); else showBanner();
+      } catch (e) { showBanner(); }
+
+      document.getElementById('aen-consent-accept')?.addEventListener('click', function () {
+        try { localStorage.setItem('aen_ga_consent', 'granted'); } catch (e) { }
+        if (window.loadAnalytics) window.loadAnalytics(true);
+        hideBanner();
+      });
+
+      document.getElementById('aen-consent-decline')?.addEventListener('click', function () {
+        try { localStorage.setItem('aen_ga_consent', 'denied'); } catch (e) { }
+        hideBanner();
+      });
+    })();
   </script>
 </body>
 </html>

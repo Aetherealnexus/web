@@ -209,3 +209,28 @@ Together, we are shaping the **multi-intelligence ecosystem** of tomorrow.
 
 ---
 
+## Asset optimization (recommended)
+
+To improve load performance, generate modern asset formats locally (WOFF2 for fonts, WebP/AVIF for images). Use the helper scripts in `scripts/`.
+
+Quick workflow:
+
+- Convert Playfair TTFs to WOFF2 (use `scripts/convert-fonts.ps1` or `scripts/convert-fonts.sh`).
+- Convert PNGs to WebP (use `scripts/convert-images.ps1` or `scripts/convert-images.sh`).
+- Prefer `.woff2` in `@font-face` and `.webp`/`.avif` for large images; keep original files as fallbacks.
+
+Notes:
+
+- Do not commit large binary assets unless you intend to use Git LFS. If you want me to add generated `.woff2` and `.webp` files to the repo, I can prepare a PR — tell me if you want Git LFS enabled first.
+- Hosting fonts on a CDN (jsDelivr, Cloudflare) reduces repo size and speeds delivery.
+
+Commands (example):
+
+```bash
+# from the web/ folder
+scripts/convert-fonts.sh
+scripts/convert-images.sh
+```
+
+After generating assets, update `@font-face` in `index.html` (woff2 first) and replace preloads with `.webp` where appropriate.
+
