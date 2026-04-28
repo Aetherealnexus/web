@@ -1,0 +1,21 @@
+/* Immersive orbit and UI styles */
+:root{
+  --immersive-bg: linear-gradient(180deg,#02040a,#061025 60%);
+  --immersive-accent: #8be8ff;
+  --nx-ui: Inter, system-ui, -apple-system, "Segoe UI", Roboto, 'Helvetica Neue', Arial;
+}
+body[data-theme='light']{ --immersive-accent: #2b6cff; color: #0b1220; }
+
+.page-fx__canvas{ position: absolute; inset:0; width:100%; height:100%; display:block; z-index:1; pointer-events:none; }
+
+.immersive-toggle{
+  position: fixed; right: 18px; top: 18px; z-index:1400; background: rgba(2,6,12,0.6); color: #eaf8ff; border: 1px solid rgba(255,255,255,0.04); padding:8px 10px; border-radius: 12px; backdrop-filter: blur(8px); cursor: pointer; font-family: var(--nx-ui); font-weight:700; font-size:13px;
+}
+.immersive-toggle:focus{ outline: 3px solid rgba(139,232,255,0.14); }
+
+/* Small ornament for the living field trigger when hovered */
+.nexus-v2-trigger[data-immersive='active'] .nexus-v2-trigger__halo{ transform: scale(1.12); filter: blur(24px); }
+
+@media (prefers-reduced-motion: reduce){
+  .page-fx__canvas{ display:none !important; }
+}

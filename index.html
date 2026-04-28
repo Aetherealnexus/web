@@ -69,6 +69,10 @@
   <link rel="preload" href="/images/aethereal_nexus.webp" as="image" type="image/webp">
   <link rel="preload" href="/images/aethereal_nexus.png" as="image">
 
+  <!-- Immersive styles -->
+  <link rel="preload" href="/css/13-immersive.css" as="style" onload="this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/css/13-immersive.css"></noscript>
+
   <style>
     /* NOTE: run scripts/convert-fonts.sh (or .ps1) to generate .woff2 files into Playfair_Display/static/ when preparing assets for production. Keep .ttf as fallback. */
     /* Embedded font-face (fallback to local system) */
@@ -491,6 +495,7 @@
 
 <body class="nexus-home" data-bg-mode="fx">
   <a class="skip-link" href="#main-content">Skip to content</a>
+  <!-- Theme toggle (created by immersive script) -->
   <div id="consentBanner" class="consent-banner" role="dialog" aria-live="polite" aria-label="Cookie consent">
     <p style="margin-right:12px;">We use anonymous analytics to improve Aethereal Nexus. Do you allow Google Analytics?</p>
     <div>
@@ -732,6 +737,8 @@
       }
     })();
   </script>
+  <!-- Immersive orbit animator + theme toggle (deferred) -->
+  <script src="js/immersive-orbit.js" defer></script>
   <script>
     (function () {
       let lastFocusedElement = null;
