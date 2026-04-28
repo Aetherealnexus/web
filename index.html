@@ -56,9 +56,9 @@
   <link rel="manifest" href="/images/fav/site.webmanifest" />
   <link rel="mask-icon" href="/images/fav/safari-pinned-tab.svg" color="#050816" />
 
-  <!-- Preload Playfair Display fonts for faster headings render -->
-  <link rel="preload" href="/Playfair_Display/static/PlayfairDisplay-Regular.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="preload" href="/Playfair_Display/static/PlayfairDisplay-Bold.ttf" as="font" type="font/ttf" crossorigin>
+  <!-- Preload Playfair Display fonts for faster headings render (prefer .woff2; run scripts/convert-fonts to generate) -->
+  <link rel="preload" href="/Playfair_Display/static/PlayfairDisplay-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/Playfair_Display/static/PlayfairDisplay-Bold.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="preload" href="style.css" as="style" onload="this.rel='stylesheet'">
   <noscript>
@@ -70,6 +70,7 @@
   <link rel="preload" href="/images/aethereal_nexus.png" as="image">
 
   <style>
+    /* NOTE: run scripts/convert-fonts.sh (or .ps1) to generate .woff2 files into Playfair_Display/static/ when preparing assets for production. Keep .ttf as fallback. */
     /* Embedded font-face (fallback to local system) */
     @font-face {
       font-family: 'PlayfairDisplay';
